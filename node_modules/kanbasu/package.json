@@ -1,0 +1,81 @@
+{
+  "name": "kanbasu",
+  "version": "1.0.1",
+  "description": "Bare OOCSS Framework written in Sass",
+  "homepage": "http://kanbasu.liip.ch",
+  "main": "README.md",
+  "scripts": {
+    "gulp": "gulp",
+    "prestart": "npm install",
+    "build": "npm install && gulp",
+    "start": "gulp --dev",
+    "test": "npm run build"
+  },
+  "keywords": [
+    "css",
+    "sass",
+    "toolkit",
+    "styleguide",
+    "framework",
+    "scaffold",
+    "patterns",
+    "library"
+  ],
+  "author": {
+    "name": "Liip AG"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liip/kanbasu.git"
+  },
+  "engines": {
+    "node": ">=0.10.0",
+    "npm": ">=2.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^5.2.17",
+    "babel-loader": "5.0.0",
+    "browser-sync": "^2.7.1",
+    "del": "^1.1.1",
+    "fabricator-assemble": "^1.1.3",
+    "gulp": "^3.8.11",
+    "gulp-autoprefixer": "^2.2.0",
+    "gulp-csso": "^1.0.0",
+    "gulp-gh-pages": "^0.5.2",
+    "gulp-if": "^1.2.5",
+    "gulp-imagemin": "^2.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.0.0",
+    "gulp-util": "^3.0.4",
+    "imports-loader": "^0.6.3",
+    "run-sequence": "^1.0.2",
+    "script-loader": "^0.6.1",
+    "webpack": "^1.8.11"
+  },
+  "gitHead": "cbaeafb8bd2f72edcd9fe25975189ea9a7c0b202",
+  "bugs": {
+    "url": "https://github.com/liip/kanbasu/issues"
+  },
+  "_id": "kanbasu@1.0.1",
+  "_shasum": "57b223793cc4b7325b290671398e30aa60662cad",
+  "_from": "kanbasu@*",
+  "_npmVersion": "2.11.2",
+  "_nodeVersion": "0.12.5",
+  "_npmUser": {
+    "name": "lebenleben",
+    "email": "benoit.burgener@gmail.com"
+  },
+  "dist": {
+    "shasum": "57b223793cc4b7325b290671398e30aa60662cad",
+    "tarball": "http://registry.npmjs.org/kanbasu/-/kanbasu-1.0.1.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "lebenleben",
+      "email": "benoit.burgener@gmail.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/kanbasu/-/kanbasu-1.0.1.tgz"
+}

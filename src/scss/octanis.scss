@@ -1,0 +1,21 @@
+/* Octanis Website */
+
+@import 'settings/_kanbasu-overwrites'; // overwrites
+@import "kanbasu";
+
+body {
+    font-size: 16px;
+    background: $alt-color-darker;
+}
+
+h1 {
+    font-weight: 600;
+}
+
+.oc-brand-indicator:after {
+    content: "";
+    display: block;
+    background: $brand-color;
+    height: $spacing-unit-tiny;
+    width: $spacing-unit-huge;
+}
