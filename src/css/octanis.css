@@ -2904,21 +2904,30 @@ header {
 .masterhead p {
   font-size: 1.25em; }
 
-button.cta {
+a.cta {
   border: 2px solid white;
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 2px; }
 
-button.cta:hover {
+a.cta:hover {
   color: white;
   border: 2px solid #ffc600; }
 
 @media (min-width: 769px) and (max-width: 1024px), (min-width: 641px) and (max-width: 768px), (max-width: 640px) {
-  .masterhead button.cta {
+  .masterhead a.cta {
     margin-top: 2rem; } }
 @media (min-width: 1025px) {
-  .masterhead button.cta {
+  .masterhead a.cta {
     margin-top: 6rem; } }
+
+.grid {
+  background: #22211f; }
+  @media (min-width: 769px) and (max-width: 1024px), (min-width: 641px) and (max-width: 768px), (max-width: 640px) {
+    .grid {
+      padding: 2rem; } }
+  @media (min-width: 1025px) {
+    .grid {
+      padding: 6rem; } }
 
 /*# sourceMappingURL=octanis.css.map */

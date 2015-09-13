@@ -49,19 +49,19 @@ header{
 }
 
 
-button.cta{
+a.cta{
 	border: 2px solid white;
 	text-transform: uppercase;
 	font-weight: 600;
 	letter-spacing: 2px;
 }
 
-button.cta:hover{
+a.cta:hover{
 	color: white;
 	border: 2px solid $brand-color;
 }
 
-.masterhead button.cta {
+.masterhead a.cta {
 	@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
 		margin-top: $spacing-unit-huge;
 	}
@@ -70,3 +70,19 @@ button.cta:hover{
 		margin-top: 3*$spacing-unit-huge;
 	}
 }
+
+
+.grid {
+	background: $alt-color-darker;
+	
+	@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+    	padding: $spacing-unit-huge;
+	}
+
+	@media #{$mq-lg} {
+    	padding: 3*$spacing-unit-huge;
+	}
+}
+
+
+
