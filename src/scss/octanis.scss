@@ -23,8 +23,7 @@ h1 {
     margin: $spacing-unit-small 0 $spacing-unit-huge 0;
 }
 
-header{
-	width: 100%;
+.padded{
 
     @media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
     	padding: $spacing-unit-huge;
@@ -48,6 +47,9 @@ header{
 	font-size: 1.25em;
 }
 
+header {
+	height: 100vh;
+}
 
 a.cta{
 	border: 2px solid white;
@@ -74,15 +76,12 @@ a.cta:hover{
 
 .grid {
 	background: $alt-color-darker;
-	
-	@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
-    	padding: $spacing-unit-huge;
-	}
-
-	@media #{$mq-lg} {
-    	padding: 3*$spacing-unit-huge;
-	}
 }
 
+
+.divider {
+	background: $alt-color-lighter;
+	color: $alt-color-darker;
+}
 
 
