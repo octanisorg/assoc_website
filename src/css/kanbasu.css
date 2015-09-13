@@ -1,6 +1,5 @@
-@charset "UTF-8";
 /*!
- *  カンバス KANBASU
+ *  KANBASU
  *  Distributed under the MIT License
  *  Copyright (c) 2015 Liip AG
  */
@@ -504,7 +503,7 @@ html {
   font-family: "Gibson", Helvetica, Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.45;
-  color: white;
+  color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
 
@@ -651,7 +650,7 @@ textarea {
   font-size: inherit;
   font-family: inherit;
   line-height: inherit;
-  border: 1px solid #999999;
+  border: 1px solid #999;
   background-color: white;
   border-radius: 4px;
   -moz-osx-font-smoothing: grayscale;
@@ -712,7 +711,7 @@ label {
 .field-help {
   margin-top: 0.25rem;
   margin-bottom: 0;
-  color: #999999; }
+  color: #999; }
 
 /**
  * Sizes
@@ -2616,11 +2615,11 @@ dl:after,
  */
 .btn--default {
   color: inherit;
-  background-color: #eeeeee; }
+  background-color: transparent; }
   .btn--default:hover, .btn--default:focus {
-    background-color: #f6f6f6; }
+    background-color: rgba(8, 8, 8, 0); }
   .btn--default:active {
-    background-color: #e1e1e1; }
+    background-color: transparent; }
 
 .btn--primary {
   color: white;
@@ -2686,7 +2685,7 @@ dl:after,
  */
 .box--default {
   color: inherit;
-  background-color: #eeeeee; }
+  background-color: #eee; }
 
 .box--primary {
   color: white;
@@ -2778,7 +2777,7 @@ dl:after,
       padding-right: 0; }
 
 .list-inline--divided > li + li {
-  border-left: 1px solid #eeeeee; }
+  border-left: 1px solid #eee; }
 
 /**
  * Sizes
@@ -2809,7 +2808,7 @@ dl:after,
     padding-bottom: 0; }
 
 .list-stacked--divided > li + li {
-  border-top: 1px solid #eeeeee; }
+  border-top: 1px solid #eee; }
 
 /**
  * Sizes
@@ -2828,3 +2827,5 @@ dl:after,
 
 .list-stacked--huge > li {
   padding: 1rem 0; }
+
+/*# sourceMappingURL=kanbasu.css.map */

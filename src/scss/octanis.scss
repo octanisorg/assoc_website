@@ -4,12 +4,14 @@
 @import "kanbasu";
 
 body {
-    font-size: 16px;
+    font-size: 20px;
     background: $alt-color-darker;
 }
 
 h1 {
     font-weight: 600;
+    font-size: 2em;
+
 }
 
 .oc-brand-indicator:after {
@@ -17,5 +19,52 @@ h1 {
     display: block;
     background: $brand-color;
     height: $spacing-unit-tiny;
-    width: $spacing-unit-huge;
+    width: $spacing-unit-huge*2;
+    margin: $spacing-unit-small 0 $spacing-unit-huge 0;
+}
+
+header, .grid {
+	width: 100%;
+	min-height: 30*$spacing-unit-huge;
+
+    @media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+    	padding: $spacing-unit-huge;
+	}
+
+	@media #{$mq-lg} {
+    	padding: 3*$spacing-unit-huge;
+	}
+}
+
+.main-nav {
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 2px;
+}
+
+.masterhead {
+	margin-top: 6*$spacing-unit-huge;
+}
+
+
+button.cta{
+	border: 2px solid white;
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 2px;
+}
+
+button.cta:hover{
+	color: white;
+	border: 2px solid $brand-color;
+}
+
+.masterhead button.cta {
+	@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+		margin-top: $spacing-unit-huge;
+	}
+
+	@media #{$mq-lg} {
+		margin-top: 3*$spacing-unit-huge;
+	}
 }
