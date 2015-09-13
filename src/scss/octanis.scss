@@ -4,13 +4,13 @@
 @import "kanbasu";
 
 body {
-    font-size: 20px;
+    font-size: 1.25em;
     background: $alt-color-darker;
 }
 
 h1 {
     font-weight: 600;
-    font-size: 2em;
+    font-size: 4em;
 
 }
 
@@ -25,7 +25,7 @@ h1 {
 
 header{
 	width: 100%;
-	
+
     @media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
     	padding: $spacing-unit-huge;
 	}
@@ -43,6 +43,9 @@ header{
 
 .masterhead {
 	margin-top: 6*$spacing-unit-huge;
+}
+.masterhead p {
+	font-size: 1.25em;
 }
 
 

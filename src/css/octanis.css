@@ -2869,12 +2869,12 @@ dl:after,
   padding: 1rem 0; }
 
 body {
-  font-size: 20px;
+  font-size: 1.25em;
   background: #22211f; }
 
 h1 {
   font-weight: 600;
-  font-size: 2em; }
+  font-size: 4em; }
 
 .oc-brand-indicator:after {
   content: "";
@@ -2900,6 +2900,9 @@ header {
 
 .masterhead {
   margin-top: 12rem; }
+
+.masterhead p {
+  font-size: 1.25em; }
 
 button.cta {
   border: 2px solid white;
