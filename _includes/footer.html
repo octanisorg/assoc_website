@@ -6,19 +6,19 @@
 {% when 'index.html' %}
 <script type="text/javascript">
 $(document).ready(function () {
-  $.backstretch("/img/header1.jpg");
+  $.backstretch("{{ site.baseurl }}/img/header1.jpg");
 });
 </script>
 {% when 'about.html' %}
 <script type="text/javascript">
 $(document).ready(function () {
-  $.backstretch("/img/header2.jpg");
+  $.backstretch("{{ site.baseurl }}/img/header2.jpg");
 });
 </script>
 {% when 'projects.html' %}
 <script type="text/javascript">
 $(document).ready(function () {
-  $.backstretch("/img/header3.jpg");
+  $.backstretch("{{ site.baseurl }}/img/header3.jpg");
 });
 </script>
 {% endcase %}
