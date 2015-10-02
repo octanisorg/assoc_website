@@ -1,17 +1,45 @@
 ---
 layout: page
-title: Our Work
+title: 'What We Do'
+teaser: 'These are some of our current projects. We strive to pursue only the most ambitious ideas. They must adhere to our core values and be: Open, Fascinating and Simple. Anyone can <a href="#">apply</a> with a new project. If you can convince us, we will support you. One thing we can say: It''s a hell of a ride! <br/>'
 ---
 
-<div class="padded bg-gradient">
+	<div class="grid padded masterhead">
 		<div class="grid__item sm-w-1/1">
-		    <div class="masterhead relative-parent">
+			 <h1 class="oc-brand-indicator">{{ page.title }}</h1>
+			 <p class="sm-w-3/5">{{ page.teaser  }}</p>
 
-		      <h1 class="oc-brand-indicator">{{ page.title }}</h1>
-
-		      <p class="sm-w-3/5">{{ page.teaser  }}</p>
-
-		      <a class="btn btn--md btn--default cta" href="about.html">Find out what we do</a>
-		    </div>
 		</div>
-</div>
+
+
+		<div class="grid__item sm-w-1/1">
+
+			<ul id="projectcovers" class="list-inline">
+				<li>
+					<img src="img/levillage_cover.jpg" alt="Octanis Le Village" />
+					<div class="projectteaser">
+						<h2><a href="#">Le Village</a></h2>
+						<span>Built by students, for students.</span>
+					</div>
+				</li>
+			 
+			 	<li>
+					<img src="img/rover_cover.jpg" alt="Octanis Rover" />
+					<div class="projectteaser">
+						<h2><a href="#">Rover</a></h2>
+						<span>Autonomous explorer and data collector.</span>
+					</div>
+			 	</li>
+			 	
+			 	<li>
+					<img src="img/balloon_cover.jpg" alt="Octanis Balloon" />
+					<div class="projectteaser">
+						<h2><a href="#">Balloon</a></h2>
+						<span>Low cost, long distance deployments.</span>
+					</div>
+			 	</li>
+			</ul>
+
+
+		</div>
+	</div>

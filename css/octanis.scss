@@ -41,7 +41,7 @@ h1 {
 	letter-spacing: 2px;
 }
 
-.masterhead {
+header .masterhead {
 	margin-top: 6*$spacing-unit-huge;
 }
 
@@ -62,6 +62,10 @@ h1 {
 
 .bg-darker {
 	background: $alt-color-darker;
+}
+
+header {
+	height: 10.5em;
 }
 
 header.full {
@@ -91,13 +95,69 @@ a.cta:hover{
 }
 
 
-.grid {
-
-}
-
 
 .divider {
 	color: $alt-color-darker;
 }
+
+
+/* Projects page */
+ul#projectcovers {
+	margin-top: $spacing-unit-huge;
+}
+
+ul#projectcovers li img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    opacity: 0.5;
+}
+ul#projectcovers li .projectteaser h2 a {
+	color: white;
+	text-decoration: none;
+}
+
+ul#projectcovers li .projectteaser h2 {
+	font-weight: 600;
+	font-size: 2.4em;
+	margin: 0 0 100px 0;
+	padding: 0;
+	position: relative;
+	top: 0;
+}
+
+ul#projectcovers li .projectteaser span {
+	font-size: 1.2em;
+	line-height: 1;
+	font-weight: 400;
+}
+
+ul#projectcovers li .projectteaser {
+    position: absolute;
+    left: 0;
+    top: 0;
+	width: 232px;
+	height: 232px;
+	padding: 20px;
+}
+
+ul#projectcovers li .projectteaser:hover{
+	background: $brand-color;
+}
+
+ul#projectcovers li{
+	width: 232px;
+	height: 232px;
+	margin: 0 40px 40px 0;
+	background: #000;
+	padding: 0;
+	position: relative;
+    overflow: hidden;
+}
+
+
+
 
 
