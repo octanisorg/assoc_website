@@ -35,6 +35,18 @@ h1 {
 	}
 }
 
+
+.padded--body{
+
+    @media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+    	padding: 0 $spacing-unit-huge $spacing-unit-huge $spacing-unit-huge;
+	}
+
+	@media #{$mq-lg} {
+    	padding: 0 3*$spacing-unit-huge 3*$spacing-unit-huge 3*$spacing-unit-huge;
+	}
+}
+
 .main-nav {
 	text-transform: uppercase;
 	font-weight: 600;
@@ -102,59 +114,114 @@ a.cta:hover{
 
 
 /* Projects page */
-ul#projectcovers {
-	margin-top: $spacing-unit-huge;
+.projectcover {
+	background: none;
+	overflow: hidden;
 }
 
-ul#projectcovers li img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: auto;
-    opacity: 0.5;
-}
-ul#projectcovers li .projectteaser h2 a {
+.projectteaser h2 a {
 	color: white;
 	text-decoration: none;
 }
 
-ul#projectcovers li .projectteaser h2 {
+.projectteaser h2 {
 	font-weight: 600;
 	font-size: 2.4em;
 	margin: 0 0 100px 0;
 	padding: 0;
-	position: relative;
 	top: 0;
+	position: relative;
+	z-index: 4;
 }
 
-ul#projectcovers li .projectteaser span {
+.projectteaser span {
 	font-size: 1.2em;
 	line-height: 1;
 	font-weight: 400;
 }
 
-ul#projectcovers li .projectteaser {
-    position: absolute;
-    left: 0;
-    top: 0;
-	width: 232px;
-	height: 232px;
+.projectteaser {
+	top: 0;
 	padding: 20px;
+	min-height: 232px;
 }
 
-ul#projectcovers li .projectteaser:hover{
-	background: $brand-color;
-}
-
-ul#projectcovers li{
-	width: 232px;
-	height: 232px;
-	margin: 0 40px 40px 0;
-	background: #000;
-	padding: 0;
+.balloon {
 	position: relative;
-    overflow: hidden;
+    background: #000;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/balloon_cover.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+  	background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+
+.levillage {
+	position: relative;
+    background: #000;
+}
+
+.levillage::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/levillage_cover.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+  	background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+
+.rover {
+	position: relative;
+    background: #000;
+}
+
+.rover::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/rover_cover.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+  	background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.projectteaser:hover {
+	background: $brand-color;
 }
 
 
