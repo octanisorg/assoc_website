@@ -15,6 +15,19 @@ h1 {
     font-size: 4em;
 }
 
+h1.subtitled {
+    font-weight: 400;
+
+}
+
+h3.subtitle {
+    margin-top:-1.5em;
+    padding-top:0;
+    padding-bottom:1em;
+    font-weight: 200;
+
+}
+
 .oc-brand-indicator:after {
     content: "";
     display: block;
@@ -74,6 +87,11 @@ header .masterhead {
 
 .bg-darker {
 	background: $alt-color-darker;
+}
+
+.bg-lighter {
+    background: $alt-color-lighter;
+    color:  $alt-color-darker;
 }
 
 header {
@@ -225,6 +243,40 @@ a.cta:hover{
 }
 
 
+/* News */
 
+.news {
+	background: url(http://placehold.it/600x300);
+	padding: 10*$spacing-unit-huge 0 0 0;
+	margin: 0 0 3*$spacing-unit-huge 0;
+}
+
+
+
+/* Rover */
+.fullscreen-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.fullscreen-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.box--logo {
+    height: 100vh;
+}
+.box--logo img {
+    width: 20em;
+    margin: auto;
+}
 
 
