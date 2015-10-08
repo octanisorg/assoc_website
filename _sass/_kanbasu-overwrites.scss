@@ -2,6 +2,49 @@
   GLOBAL SETTINGS
 \*----------------------------------------*/
 
+/* FONTS */
+
+
+/* first for IE 4-8 */
+@font-face {
+  font-family: GibsonRegular;
+  src: url("../font/Gibson-RegularWeb.eot");
+}
+
+/* then for WOFF-capable browsers */
+@font-face {
+  font-family: GibsonRegular;
+  src: url("../font/Gibson-RegularWeb.woff") format("woff");
+}
+
+
+/* first for IE 4-8 */
+@font-face {
+  font-family: GibsonLight;
+  src: url("../font/Gibson-LightWeb.eot");
+}
+
+/* then for WOFF-capable browsers */
+@font-face {
+  font-family: GibsonLight;
+  src: url("../font/Gibson-LightWeb.woff") format("woff");
+}
+
+
+/* first for IE 4-8 */
+@font-face {
+  font-family: GibsonSemiBold;
+  src: url("../font/Gibson-SemiBoldWeb.eot");
+}
+
+/* then for WOFF-capable browsers */
+@font-face {
+  font-family: GibsonSemiBold;
+  src: url("../font/Gibson-SemiBoldWeb.woff") format("woff");
+}
+
+
+
 /**
  * Colors
  */
@@ -18,7 +61,9 @@ $alt-color-darker:                  #22211f !default;
  * Typography
  */
 
-$font-family-default:               'Gibson', Helvetica, Arial, sans-serif !default;
+$font-family-default:               'GibsonRegular', Helvetica, Arial, sans-serif !default;
+$font-family-light:                 'GibsonLight', Helvetica, Arial, sans-serif !default;
+$font-family-bold:                  'GibsonSemiBold', Helvetica, Arial, sans-serif !default;
 
 $font-size-default:                 1rem !default;
 $font-size-small:                   0.75rem !default;

@@ -5,19 +5,19 @@
 @import '../_sass/_kanbasu-overwrites';
 @import "../_sass/kanbasu";
 
+
 body {
     font-size: 1.25em;
     background: $alt-color-darker;
 }
 
 h1 {
-    font-weight: 600;
+    font-family: $font-family-bold;
     font-size: 4em;
 }
 
 h1.subtitled {
-    font-weight: 400;
-
+    font-family: $font-family-default;
 }
 
 h3.subtitle {
@@ -59,7 +59,7 @@ h3.subtitle {
 
 .main-nav {
 	text-transform: uppercase;
-	font-weight: 600;
+    font-family: $font-family-bold;
 	letter-spacing: 2px;
 }
 
@@ -102,7 +102,7 @@ header.full {
 a.cta{
 	border: 2px solid white;
 	text-transform: uppercase;
-	font-weight: 600;
+    font-family: $font-family-bold;
 	letter-spacing: 2px;
 }
 
