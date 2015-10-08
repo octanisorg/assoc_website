@@ -24,8 +24,7 @@ h3.subtitle {
     margin-top:-1.5em;
     padding-top:0;
     padding-bottom:1em;
-    font-weight: 200;
-
+    font-family: $font-family-light;
 }
 
 .oc-brand-indicator:after {
@@ -67,7 +66,7 @@ header .masterhead {
 	margin-top: 6*$spacing-unit-huge;
 }
 
-.masterhead p {
+p {
 	font-size: 1.25em;
 }
 
@@ -309,8 +308,8 @@ a.cta:hover{
         padding: $spacing-unit-huge;
     }
     
-    body {
-        font-size: 0.8em;
+    body, .grid__item {
+        font-size: 0.8rem;
     }
 
 
