@@ -11,6 +11,10 @@ body {
     background: $alt-color-darker;
 }
 
+p {
+    font-size: 1.5em;
+}
+
 h1 {
     font-family: $font-family-bold;
     font-size: 4em;
@@ -26,6 +30,7 @@ h3.subtitle {
     padding-bottom:1em;
     font-family: $font-family-light;
 }
+
 
 .oc-brand-indicator:after {
     content: "";
@@ -66,9 +71,6 @@ header .masterhead {
 	margin-top: 6*$spacing-unit-huge;
 }
 
-p {
-	font-size: 1.25em;
-}
 
 .bg-gradient {
 	background: rgba(255,255,255,0);
@@ -124,6 +126,12 @@ a.cta:hover{
 
 .divider {
 	color: $alt-color-darker;
+}
+
+/* Join page */
+input.newsletter {
+    width: 10*$spacing-unit-huge;
+    display: inline;
 }
 
 
