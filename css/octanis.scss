@@ -13,6 +13,7 @@ body {
 
 p {
     font-size: 1.5em;
+    font-family: $font-family-light;
 }
 
 h1 {
@@ -28,7 +29,7 @@ h3.subtitle {
     margin-top:-1.5em;
     padding-top:0;
     padding-bottom:1em;
-    font-family: $font-family-light;
+    font-family: $font-family-default;
 }
 
 
@@ -303,6 +304,21 @@ input.newsletter {
     width: 38px;
 }
 
+
+/*Updates*/
+.post {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 0 $spacing-unit-large 0;
+    margin: 0 0 5*$spacing-unit-large 0;
+}
+
+.post a {
+    text-decoration: none;
+}
+
+.post-metainfo{
+    font-size: 1em;
+}
 
 /* Responsive */
 @media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
