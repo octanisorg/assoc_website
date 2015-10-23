@@ -33,6 +33,43 @@ h3.subtitle {
 }
 
 
+.dimmed {
+  position: relative;
+}
+
+.dimmed:before {
+  content: " ";
+  z-index: -99;
+  display: block;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+#pagebg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -201;
+}
+    
+#pagebg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+
 .oc-brand-indicator:after {
     content: "";
     display: block;
@@ -305,9 +342,93 @@ input.newsletter {
 }
 
 
+.callout-bubble {
+    margin: -2em 0 0 3em;
+    position: relative;
+    display: none;
+    width:  10em;
+    padding: 0em 1em 1.2em 1em;
+    font-family: $font-family-bold;
+ 
+     color:  $alt-color-darker;
+    background-color: $alt-color-lighter;
+    
+    border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -webkit-box-shadow: 0 0 3em #B2B2B2;
+    -moz-border-radius: 0.3em;
+    -moz-box-shadow: 0 0 3em #B2B2B2;
+
+    z-index: 300;
+
+ 
+
+}
+
+.callout-bubble::before {
+    background: $alt-color-lighter;
+    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    content: "";
+    display: block;
+    height: 1.3em;
+    left: -1.6em;
+    position: relative;
+    transform:             rotate( 45deg );
+        -moz-transform:    rotate( 45deg );
+        -ms-transform:     rotate( 45deg );
+        -o-transform:      rotate( 45deg );
+        -webkit-transform: rotate( 45deg );
+    width:  1.3em;
+    z-index: 250;
+    top: 1.25em;
+}
+
+.callout-block {
+    position: relative;
+    width: 100%;
+
+}
+
+.callout-point {
+    width:2em;
+    height:2em;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    border: 0.2em solid #E3A20B;
+    background: rgba( 34, 33, 31, .5 );
+    position: absolute;
+    box-shadow: 3px 3px 10px #000;
+    cursor: pointer;
+    opacity: 0;
+     -webkit-transition: opacity 0.5s; /* Safari */
+    transition: opacity 0.5s;
+}
+
+.callout-point:hover > .callout-bubble {
+     display: block;
+}
+
+.callout-point:hover {
+        background: rgba( 34, 33, 31, 0.8 );
+
+}
+
+.callout-block:hover > .callout-point {
+    opacity: 1;
+}
+
+
+
+
 /*Updates*/
 .post {
     border-bottom: 1px solid #e0e0e0;
+    padding: 0 0 $spacing-unit-large 0;
+    margin: 0 0 5*$spacing-unit-large 0;
+}
+
+.firstpost {
     padding: 0 0 $spacing-unit-large 0;
     margin: 0 0 5*$spacing-unit-large 0;
 }
