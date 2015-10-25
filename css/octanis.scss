@@ -9,6 +9,13 @@
 body {
     font-size: 1.25em;
     background: $alt-color-darker;
+    line-height: 1.8em;
+}
+
+footer {
+
+    line-height: 1.3rem;
+
 }
 
 p {
@@ -48,7 +55,7 @@ h3.subtitle {
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 #pagebg {
@@ -130,6 +137,10 @@ header .masterhead {
 .bg-lighter {
     background: $alt-color-lighter;
     color:  $alt-color-darker;
+}
+
+.bg-lighter a{
+    color: black;
 }
 
 header {
@@ -296,6 +307,17 @@ input.newsletter {
 }
 
 
+/* About */
+.img-subtitle {
+    margin: 0 0 0 0;
+    padding: $spacing-unit-tiny;
+    background: rgba(0,0,0,0.7);
+    border-bottom: #ffc600 3px solid;
+    position: relative;
+    height: 4.4em;
+    margin-top: -4.4em;
+    font-size: 1em;
+}
 
 /* Rover */
 .fullscreen-bg {
