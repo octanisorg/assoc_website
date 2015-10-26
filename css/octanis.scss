@@ -165,11 +165,11 @@ a.cta:hover{
 
 .masterhead a.cta {
 	@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
-		margin-top: $spacing-unit-huge;
+		margin-top: $spacing-unit-large;
 	}
 
 	@media #{$mq-lg} {
-		margin-top: 3*$spacing-unit-huge;
+		margin-top: $spacing-unit-large;
 	}
 }
 
@@ -242,6 +242,8 @@ input.newsletter {
     -webkit-background-size: cover;
     background-size: cover;
 }
+
+
 
 
 .levillage {
@@ -317,6 +319,17 @@ input.newsletter {
     height: 4.4em;
     margin-top: -4.4em;
     font-size: 1em;
+}
+
+.oc-value {
+    height: 15em;
+    width: 15em;
+    margin: auto;
+}
+
+.oc-value-text {
+    padding: $spacing-unit-tiny;
+    font-size: 1.4em;
 }
 
 /* Rover */
