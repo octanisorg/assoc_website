@@ -43,7 +43,7 @@ $(function() {
 
     //preloader
 
-    $.preload('/img/rover.mp4', 1, 0);
+    //$.preload('/img/rover.mp4', 1, 0);
 
 
 
