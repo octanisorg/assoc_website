@@ -5,11 +5,10 @@ title: News
 
 <div id="pagebg">
   {% if site.posts.first.bgimage != '' %}
-  	 <img data-stellar-offset-parent="true" data-stellar-ratio="2"
-	     data-stellar-horizontal-offset="40"
-	     data-stellar-vertical-offset="0" src="{{ site.baseurl }}/media/{{site.posts.first.bgimage}}" alt="">
+  	 <img  data-stellar-ratio="2"
+	    src="{{ site.baseurl }}/media/{{site.posts.first.bgimage}}" alt="">
   {% else %}
-	  <img data-stellar-offset-parent="true" data-stellar-ratio="2" data-stellar-horizontal-offset="40" data-stellar-vertical-offset="0" src="{{ site.baseurl }}/img/header3.jpg" alt="">
+	  <img data-stellar-ratio="2" src="{{ site.baseurl }}/img/header3.jpg" alt="">
   {% endif %}
 
 </div>

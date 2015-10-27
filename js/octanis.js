@@ -68,7 +68,7 @@ $(function() {
 
             // Set the global alignment offsets
             horizontalOffset: 0,
-            verticalOffset: 0,
+            verticalOffset: -300,
 
             // Refreshes parallax content on window load and resize
             responsive: false,
