@@ -192,6 +192,10 @@ input.newsletter {
 	overflow: hidden;
 }
 
+.projectcover a{
+    text-decoration: none;
+}
+
 .projectteaser h2 a {
 	color: white;
 	text-decoration: none;
@@ -299,6 +303,18 @@ input.newsletter {
 	background: $brand-color;
 }
 
+
+.soon {display: none;}
+
+@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+    .soon {
+        display: block;
+    }
+}
+.projectteaser:hover > .soon {
+    display: block;
+    font-family: $font-family-bold;
+}
 
 /* News */
 

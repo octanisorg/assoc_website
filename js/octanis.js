@@ -71,7 +71,7 @@ $(function() {
             verticalOffset: 0,
 
             // Refreshes parallax content on window load and resize
-            responsive: true,
+            responsive: false,
 
             // Select which property is used to calculate scroll.
             // Choose 'scroll', 'position', 'margin' or 'transform',
