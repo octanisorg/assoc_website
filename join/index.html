@@ -2,7 +2,7 @@
 layout: default
 title: 'There''s no time to lose'
 teaser: 'Join us with an idea, an existing project or just to help out and gain experience. We will provide you with the tools and the team to get you going.'
-cta: '<a class="btn btn--large btn--default cta" href="#join">Join Now</a><br />or <a href="#subscribe">subscribe</a> to our bulletin...'
+cta: '<a class="btn btn--large btn--default cta" href="{{ site.baseurl }}/join_form">Join Now</a><br />or <a href="#subscribe">subscribe</a> to our bulletin...'
 ---
 
 	<div id="pagebg">
@@ -66,7 +66,7 @@ cta: '<a class="btn btn--large btn--default cta" href="#join">Join Now</a><br />
 
 				<div class="callout-block">
 
-					<img class="img-block" src="img/benches.jpg">
+					<img class="img-block" src="{{ site.baseurl }}/img/benches.jpg">
 
 					<div class="callout-point" style="top: 1%; left: 13%;">
 						<div class="callout-bubble">Electronics parts, chips, GSM modules, GPS breakouts, etc.</div>
@@ -138,14 +138,33 @@ cta: '<a class="btn btn--large btn--default cta" href="#join">Join Now</a><br />
 	</div>
 
 
+
+	<div class="grid bg-darker">
+		<div class="grid__item padded sm-w-1/1 text-center ">
+ 		
+ 			<h3 class="subtitle" id="subscribe">Are you ready to join us?</h3>
+			<a class="btn btn--large btn--default cta" href="{{ site.baseurl }}/join_form">Join Now</a>
+
+
+		</div>
+	</div>
+
+
+
 	<div class="grid bg-lighter">
 		<div class="grid__item padded sm-w-1/1 text-center ">
  			<h3 class="subtitle" id="subscribe">Octanis Bulletin: Updates once a month.</h3>
 
-  			        <input class="input--large mosaic__cell newsletter" type="text" name="email" value="E-Mail Address" />
- 			            <button class="btn btn--large btn--primary" type="submit">Subscribe</button>
- 
-		</div>
+					  <form style="padding:3px;text-align:center;" action="https://tinyletter.com/octanisorg" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/octanisorg', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+
+					  	<p><input type="text" onclick="this.value='';" class="input--large mosaic__cell newsletter" value="Your E-Mail Address" name="email" id="tlemail" />
+					  	<input type="hidden" value="1" name="embed"/>
+					  	<input class="btn btn--large btn--primary" type="submit" value="Subscribe" />
+
+					  	<p><a href="https://tinyletter.com" target="_blank">powered by TinyLetter</a></p></form>
+					         
+		
+	</div>
 
 		
 	</div>
