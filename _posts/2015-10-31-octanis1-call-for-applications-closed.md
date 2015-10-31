@@ -1,6 +1,7 @@
 ---
-published: false
+published: true
 ---
+
 
 The official deadline for the call for applications for the role of "Field Scientist" is closing today. We have received many applications from all over the world and would like to thank all applicants.
 
