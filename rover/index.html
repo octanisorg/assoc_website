@@ -17,10 +17,9 @@ title: Octanis 1 - Rover and Mission
 				<img class="img-block" src="{{ site.baseurl }}/img/patch.png" />
 				<h3><strong>Octanis 1</strong> is a mission to make a reusable, autonomous, solar powered and open source rover for outdoors. The rover will be deployed in Antarctica in February, 2016.</h3>
 				<br />
-				 <a class="btn btn--medium btn--default cta" target="_blank" href="/antarctica_mission">Call for Applications</a>
+				 <a class="btn btn--medium btn--default cta" href="#rover" onclick="javascript:_paq.push(['trackEvent', 'cta', 'Sneak Preview']);">Sneak Preview</a>
 			</div>
 		</div>
-
 
 
 	</div>
@@ -28,8 +27,9 @@ title: Octanis 1 - Rover and Mission
  
 	<div class="grid padded bg-darker pdgb">
 		<div class="grid__item sm-w-1/1">
-			<h1 class="subtitled">Autonomous Rover for Everyone.</h1>
+ 			<h1 class="subtitled">Autonomous Rover for Everyone.</h1>
 			<h3 class="subtitle oc-brand-indicator">Sophosticated precision sensors, LoRa wireless technology and 3D printed mechanics.</h3>
+			
 			<p>
 				 Octanis 1 is our first mission to build a low-cost autonomous rover for polar, snow or ice covered regions. In this first iteration we will be specialising the rover for the coastal regions of Antarctica and its specific weather conditions. After the rover will prove itself in Antarctica, we plan to release a rover kit aimed at curious minds wanting to do their own exploratory missions.
 			</p>
@@ -37,13 +37,13 @@ title: Octanis 1 - Rover and Mission
 
 
 			LoRa Hardware Sponsored By
-			<a href="http://espace.epfl.ch" target="_blank"><img src="{{ site.baseurl }}/img/espace.png" class="img-responsive" /></a>
+			<a href="http://espace.epfl.ch" target="_blank"  onhover="javascript:_paq.push(['trackEvent', 'ctaconsider', 'espace']);"><img src="{{ site.baseurl }}/img/espace.png" class="img-responsive" /></a>
 			</span>
 
 			<span class="pull-right pdg">
 
 			Strut Motors Sponsored By
-			<a href="http://maxon.ch" target="_blank"><img src="{{ site.baseurl }}/img/maxon.jpg" class="img-responsive" /></a>
+			<a href="http://maxon.ch" target="_blank" onhover="javascript:_paq.push(['trackEvent', 'ctaconsider', 'maxon']);"><img src="{{ site.baseurl }}/img/maxon.jpg" class="img-responsive" /></a>
 			</span>
 
 		</div>
@@ -260,9 +260,12 @@ title: Octanis 1 - Rover and Mission
 				Of course you have the freedom of attaching any type of payload, such as a <a href="https://www.nanoporetech.com/products-services/minion-mki" target="_blank">DNA sequencing device</a> or a meteorite seeking camera array. They can interface over USB, I2C or UART. 	
 
 			</p>
-				<a class="btn btn--large btn--default cta" href="preorder.html">Pre-order a kit</a>
+				<a class="btn btn--large btn--default cta" onhover="javascript:_paq.push(['trackEvent', 'ctaconsider', 'Pre-order']);" href="preorder.html">Pre-order a kit</a>
 
 		</div>
+
+
+
 	</div>
 
 
@@ -327,10 +330,14 @@ title: Octanis 1 - Rover and Mission
 	</div>
 
 	<div class="grid padded bg-lighter">
+				<div  id="rover" class="grid__item sm-w-1/1 pdg">
 
+			<img src="{{ site.baseurl }}/img/render1.jpg" class="img-block" />
+
+		</div>
 		<div class="grid__item sm-w-1/3 pdg">
 			<img src="/img/rover1.jpg" class="img-block" />
-			<h3>Rover</h3>
+			<h3>Rover without solar panels</h3>
 
 		</div>
 
@@ -374,7 +381,7 @@ title: Octanis 1 - Rover and Mission
 
 
 		<div class="grid__item sm-w-1/1 pdg++">
-			<a class="btn btn--large btn--default cta text-right" href="/updates">Follow the Expedition</a>
+			<a class="btn btn--large btn--default cta text-right" href="/updates" onclick="javascript:_paq.push(['trackEvent', 'cta', 'Follow Expedition']);">Follow the Expedition</a>
 		</div>
 	</div>
 
