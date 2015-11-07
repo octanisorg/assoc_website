@@ -159,7 +159,8 @@
                 sunrise = 12.0 - H;
                 sunset = 12.0 + H;
 
-                console.log( "Sunrise: " + HoursMinutes(sunrise) + " Sunset: " + HoursMinutes(sunset));
+
+                $("#siminfo").append("latitude: "+latitude+", sunrise: " + HoursMinutes(sunrise) + ", sunset: " + HoursMinutes(sunset) + " on day "+dayofyear+"<br/>");
 
                 for (i = 0; i < datapoints; i++){
                     hour = i / 8.0;
@@ -185,9 +186,8 @@
         function Declination(c){return 23.45*Math.sin(ToRad(360/365*(c-81)))}
         function HoursMinutes(c){h=Math.floor(c);m=Math.floor(60*(c-h));return h.toFixed(0)+":"+m.toFixed(0)}
 
+
         function charge_battery_until_full(energy_charge){
-
-
 
             if(energy_charge <= battery_energy_cap){
                 var percent_full = Math.floor((energy_charge/battery_energy_cap)*100);
