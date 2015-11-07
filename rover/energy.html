@@ -9,6 +9,7 @@
 
     <script type="text/javascript" src="../js/jquery.js"></script>
     <script language="javascript" type="text/javascript" src="../js/flot/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/xml2json.js"></script>
 
 </head>
  
@@ -33,7 +34,6 @@
     <script type="text/javascript">
 
 
-
             //time
             var time_step = 0.08; //h
             var time = 0; //start at midnight
@@ -42,6 +42,11 @@
             //time budgets
             var time_drive = 2; //h
             var time_comms = 3;
+
+
+            //yr.no weather API url
+            var weather_url = "http://​crossorigin.me/http://www.yr.no/place/Antarctica/Other/Greenwich_Island/forecast.xml";
+            var weather_data = false; 
 
             //energy storage
             var battery_voltage = 3.7; //V
@@ -96,8 +101,8 @@
 
         !function ($) {
 
-           
-            
+            //fetches weather asynchronously!
+            get_weather_data(weather_url);
 
 
             $("#battery_charging_current").attr('max', solar_power_produced_avg/battery_voltage);
@@ -112,11 +117,27 @@
                 evolve_over_time();
                 
                 //charting
-                $.plot("#chart", [{label: "battery %", data: battery_percent_status_data}, {label: "energy produced/sumE %", data: energy_production_data}, {label: "energy consumed/sumE %", data: energy_consumption_data}]);
+                $.plot("#chart", [{label: "battery %", data: battery_percent_status_data}, {label: "energy consumed/(consumed+produced) %", data: energy_consumption_data} ]);
 
             });
 
+
+
+            function get_weather_data(yrno_xml_url){
+                $.ajax({
+                    type: "GET",
+                    url: yrno_xml_url,
+                    dataType: "xml",
+                    success: function(xml) {
+                        weather_data = $.xml2json(xml)['#document'].weatherdata;
+                    }
+                });
+            }
+
+
         }(window.jQuery)
+
+
 
 
 
@@ -239,7 +260,6 @@
                
 
                 battery_percent_status_data.push([time, (battery_energy_charge/battery_energy_cap)*100]);
-                energy_production_data.push([time, (energy_produced/(energy_produced+energy_consumed)*100)]);
                 energy_consumption_data.push([time, (energy_consumed/(energy_produced+energy_consumed)*100)]);
  
 
