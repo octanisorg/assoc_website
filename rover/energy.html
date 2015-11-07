@@ -70,8 +70,8 @@
             //HEATING IS DONE BY DISSIPATION
 
             var system_consumers = [
-                                        {name: "mainboard", sleep: 0.01, active: 0.05, active_per_hour: 1},
-                                        {name: "eps", sleep: 0.01, active: 0.05,  active_per_hour: 1},
+                                        {name: "mainboard", sleep: 0.01, active: 0.05*3.3, active_per_hour: 1},
+                                        {name: "eps", sleep: 0.01, active: 0.05*3.3,  active_per_hour: 1},
                                     ];
 
 
@@ -140,7 +140,7 @@
 
 
         function consume_battery_energy(energy_charge, t, t_step){
-            var total_consumption = 0;
+            var total_consumption = 0; //W
             var percent_hour_full = Math.floor(((t-Math.floor(t)))*100)+0.01;
 
             if(energy_charge <= battery_energy_cap){
@@ -186,7 +186,7 @@
                 };
             }
 
-            return total_consumption;
+            return total_consumption*t_step; //Wh
         }
 
 
@@ -232,7 +232,8 @@
                 energy_produced = charge_battery_until_full(battery_energy_charge);
                 energy_consumed = consume_battery_energy(battery_energy_charge, time, time_step);
               
-                battery_energy_charge += (energy_produced - energy_consumed);
+                battery_energy_charge += (energy_produced);
+                battery_energy_charge -= (energy_consumed);
                
 
                 battery_percent_status_data.push([time, (battery_energy_charge/battery_energy_cap)*100]);
