@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">
+ 
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Energy Sim Sketch</title>
+
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/flot/jquery.flot.js"></script>
+
+</head>
+ 
+<body onload="evolve_over_time();">
+
+
+    <strong>battery_energy_charge: </strong><input class="sim_parameter_input" id="battery_energy_charge" type="range" step="1" min='0' max='33.3' /><br/>
+
+    <strong>battery_charging_current: </strong><input class="sim_parameter_input" id="battery_charging_current" type="range" step="0.1" min='0' /><br/>
+    <strong>solar_power_produced_avg: </strong><input class="sim_parameter_input" id="solar_power_produced_avg" type="range" step="0.1" min='0.1' max='15' />
+    <br/><br/>
+    
+
+    <div id="chart" style="height: 400px; width: 800px"></div>
+    <br/>
+    
+    <pre id="siminfo"></pre>
+    <pre id="simresults"></pre>
+
+
+    <script type="text/javascript">
+
+
+
+            //time
+            var time_step = 0.12; //h
+            var time = 0; //start at midnight
+            var time_limit = 24;
+
+            //time budgets
+            var time_drive = 2; //h
+            var time_comms = 3;
+
+            //energy storage
+            var battery_voltage = 3.7; //V
+            var battery_cap = 9; //Ah
+            var battery_energy_cap =  battery_voltage * battery_cap; //Wh (3.7V * 9Ah)
+            var battery_charging_current = 0.5; //A
+            var battery_energy_charge = 0; //initial charge 0
+            var battery_percent_status_data = [];
+
+
+
+            //energy production
+            var solar_power_produced_avg = 5; //W
+            var solar_energy_produced_per_day_avg = solar_power_produced_avg*24; //Wh
+            
+            var energy_produced = 0;
+            var energy_consumed = 0;
+
+            var energy_production_data = [];
+            var energy_consumption_data = [];
+
+            //distance traveled
+            var drive_time_total = 0;
+
+            //energy consumption
+            //HEATING IS DONE BY DISSIPATION
+
+            var system_consumers = [
+                                        {name: "mainboard", sleep: 0.01, active: 0.05, active_per_hour: 1},
+                                        {name: "eps", sleep: 0.01, active: 0.05,  active_per_hour: 1},
+                                    ];
+
+
+            var comms_consumers = [ 
+                                        {name: "rockblock", sleep: 0.01, active: 0.2, active_per_hour: 0.12}
+                                    ];
+
+            var drive_consumers = [
+
+                                        {name: "M1", sleep: 0, active: 0.1,  active_per_hour: 1},
+                                        {name: "M2", sleep: 0, active: 0.1,  active_per_hour: 1},
+                                        {name: "M3", sleep: 0, active: 0.1, active_per_hour: 1},
+                                        {name: "M4", sleep: 0, active: 0.1, active_per_hour: 1},
+                                        {name: "M5", sleep: 0, active: 0.05, active_per_hour: 0.2},
+                                        {name: "M6", sleep: 0, active: 0.05, active_per_hour: 0.2},
+                                        {name: "M7", sleep: 0, active: 0.05, active_per_hour: 0.2}, 
+                                        {name: "M8", sleep: 0, active: 0.05, active_per_hour: 0.2}
+
+                                    ];
+
+
+
+        !function ($) {
+
+           
+            
+
+
+            $("#battery_charging_current").attr('max', solar_power_produced_avg/battery_voltage);
+
+            $(".sim_parameter_input").change(function(event) {
+                clear_sim();
+
+                battery_charging_current = parseFloat($("#battery_charging_current").val());
+                solar_power_produced_avg = parseFloat($("#solar_power_produced_avg").val());
+                battery_energy_charge = parseFloat($("#battery_energy_charge").val());
+
+                evolve_over_time();
+                
+                //charting
+                $.plot("#chart", [battery_percent_status_data, energy_production_data, energy_consumption_data]);
+
+            });
+
+        }(window.jQuery)
+
+
+
+        function charge_battery_until_full(energy_charge){
+
+
+
+            if(energy_charge <= battery_energy_cap){
+                var percent_full = Math.floor((energy_charge/battery_energy_cap)*100);
+
+                //$("#simresults").append(percent_full + "% charged - ");
+                return battery_charging_current * battery_voltage * time_step; // V * A * h = Wh
+            }else{
+
+                //$("#simresults").append("Battery full, dissipating if ∂E > 0 - ");
+                return 0;
+
+            } 
+
+        }
+
+
+        function consume_battery_energy(energy_charge, t, t_step){
+            var total_consumption = 0;
+            var percent_hour_full = Math.floor(((t-Math.floor(t)))*100)+0.01;
+
+            if(energy_charge <= battery_energy_cap){
+                var percent_full = Math.floor((energy_charge/battery_energy_cap)*100);
+            }else{
+                var percent_full = 100;
+            }
+
+            //$("#simresults").append(percent_hour_full + "% of current hour");
+
+
+            for (var i = system_consumers.length - 1; i >= 0; i--) {
+               total_consumption += system_consumers[i].active;
+            };
+            
+
+            if(percent_full > 80){
+
+                for (var i = drive_consumers.length - 1; i >= 0; i--) {
+                    
+                    if(drive_consumers[i].active_per_hour*100 >= percent_hour_full){
+
+                        if(drive_consumers[i].name == "M1"){
+
+                        }
+
+                        //$("#simresults").append(" - " + drive_consumers[i].name + " - drive mode.");
+
+                        total_consumption += drive_consumers[i].active;
+                    }
+                };
+            }   
+
+            if(percent_full > 50){
+
+
+                for (var i = comms_consumers.length - 1; i >= 0; i--) {
+                    if(comms_consumers[i].active_per_hour*100 >= percent_hour_full){
+                        //$("#simresults").append(" - " + comms_consumers[i].name + ": "+ comms_consumers[i].active_per_hour*100 + "aph - comms mode.");
+
+                        total_consumption += comms_consumers[i].active;
+                    }
+                };
+            }
+
+            return total_consumption;
+        }
+
+
+        function clear_sim(){
+            $("#siminfo").html("");
+            $("#simresults").html("");
+
+            //sums
+            battery_energy_charge = 0;
+            energy_produced = 0;
+            energy_consumed = 0;
+
+
+            //charts
+            battery_percent_status_data = [];
+            energy_production_data = [];
+            energy_consumption_data = [];
+        }
+
+
+        function show_sim_info(){
+            $("#siminfo").append("------------<br/>");
+            $("#siminfo").append("battery_cap (battery_voltage*battery_cap): " + battery_energy_cap + "Wh </br>");
+            $("#siminfo").append("battery_voltage: " + battery_voltage + "V</br>");
+            $("#siminfo").append("battery_charging_current: " + battery_charging_current + "A</br>");
+            $("#siminfo").append("battery_energy_charge (initial charge): " + battery_energy_charge + "Wh </br>");
+            $("#siminfo").append("solar_power_produced_avg: " + solar_power_produced_avg + "W, doesn't affect simulation </br>");
+            $("#siminfo").append("</br>------------ </br>");
+        }
+
+        function show_postsim_info(){
+            $("#siminfo").append("# data rows: "+ battery_percent_status_data.length);
+
+        }
+
+        function evolve_over_time(){
+
+            show_sim_info();
+
+
+            while (time < time_limit){
+                //$("#simresults").append("<hr/><i>" + time + "h: </i><br/>");
+
+                energy_produced = charge_battery_until_full(battery_energy_charge);
+                energy_consumed = consume_battery_energy(battery_energy_charge, time, time_step);
+              
+                battery_energy_charge += (energy_produced - energy_consumed);
+               
+
+                battery_percent_status_data.push([time, battery_energy_charge]);
+                energy_production_data.push([time, energy_produced]);
+                energy_consumption_data.push([time, energy_consumed]);
+ 
+
+                time=time+time_step;
+                //$("#simresults").append("<br/>∂E = "+(energy_production - energy_consumption)+"</hr>");
+            }
+
+            show_postsim_info();
+
+
+            //reset time
+            time = 0;
+        }
+
+
+
+    </script>
+    
+</body>
+ 
+</html>
