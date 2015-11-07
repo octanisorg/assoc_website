@@ -107,6 +107,9 @@
             //fetches weather asynchronously!
             get_weather_data(weather_url);
 
+            console.log(get_solar_irradiance_data(40, -62, 200));
+
+
 
             $("#battery_charging_current").attr('max', solar_power_produced_avg/battery_voltage);
 
@@ -138,11 +141,49 @@
             }
 
 
+
+            function get_solar_irradiance_data(dayofyear, latitude, datapoints){
+                var sdata = [];
+                var i = 0;
+                dec = ToRad(Declination(dayofyear))
+                lat = ToRad(latitude);
+                x = - (Math.sin(lat) * Math.sin(dec));
+                x = x / (Math.cos(lat) * Math.cos(dec));
+                if (x > 1.0)
+                    x = 1.0;
+                if (x < -1.0)
+                    x = -1.0;
+                f = Math.acos(x);
+                H = ToDeg(f * 1 / 15.0);
+                
+                sunrise = 12.0 - H;
+                sunset = 12.0 + H;
+
+                console.log( "Sunrise: " + HoursMinutes(sunrise) + " Sunset: " + HoursMinutes(sunset));
+
+                for (i = 0; i < datapoints; i++){
+                    hour = i / 8.0;
+                    Stot = 0.0;
+                    if (hour > sunrise && hour < sunset) {
+                        am = AM(hour, dayofyear, lat);
+                        x1 = Math.pow(0.7, am);
+                        Stot = Stot + 1.353 * Math.pow(x1, 0.678);
+                        } else { Stot = 0}
+                        if (Stot > 1.1){Stot = 0}
+                    sdata[i] = Stot
+
+                }   
+
+                return sdata;
+            }
+
         }(window.jQuery)
 
-
-
-
+        function ToRad(c){return c*Math.PI/180}
+        function ToDeg(c){return 180*c/Math.PI}
+        function AM(c,e,f){dec=ToRad(Declination(e));HRA=ToRad(15*(c-12));elevation=Math.asin(Math.sin(dec)*Math.sin(f)+Math.cos(dec)*Math.cos(f)*Math.cos(HRA));declination=ToRad(90)-elevation;return 1/(1E-4+Math.cos(declination))}
+        function Declination(c){return 23.45*Math.sin(ToRad(360/365*(c-81)))}
+        function HoursMinutes(c){h=Math.floor(c);m=Math.floor(60*(c-h));return h.toFixed(0)+":"+m.toFixed(0)}
 
         function charge_battery_until_full(energy_charge){
 
