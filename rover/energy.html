@@ -22,19 +22,20 @@
     <br/><br/>
     
 
-    <div id="chart" style="height: 400px; width: 800px"></div>
     <br/>
     
     <pre id="siminfo"></pre>
     <pre id="simresults"></pre>
 
+    <div id="chart" style="height: 500px; width: 90%"></div>
+    <br/>X: time<br/>
 
     <script type="text/javascript">
 
 
 
             //time
-            var time_step = 0.12; //h
+            var time_step = 0.08; //h
             var time = 0; //start at midnight
             var time_limit = 24;
 
@@ -111,7 +112,7 @@
                 evolve_over_time();
                 
                 //charting
-                $.plot("#chart", [battery_percent_status_data, energy_production_data, energy_consumption_data]);
+                $.plot("#chart", [{label: "battery %", data: battery_percent_status_data}, {label: "energy produced/sumE %", data: energy_production_data}, {label: "energy consumed/sumE %", data: energy_consumption_data}]);
 
             });
 
@@ -195,8 +196,6 @@
 
             //sums
             battery_energy_charge = 0;
-            energy_produced = 0;
-            energy_consumed = 0;
 
 
             //charts
@@ -218,6 +217,7 @@
 
         function show_postsim_info(){
             $("#siminfo").append("# data rows: "+ battery_percent_status_data.length);
+            $("#siminfo").append("<br/>time step: "+ time_step + "h , time span: " + time_limit+ "h ");
 
         }
 
@@ -235,9 +235,9 @@
                 battery_energy_charge += (energy_produced - energy_consumed);
                
 
-                battery_percent_status_data.push([time, battery_energy_charge]);
-                energy_production_data.push([time, energy_produced]);
-                energy_consumption_data.push([time, energy_consumed]);
+                battery_percent_status_data.push([time, (battery_energy_charge/battery_energy_cap)*100]);
+                energy_production_data.push([time, (energy_produced/(energy_produced+energy_consumed)*100)]);
+                energy_consumption_data.push([time, (energy_consumed/(energy_produced+energy_consumed)*100)]);
  
 
                 time=time+time_step;
