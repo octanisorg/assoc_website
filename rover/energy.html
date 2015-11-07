@@ -67,28 +67,28 @@
             var drive_time_total = 0;
 
             //energy consumption
-            //HEATING IS DONE BY DISSIPATION
+            //HEATING IS NOT CONSIDERED IN THIS MODEL
 
             var system_consumers = [
-                                        {name: "mainboard", sleep: 0.01, active: 0.05*3.3, active_per_hour: 1},
-                                        {name: "eps", sleep: 0.01, active: 0.05*3.3,  active_per_hour: 1},
+                                        {name: "mainboard", sleep: 0.01*3.3, active: 0.05*3.3, active_per_hour: 1},
+                                        {name: "eps", sleep: 0.01*3.3, active: 0.05*3.3,  active_per_hour: 1},
                                     ];
 
 
             var comms_consumers = [ 
-                                        {name: "rockblock", sleep: 0.01, active: 0.2, active_per_hour: 0.12}
+                                        {name: "rockblock", sleep: 0.01*5, active: 0.2*5, active_per_hour: 0.12}
                                     ];
 
             var drive_consumers = [
 
-                                        {name: "M1", sleep: 0, active: 0.1,  active_per_hour: 1},
-                                        {name: "M2", sleep: 0, active: 0.1,  active_per_hour: 1},
-                                        {name: "M3", sleep: 0, active: 0.1, active_per_hour: 1},
-                                        {name: "M4", sleep: 0, active: 0.1, active_per_hour: 1},
-                                        {name: "M5", sleep: 0, active: 0.05, active_per_hour: 0.2},
-                                        {name: "M6", sleep: 0, active: 0.05, active_per_hour: 0.2},
-                                        {name: "M7", sleep: 0, active: 0.05, active_per_hour: 0.2}, 
-                                        {name: "M8", sleep: 0, active: 0.05, active_per_hour: 0.2}
+                                        {name: "M1", sleep: 0, active: 0.1*5,  active_per_hour: 1},
+                                        {name: "M2", sleep: 0, active: 0.1*5,  active_per_hour: 1},
+                                        {name: "M3", sleep: 0, active: 0.1*5, active_per_hour: 1},
+                                        {name: "M4", sleep: 0, active: 0.1*5, active_per_hour: 1},
+                                        {name: "M5", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2},
+                                        {name: "M6", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2},
+                                        {name: "M7", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2}, 
+                                        {name: "M8", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2}
 
                                     ];
 
