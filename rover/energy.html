@@ -66,6 +66,9 @@
             //distance traveled
             var drive_time_total = 0;
 
+            //motors driving state
+            var motors_on = false;
+
             //energy consumption
             //HEATING IS NOT CONSIDERED IN THIS MODEL
 
@@ -81,10 +84,10 @@
 
             var drive_consumers = [
 
-                                        {name: "M1", sleep: 0, active: 0.1*5,  active_per_hour: 0.5},
-                                        {name: "M2", sleep: 0, active: 0.1*5,  active_per_hour: 0.5},
-                                        {name: "M3", sleep: 0, active: 0.1*5, active_per_hour: 0.5},
-                                        {name: "M4", sleep: 0, active: 0.1*5, active_per_hour: 0.5},
+                                        {name: "M1", sleep: 0, active: 0.1*5,  active_per_hour: 1},
+                                        {name: "M2", sleep: 0, active: 0.1*5,  active_per_hour: 1},
+                                        {name: "M3", sleep: 0, active: 0.1*5, active_per_hour: 1},
+                                        {name: "M4", sleep: 0, active: 0.1*5, active_per_hour: 1},
                                         {name: "M5", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2},
                                         {name: "M6", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2},
                                         {name: "M7", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2}, 
@@ -157,8 +160,16 @@
             };
             
 
-            if(percent_full < 90 && percent_full > 70 ){
+            if(percent_full > 90 && motors_on == false){
+                motors_on = true;
+            }
 
+            if(percent_full < 70 && motors_on == true){
+                motors_on = false;
+            }
+
+            if(motors_on == true)
+            {
                 for (var i = drive_consumers.length - 1; i >= 0; i--) {
                     
                     if(drive_consumers[i].active_per_hour*100 >= percent_hour_full){
