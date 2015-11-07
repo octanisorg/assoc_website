@@ -163,13 +163,12 @@
                     
                     if(drive_consumers[i].active_per_hour*100 >= percent_hour_full){
 
-                        if(drive_consumers[i].name == "M1"){
-
-                        }
-
                         //$("#simresults").append(" - " + drive_consumers[i].name + " - drive mode.");
 
                         total_consumption += drive_consumers[i].active;
+                    }else{
+                        total_consumption += drive_consumers[i].sleep;
+
                     }
                 };
             }   
@@ -182,6 +181,9 @@
                         //$("#simresults").append(" - " + comms_consumers[i].name + ": "+ comms_consumers[i].active_per_hour*100 + "aph - comms mode.");
 
                         total_consumption += comms_consumers[i].active;
+                    }else{
+                        total_consumption += comms_consumers[i].sleep;
+
                     }
                 };
             }
