@@ -78,8 +78,9 @@
             //HEATING IS NOT CONSIDERED IN THIS MODEL
 
             var system_consumers = [
-                                        {name: "mainboard", sleep: 0.01*3.3, active: 0.05*3.3, active_per_hour: 1},
-                                        {name: "eps", sleep: 0.01*3.3, active: 0.05*3.3,  active_per_hour: 1},
+                                        {name: "mainboard", sleep: 0.001*3.3, active: 0.05*3.3, active_per_hour: 1},
+                                        {name: "eps", sleep: 0.001*3.3, active: 0.05*3.3,  active_per_hour: 1},
+                                        {name: "imaging", sleep: 0, active: 0.5*3.3,  active_per_hour: 0.12},
                                     ];
 
 
@@ -218,7 +219,13 @@
 
 
             for (var i = system_consumers.length - 1; i >= 0; i--) {
-               total_consumption += system_consumers[i].active;
+
+                if(system_consumers[i].active_per_hour*100 >= percent_hour_full){
+                   total_consumption += system_consumers[i].active;
+                }else{
+                   total_consumption += system_consumers[i].sleep;
+                }
+
             };
             
 
