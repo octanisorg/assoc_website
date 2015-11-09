@@ -13,12 +13,12 @@
 
 </head>
  
-<body onload="evolve_over_time();">
+<body>
 
 
     <strong>battery_energy_charge: </strong><input class="sim_parameter_input" id="battery_energy_charge" type="range" step="1" min='0' max='33.3' /><br/>
 
-    <strong>battery_charging_current: </strong><input class="sim_parameter_input" id="battery_charging_current" type="range" step="0.1" min='0' /><br/>
+    <strong>battery_charging_current_max: </strong><input class="sim_parameter_input" id="battery_charging_current_max" type="range" step="0.1" min='0' /><br/>
     <strong>solar_power_produced_avg: </strong><input class="sim_parameter_input" id="solar_power_produced_avg" type="range" step="0.1" min='0.1' max='15' />
     <br/><br/>
     
@@ -38,6 +38,7 @@
             var time_step = 0.08; //h
             var time = 0; //start at midnight
             var time_limit = 24;
+            var n_datapoints = time_limit/time_step; //300
 
             //time budgets
             var time_drive = 2; //h
@@ -52,10 +53,12 @@
             var battery_voltage = 3.7; //V
             var battery_cap = 9; //Ah
             var battery_energy_cap =  battery_voltage * battery_cap; //Wh (3.7V * 9Ah)
-            var battery_charging_current = 0.5; //A
+            var battery_charging_current_max = 0.5; //A
             var battery_energy_charge = 0; //initial charge 0
             var battery_percent_status_data = [];
 
+            //energy consumption
+            var energy_consumption_max_per_timestamp = 6 * 3.3 * time_step; //Wh (max current of EPS * bus voltage 3.3V)
 
 
             //energy production
@@ -67,6 +70,15 @@
 
             var energy_production_data = [];
             var energy_consumption_data = [];
+
+            var daily_irradiation_data = [];
+
+            //solar panels data
+            var solar_cell_surface = 0.3 * 0.3; //m^2
+            var solar_cell_efficiency = 0.15; // module efficiency
+            var solar_energy_max_per_timestep = solar_cell_surface * solar_cell_efficiency * 1000 * time_step; 
+                                                                    // Wh. Scaling factor for graph.
+                                                                    // (1000 W / m^2 is the maximum normal surface irradiance at sea level)
 
             //distance traveled
             var drive_time_total = 0;
@@ -108,23 +120,23 @@
             //fetches weather asynchronously!
             get_weather_data(weather_url);
 
-            console.log(get_solar_irradiance_data(40, -62, 200));
+            console.log(get_solar_irradiance_data(40, -62, 300));
 
 
 
-            $("#battery_charging_current").attr('max', solar_power_produced_avg/battery_voltage);
+            $("#battery_charging_current_max").attr('max', solar_power_produced_avg/battery_voltage);
 
             $(".sim_parameter_input").change(function(event) {
                 clear_sim();
 
-                battery_charging_current = parseFloat($("#battery_charging_current").val());
+                battery_charging_current_max = parseFloat($("#battery_charging_current_max").val());
                 solar_power_produced_avg = parseFloat($("#solar_power_produced_avg").val());
                 battery_energy_charge = parseFloat($("#battery_energy_charge").val());
 
                 evolve_over_time();
                 
                 //charting
-                $.plot("#chart", [{label: "battery %", data: battery_percent_status_data}, {label: "energy consumed/(consumed+produced) %", data: energy_consumption_data} ]);
+                $.plot("#chart", [{label: "battery %", data: battery_percent_status_data}, {label: "energy consumed/(max. output of EPS) %", data: energy_consumption_data}, {label: "energy produced/(theoretical maximum) %", data: energy_production_data} ]);
 
             });
 
@@ -142,7 +154,7 @@
             }
 
 
-
+            //returns kW/m^2
             function get_solar_irradiance_data(dayofyear, latitude, datapoints){
                 var sdata = [];
                 var i = 0;
@@ -164,7 +176,7 @@
                 $("#siminfo").append("latitude: "+latitude+", sunrise: " + HoursMinutes(sunrise) + ", sunset: " + HoursMinutes(sunset) + " on day "+dayofyear+"<br/>");
 
                 for (i = 0; i < datapoints; i++){
-                    hour = i / 8.0;
+                    hour = i * time_step ;
                     Stot = 0.0;
                     if (hour > sunrise && hour < sunset) {
                         am = AM(hour, dayofyear, lat);
@@ -179,7 +191,6 @@
                 return sdata;
             }
 
-        }(window.jQuery)
 
         function ToRad(c){return c*Math.PI/180}
         function ToDeg(c){return 180*c/Math.PI}
@@ -188,19 +199,16 @@
         function HoursMinutes(c){h=Math.floor(c);m=Math.floor(60*(c-h));return h.toFixed(0)+":"+m.toFixed(0)}
 
 
-        function charge_battery_until_full(energy_charge){
+        // returns the amount of energy to be charged into the battery.
+        function charge_battery_until_full(energy_charge, sunpower){
+            var battery_charging_current = sunpower * 1000 * solar_cell_surface * solar_cell_efficiency / battery_voltage;
 
-            if(energy_charge <= battery_energy_cap){
-                var percent_full = Math.floor((energy_charge/battery_energy_cap)*100);
+            //limit charge current
+            battery_charging_current = Math.min(battery_charging_current, battery_charging_current_max);
 
-                //$("#simresults").append(percent_full + "% charged - ");
-                return battery_charging_current * battery_voltage * time_step; // V * A * h = Wh
-            }else{
-
-                //$("#simresults").append("Battery full, dissipating if ∂E > 0 - ");
-                return 0;
-
-            } 
+            //charge until full
+            return Math.min(battery_charging_current * battery_voltage * time_step, battery_energy_cap - energy_charge);
+            // V * A * h = Wh
 
         }
 
@@ -291,7 +299,7 @@
             $("#siminfo").append("------------<br/>");
             $("#siminfo").append("battery_cap (battery_voltage*battery_cap): " + battery_energy_cap + "Wh </br>");
             $("#siminfo").append("battery_voltage: " + battery_voltage + "V</br>");
-            $("#siminfo").append("battery_charging_current: " + battery_charging_current + "A</br>");
+            $("#siminfo").append("battery_charging_current_max: " + battery_charging_current_max + "A</br>");
             $("#siminfo").append("battery_energy_charge (initial charge): " + battery_energy_charge + "Wh </br>");
             $("#siminfo").append("solar_power_produced_avg: " + solar_power_produced_avg + "W, doesn't affect simulation </br>");
             $("#siminfo").append("</br>------------ </br>");
@@ -306,12 +314,13 @@
         function evolve_over_time(){
 
             show_sim_info();
-
+            daily_sunpower_data = get_solar_irradiance_data(40, -62, 300) ; //kW/m^2
+            var i=0;
 
             while (time < time_limit){
                 //$("#simresults").append("<hr/><i>" + time + "h: </i><br/>");
 
-                energy_produced = charge_battery_until_full(battery_energy_charge);
+                energy_produced = charge_battery_until_full(battery_energy_charge, daily_sunpower_data[i]);
                 energy_consumed = consume_battery_energy(battery_energy_charge, time, time_step);
               
                 battery_energy_charge += (energy_produced);
@@ -319,10 +328,13 @@
                
 
                 battery_percent_status_data.push([time, (battery_energy_charge/battery_energy_cap)*100]);
-                energy_consumption_data.push([time, (energy_consumed/(energy_produced+energy_consumed)*100)]);
+                energy_consumption_data.push([time, (energy_consumed/(energy_consumption_max_per_timestamp)*100)]);
+                energy_production_data.push([time, (energy_produced/solar_energy_max_per_timestep * 100)]);
+
  
 
                 time=time+time_step;
+                i=i+1;
                 //$("#simresults").append("<br/>∂E = "+(energy_production - energy_consumption)+"</hr>");
             }
 
@@ -334,6 +346,7 @@
         }
 
 
+    }(window.jQuery)
 
     </script>
     
