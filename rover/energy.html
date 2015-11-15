@@ -181,7 +181,7 @@
                 sunset = 12.0 + H;
 
 
-                $("#siminfo").append("latitude: "+latitude+", sunrise: " + HoursMinutes(sunrise) + ", sunset: " + HoursMinutes(sunset) + " on day "+dayofyear+"<br/>");
+                $("#siminfo").append("latitude: "+latitude+", sunrise: " + HoursMinutes(sunrise) + ", sunset: " + HoursMinutes(sunset) + " on day <b>"+dateFromDay(2016, dayofyear)+"</b><br/>");
 
                 for (i = 0; i < datapoints; i++){
                     hour = i * time_step ;
@@ -199,7 +199,10 @@
                 return sdata;
             }
 
-
+        function dateFromDay(year, day){
+          var date = new Date(year, 0); // initialize a date in `year-01-01`
+          return new Date(date.setDate(day)).toDateString(); // add the number of days
+        }
         function ToRad(c){return c*Math.PI/180}
         function ToDeg(c){return 180*c/Math.PI}
         function AM(c,e,f){dec=ToRad(Declination(e));HRA=ToRad(15*(c-12));elevation=Math.asin(Math.sin(dec)*Math.sin(f)+Math.cos(dec)*Math.cos(f)*Math.cos(HRA));declination=ToRad(90)-elevation;return 1/(1E-4+Math.cos(declination))}
