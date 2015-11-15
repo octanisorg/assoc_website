@@ -19,9 +19,15 @@
     <strong>battery_energy_charge: </strong><input class="sim_parameter_input" id="battery_energy_charge" type="range" step="1" min='0' max='33.3' /><br/>
 
     <strong>battery_charging_current_max: </strong><input class="sim_parameter_input" id="battery_charging_current_max" type="range" step="0.1" min='0' /><br/>
-    <strong>solar_power_produced_avg: </strong><input class="sim_parameter_input" id="solar_power_produced_avg" type="range" step="0.1" min='0.1' max='15' />
-    <br/><br/>
-    
+    <strong>solar_power_produced_avg: </strong><input class="sim_parameter_input" id="solar_power_produced_avg" type="range" step="0.1" min='0.1' max='15' />    <br/>
+
+    <strong>earth_latitude: </strong><input class="sim_parameter_input" id="earth_latitude" type="range" step="1" min='-90' max='90' />
+    <br/>
+    <strong>earth_day_of_year: </strong><input class="sim_parameter_input" id="earth_day_of_year" type="range" step="1" min='1' max='365' />
+
+    <br/>
+    <br/>
+
 
     <br/>
     
@@ -132,6 +138,8 @@
                 battery_charging_current_max = parseFloat($("#battery_charging_current_max").val());
                 solar_power_produced_avg = parseFloat($("#solar_power_produced_avg").val());
                 battery_energy_charge = parseFloat($("#battery_energy_charge").val());
+                earth_latitude = parseFloat($("#earth_latitude").val());
+                earth_day_of_year = parseFloat($("#earth_day_of_year").val());
 
                 evolve_over_time();
                 
@@ -314,7 +322,7 @@
         function evolve_over_time(){
 
             show_sim_info();
-            daily_sunpower_data = get_solar_irradiance_data(40, -62, 300) ; //kW/m^2
+            daily_sunpower_data = get_solar_irradiance_data(earth_day_of_year, earth_latitude, 300) ; //kW/m^2
             var i=0;
 
             while (time < time_limit){
