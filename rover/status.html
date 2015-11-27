@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <!-- EXTERNAL LIBS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    
+    <link href='https://fonts.googleapis.com/css?family=Catamaran:400,500,300,600' rel='stylesheet' type='text/css'>
+    
+    <title>Octanis 1 Rover Status</title>
+
+    <style type="text/css">
+    body {
+      font-family: 'Catamaran', sans-serif;
+    }
+    </style>
+  </head>
+  <body style="padding: 30px;">
+
+    <div style="margin-bottom:-60px">
+      <img src="http://octanis.org/img/patch.png" width="80" style=""/>
+      <h1 style="position: relative; top: -95px; left: 100px;">Octanis 1 Dashboard</h1>
+    </div>
+
+    <div id="payload_data">
+      Last packet received from 
+      <ul>
+        <li>LoRaWAN: <br/><span id="lorawan_last_metadata">-</span></li>
+        <li>Iridium: <br/><span id="iridium_last_metadata">-</span></li>
+      </ul> 
+    </div>
+
+    <h2>Rover Position</h2>
+
+    <div id="map" style="height:400px; width:48%; border: 1px #efefef solid; float:left;"></div>
+    <div id="rover_3d" style="height:400px; width:48%; border: 1px #efefef solid; float:right;"></div>
+
+    <div style="clear:both; padding-top:20px">
+    
+    <h2>Telemetry</h2>
+      <div id="chartCommsNav" style="width: 100%;"></div>
+      <div id="chartWeatherOut" style="width: 100%;"></div>
+      <div id="chartWeatherIn" style="width: 100%;"></div>
+      <div id="chartPose" style="width: 100%;"></div>
+
+    </div>
+
+
+
+    <script type="text/javascript">
+      console.log("init");
+
+      //set rover status variables to be filled
+      var last_lat = 0;
+      var last_lon = 0;
+      var last_time = 0;
+      var last_pitch = 0;
+      var last_roll = 0;
+      var last_yaw = 0;
+
+      //lorawan specific
+      var last_lrrrssi = 0;
+      var last_lrrsnr = 0;
+      var last_spfact = 0;
+      var last_subband = 0;
+      var last_channel = 0;
+      var last_lrrlat = 0;
+      var last_lrrlon = 0;
+
+      //storage for data from json api
+      var rover_statuses = [];
+
+
+      // JSONP request
+      $.ajax({
+        url: 'http://basestation.octanis.org/lorawan_packets/AF7A46ED73754BB7C4C7F54F9B927E694BEC4340',
+        dataType: 'jsonp',
+        jsonp: 'callback'
+      }).done(function(data){
+
+        rover_statuses = data;
+        var lasti = rover_statuses.length-1;
+
+        //set lora AS specific data
+        last_lrrrssi = rover_statuses[lasti].lrrrssi;
+        last_time = rover_statuses[lasti].time;
+        last_lrrsnr = rover_statuses[lasti].lrrsnr;
+        last_spfact = rover_statuses[lasti].spfact;
+        last_subband = rover_statuses[lasti].subband;
+        last_channel = rover_statuses[lasti].channel;
+        last_lrrlat = rover_statuses[lasti].lrrlat;
+        last_lrrlon = rover_statuses[lasti].lrrlon;
+
+
+        $("#lorawan_last_metadata").html("#"+lasti+") Time: <b>"+last_time+"</b>, " + "RSSI: "+last_lrrrssi+", SNR: " +last_lrrsnr+", SPF: " + last_spfact+ ", SB: " +last_subband + ", LC: " +  last_channel + ", GWlat: "+last_lrrlat + ", GWlon: "+last_lrrlon);
+
+
+        //decode hex string payload
+        var last_payload = rover_statuses[lasti].payload;
+
+        
+
+
+        loadMaps();
+        loadCharts();
+      });
+
+      // onload callback
+      function drawCommsNavChart() {
+
+          var dataCommsNav = new google.visualization.DataTable();
+
+          dataCommsNav.addColumn('datetime', 'Time');
+          dataCommsNav.addColumn('number', 'RSSI');
+          //dataWeatherOut.addColumn('number', 'Wind Speed MPH');
+
+          $.each(rover_statuses, function (i, row) {
+            dataCommsNav.addRow([
+              (new Date(row.time)),
+              parseFloat(row.lrrrssi),
+              //parseFloat(row.windspeedmph)
+            ]);
+          });
+
+          var chartCommsNav = new google.visualization.LineChart($('#chartCommsNav').get(0));
+
+          chartCommsNav.draw(dataCommsNav, {
+            title: 'Comms&Nav Metadata'
+          });
+          
+
+      }
+
+      function drawCharts(){
+        drawCommsNavChart();
+
+        console.log("charts drawn");
+      }
+
+
+      function loadCharts(){
+
+          // load chart lib
+          google.load('visualization', '1', {
+            packages: ['corechart'],
+            callback: drawCharts
+          });
+
+
+          console.log("charts loaded");
+
+      }
+     
+
+
+      function loadMaps(){
+        //draw map
+        var map = L.map('map').setView([last_lrrlat, last_lrrlon], 13);
+
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([last_lrrlat, last_lrrlon+0.04]).addTo(map)
+          .bindPopup('Rover Position')
+          .openPopup();
+
+
+        L.marker([last_lrrlat, last_lrrlon]).addTo(map)
+          .bindPopup('LoRa GW')
+          .openPopup();
+      }
+
+
+
+
+      function hex2a(hexx) {
+          var hex = hexx.toString();//force conversion
+          var str = '';
+          for (var i = 0; i < hex.length; i += 2)
+              str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+          return str;
+      }
+
+
+    </script>
+
+
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+var camera, scene, renderer, spotlight, rover_body;
+var geometry, material, mesh;
+var rover_s1, rover_s2, rover_s3, rover_s4;
+
+init();
+
+//update the rovers pose
+rotate_strut(rover_s1, Math.PI/4);
+setInterval(function(){update_pose(0,0,Math.PI*Date.now()/40000);}, 40);
+
+function init() {
+  //cam position
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+    camera.position.z = 100;
+  
+    //build scene with axes
+    scene = new THREE.Scene();
+    axes = buildAxes(1000);
+    scene.add(axes);
+    
+    //light
+    var ambient = new THREE.AmbientLight( 0x777777);
+  scene.add( ambient );
+  spotLight = new THREE.SpotLight( 0xffffff, 0.5);
+  spotLight.shadowCameraNear  = 0.01;   
+  spotLight.castShadow    = true;
+  spotLight.shadowDarkness  = 0.2;
+  scene.add( spotLight ); 
+    
+    //ground
+    var geometry  = new THREE.CubeGeometry( 1000, 2, 1000);
+  var material  = new THREE.MeshPhongMaterial({
+    ambient   : 0xffffff,
+    color   : 0x4679bd,
+    shininess : 0, 
+    specular  : 0x888888,
+    shading   : THREE.SmoothShading
+    });
+    
+    var ground    = new THREE.Mesh( geometry, material );
+  ground.scale.multiplyScalar(3);
+  ground.position.set(0, -50, 0);
+  ground.castShadow = false;
+  ground.receiveShadow = true;
+  scene.add( ground );
+    
+    //rover object
+    var rover = new THREE.Object3D();
+    
+    //rover body
+    geometry = new THREE.BoxGeometry(30, 15, 30);
+    material = new THREE.MeshPhongMaterial({
+        ambient   : 0x444444,
+    color   : 0xffc446,
+    shininess : 300, 
+    specular  : 0x888888,
+    shading   : THREE.SmoothShading
+    });
+    rover_body = new THREE.Mesh(geometry, material);
+    rover_body.castShadow = true;
+    
+    //init rover struts and wheels
+    rover_s1 = new_rover_strut(0,0,0);
+    rover_s2 = new_rover_strut(0,0,0);
+    rover_s3 = new_rover_strut(0,0,0);
+    rover_s4 = new_rover_strut(0,0,0);
+    rover_s3.rotation.y = Math.PI;
+    rover_s4.rotation.y = Math.PI;
+    
+    //rotate to default
+    rotate_strut(rover_s1, Math.PI/4);
+    rotate_strut(rover_s2, -Math.PI/4);
+    rotate_strut(rover_s3, Math.PI/4);
+    rotate_strut(rover_s4, -Math.PI/4);
+    
+    //connect everything together
+    rover_body.add(rover_s1);
+    rover_body.add(rover_s2);
+    rover_body.add(rover_s3);
+    rover_body.add(rover_s4);
+    rover.add(rover_body);
+ 
+    
+    //update strut
+    scene.add(rover);
+
+    //setup renderer
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMapEnabled = true;
+    renderer.shadowMapType = THREE.PCFSoftShadowMap;
+    
+    renderer.setSize(document.getElementById("rover_3d").offsetWidth, document.getElementById("rover_3d").offsetHeight);
+    document.getElementById('rover_3d').appendChild(renderer.domElement);
+
+}
+
+function new_rover_strut(posx,posy,posz){
+  //strut
+    var rover_s_holder = new THREE.Object3D();
+
+    var s_geometry = new THREE.BoxGeometry(3, 25, 2);
+    var s_material = new THREE.MeshPhongMaterial({
+        ambient   : 0x444444,
+    color   : 0xf4f4f4,
+    shininess : 300, 
+    specular  : 0x888888,
+    shading   : THREE.SmoothShading
+    });
+    var rover_s = new THREE.Mesh(s_geometry, s_material);
+    rover_s.castShadow = true;
+    rover_s.position.set(0,-12,16);
+    rover_s_holder.position.set(posx,posy,posz);
+    
+    //wheel
+    var w_geometry = new THREE.CylinderGeometry( 7, 7, 5, 32);
+    var w_material = new THREE.MeshPhongMaterial( {color: 0xffc446} );
+    var rover_w = new THREE.Mesh(w_geometry, w_material);
+    rover_w.castShadow = true;
+  rover_w.rotation.x = Math.PI/2;
+    rover_w.position.set(0,-10,4);
+    
+    rover_s.add(rover_w);
+    rover_s_holder.add(rover_s);
+    
+    return rover_s_holder;
+}
+
+function rotate_strut(strut, angle){
+    strut.rotation.z = angle; 
+}
+
+function update_spotlight(){
+    var angle =  -7*Math.PI;
+    spotLight.position.x = Math.cos(angle*-0.1)*200;
+    spotLight.position.y = 200+Math.sin(angle*0.5)*60;
+    spotLight.position.z = Math.sin(angle*-0.1)*200;    
+}
+
+function update_pose(posx,posy,posz) {
+  update_spotlight();
+    
+    rover_body.rotation.x = posx;
+    rover_body.rotation.z = posy;
+    rover_body.rotation.y = posz;
+    
+  renderer.render(scene, camera);
+}
+
+function buildAxes( length ) {
+        var axes = new THREE.Object3D();
+
+        axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( length, 0, 0 ), 0xFF0000, false ) ); // +X
+        axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( -length, 0, 0 ), 0xFF0000, true) ); // -X
+        axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, length, 0 ), 0x00FF00, false ) ); // +Y
+        axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, -length, 0 ), 0x00FF00, true ) ); // -Y
+        axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, length ), 0x0000FF, false ) ); // +Z
+        axes.add( buildAxis( new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, -length ), 0x0000FF, true ) ); // -Z
+
+        return axes;
+
+}
+
+function buildAxis( src, dst, colorHex, dashed ) {
+        var geom = new THREE.Geometry(),
+            mat;
+
+        if(dashed) {
+                mat = new THREE.LineDashedMaterial({ linewidth: 3, color: colorHex, dashSize: 3, gapSize: 3 });
+        } else {
+                mat = new THREE.LineBasicMaterial({ linewidth: 3, color: colorHex });
+        }
+
+        geom.vertices.push( src.clone() );
+        geom.vertices.push( dst.clone() );
+        geom.computeLineDistances(); // This one is SUPER important, otherwise dashed lines will appear as simple plain lines
+
+        var axis = new THREE.Line( geom, mat, THREE.LinePieces );
+
+        return axis;
+
+}
+}//]]> 
+
+</script>
+
+      <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+  </body>
+</html>
