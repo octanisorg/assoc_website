@@ -211,8 +211,8 @@
 
 
         // returns the amount of energy to be charged into the battery.
-        function charge_battery_until_full(energy_charge, sunpower){
-            var battery_charging_current = sunpower * 1000 * solar_cell_surface * solar_cell_efficiency / battery_voltage;
+        function charge_battery_until_full(energy_charge, sunpower, energy_consumed_at_this_step){
+            var battery_charging_current = Math.max(sunpower-energy_consumed_at_this_step,0) * 1000 * solar_cell_surface * solar_cell_efficiency / battery_voltage;
 
             //limit charge current
             battery_charging_current = Math.min(battery_charging_current, battery_charging_current_max);
@@ -331,9 +331,10 @@
             while (time < time_limit){
                 //$("#simresults").append("<hr/><i>" + time + "h: </i><br/>");
 
-                energy_produced = charge_battery_until_full(battery_energy_charge, daily_sunpower_data[i]);
                 energy_consumed = consume_battery_energy(battery_energy_charge, time, time_step);
               
+                energy_produced = charge_battery_until_full(battery_energy_charge, daily_sunpower_data[i], energy_consumed);
+               
                 battery_energy_charge += (energy_produced);
                 battery_energy_charge -= (energy_consumed);
                
