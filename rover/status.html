@@ -98,13 +98,14 @@
         last_lrrlon = rover_statuses[lasti].lrrlon;
 
 
-        $("#lorawan_last_metadata").html("#"+lasti+") Time: <b>"+last_time+"</b>, " + "RSSI: "+last_lrrrssi+", SNR: " +last_lrrsnr+", SPF: " + last_spfact+ ", SB: " +last_subband + ", LC: " +  last_channel + ", GWlat: "+last_lrrlat + ", GWlon: "+last_lrrlon);
-
-
         //decode hex string payload
-        var last_payload = rover_statuses[lasti].payload;
+        var last_payload = rover_statuses[lasti].payload_hex;
 
+        //download weather forecast based on current position
+        loadWeatherData('weather', last_lrrlat, last_lrrlon);
         
+
+        $("#lorawan_last_metadata").html("#"+lasti+") Time: <b>"+last_time+"</b>, " + "RSSI: "+last_lrrrssi+", SNR: " +last_lrrsnr+", SPF: " + last_spfact+ ", SB: " +last_subband + ", LC: " +  last_channel + ", GWlat: "+last_lrrlat + ", GWlon: "+last_lrrlon + ", Payload: "+hex2a(last_payload));
 
 
         loadMaps();
@@ -131,7 +132,12 @@
           var chartCommsNav = new google.visualization.LineChart($('#chartCommsNav').get(0));
 
           chartCommsNav.draw(dataCommsNav, {
-            title: 'Comms&Nav Metadata'
+            title: 'Comms&Nav Metadata', 
+            explorer: {
+                maxZoomOut:2,
+                keepInBounds: true,
+                actions: ["dragToZoom", "rightClickToReset"]
+            }
           });
           
 
@@ -156,7 +162,22 @@
           console.log("charts loaded");
 
       }
-     
+      
+
+      function loadWeatherData(api_method, lat, lon) {
+
+          $.ajax({
+            url: 'http://api.openweathermap.org/data/2.5/'+api_method+'?lat='+lat+'&lon='+lon+'&appid=48260edf80ab3835128b61113e5e6574',
+            dataType: 'jsonp',
+            jsonp: 'callback'
+          }).done(function(data){
+
+            console.log(data);
+
+
+          });
+
+      }
 
 
       function loadMaps(){
@@ -164,12 +185,18 @@
         var map = L.map('map').setView([last_lrrlat, last_lrrlon], 13);
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          attribution: '&copy; <a href="http://osm.org/copyright">OSM</a>'
         }).addTo(map);
 
-        L.marker([last_lrrlat, last_lrrlon+0.04]).addTo(map)
+
+        var roverCurrentMarker = L.boatMarker([last_lrrlat, last_lrrlon+0.04], {
+            color: "#f1c40f"
+        }).addTo(map)
           .bindPopup('Rover Position')
           .openPopup();
+
+        //set heading via compass data incl. wind data from forecast
+        roverCurrentMarker.setHeadingWind(60, 4.5, 120);
 
 
         L.marker([last_lrrlat, last_lrrlon]).addTo(map)
@@ -382,5 +409,6 @@ function buildAxis( src, dst, colorHex, dashed ) {
 </script>
 
       <script src="//cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+      <script type="text/javascript" src="/js/leaflet.boatmarker.min.js"></script>
   </body>
 </html>
