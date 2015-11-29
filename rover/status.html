@@ -19,13 +19,17 @@
     body {
       font-family: 'Catamaran', sans-serif;
     }
-    </style>
+
+     </style>
   </head>
   <body style="padding: 30px;">
 
     <div style="margin-bottom:-60px">
       <img src="http://octanis.org/img/patch.png" width="80" style=""/>
       <h1 style="position: relative; top: -95px; left: 100px;">Octanis 1 Dashboard</h1>
+    </div>
+    
+    <div id="weather_now">
     </div>
 
     <div id="payload_data">
@@ -48,6 +52,7 @@
       <div id="chartWeatherOut" style="width: 100%;"></div>
       <div id="chartWeatherIn" style="width: 100%;"></div>
       <div id="chartPose" style="width: 100%;"></div>
+      <div id="chartWeatherForecast" style="width: 100%;"></div>
 
     </div>
 
@@ -63,6 +68,9 @@
       var last_pitch = 0;
       var last_roll = 0;
       var last_yaw = 0;
+      var last_fix = 0;
+      var last_systime = 0;
+      var last_imustate = 0;
 
       //lorawan specific
       var last_lrrrssi = 0;
@@ -100,17 +108,115 @@
 
         //decode hex string payload
         var last_payload = rover_statuses[lasti].payload_hex;
+        var last_payload_arr = hex2a(last_payload).split(",");
 
-        //download weather forecast based on current position
-        loadWeatherData('weather', last_lrrlat, last_lrrlon);
-        
+        last_lat = last_payload_arr[0]; 
+        last_lon = last_payload_arr[1];
+        last_fix = last_payload_arr[2] 
+        last_systime = last_payload_arr[3] 
+        last_imustate = last_payload_arr[4] 
+
+        console.log(last_payload_arr);
+
 
         $("#lorawan_last_metadata").html("#"+lasti+") Time: <b>"+last_time+"</b>, " + "RSSI: "+last_lrrrssi+", SNR: " +last_lrrsnr+", SPF: " + last_spfact+ ", SB: " +last_subband + ", LC: " +  last_channel + ", GWlat: "+last_lrrlat + ", GWlon: "+last_lrrlon + ", Payload: "+hex2a(last_payload));
 
 
-        loadMaps();
         loadCharts();
+
       });
+  
+        
+
+      function displayCurrentWeather(){
+        $.when(loadWeatherData('weather', last_lrrlat, last_lrrlon)).then(function(data){
+
+          console.log(data);
+          $('#weather_now').append("Current city: <b>"+data.name+", "+data.weather[0].description + "</b>, ");
+          $('#weather_now').append(data.clouds.all + "% cloudy, ");
+          $('#weather_now').append(data.wind.speed + "m/s wind, ");
+          $('#weather_now').append((data.main.temp-273.15,2).toFixed(2) + "°C, ");
+          $('#weather_now').append(data.main.pressure + "hPa, ");
+          $('#weather_now').append(data.main.humidity + "% humid");
+
+          //load maps and set wind and rover info
+          loadMaps(0, data.wind.speed, data.wind.deg);
+
+        });
+
+      }
+
+
+      function drawWeatherForecastChart(){
+
+        displayCurrentWeather();
+
+        //download weather forecast based on current position
+        $.when(loadWeatherData('forecast', last_lrrlat, last_lrrlon)).then(function(data){
+
+          var rain = 0;
+          var snow = 0;
+          var city = data.city.name;
+
+
+          var dataWeatherForecast = new google.visualization.DataTable();
+
+          dataWeatherForecast.addColumn('datetime', 'Time');
+          dataWeatherForecast.addColumn('number', 'Wind m/s');
+          dataWeatherForecast.addColumn('number', 'Wind direction C°');
+          dataWeatherForecast.addColumn('number', 'Cloudiness %');
+          dataWeatherForecast.addColumn('number', 'Temp');
+          dataWeatherForecast.addColumn('number', 'Pressure (kPa)');
+          dataWeatherForecast.addColumn('number', 'Humidity');
+          dataWeatherForecast.addColumn('number', 'Rain (3h)');
+          dataWeatherForecast.addColumn('number', 'Snow (3h)');
+
+          $.each(data.list, function (i, row) {
+              
+            if(row.rain){
+              rain = row.rain['3h'];
+            }
+
+            if(row.snow){
+              snow = row.snow['3h'];
+            }
+
+
+            dataWeatherForecast.addRow([
+              (new Date(row.dt*1000)),
+              parseFloat(row.wind.speed),
+              parseFloat(row.wind.deg/10),
+              parseFloat(row.clouds.all),
+              parseFloat(row.main.temp-273.15),
+              parseFloat(row.main.pressure/10),
+              parseFloat(row.main.humidity),
+              parseFloat(rain),
+              parseFloat(snow)
+            ]);
+
+          });
+
+
+
+          var chartWeatherForecast = new google.visualization.LineChart($('#chartWeatherForecast').get(0));
+
+          chartWeatherForecast.draw(dataWeatherForecast, {
+            title: 'Weather Forecast for ' + city, 
+            explorer: {
+                maxZoomOut:2,
+                keepInBounds: true,
+                actions: ["dragToZoom", "rightClickToReset"]
+            }
+          });
+
+
+
+        });
+
+
+        
+
+      }
 
       // onload callback
       function drawCommsNavChart() {
@@ -145,6 +251,7 @@
 
       function drawCharts(){
         drawCommsNavChart();
+        drawWeatherForecastChart();
 
         console.log("charts drawn");
       }
@@ -162,25 +269,20 @@
           console.log("charts loaded");
 
       }
-      
+    
 
       function loadWeatherData(api_method, lat, lon) {
 
-          $.ajax({
+          return $.ajax({
             url: 'http://api.openweathermap.org/data/2.5/'+api_method+'?lat='+lat+'&lon='+lon+'&appid=48260edf80ab3835128b61113e5e6574',
             dataType: 'jsonp',
             jsonp: 'callback'
-          }).done(function(data){
-
-            console.log(data);
-
-
           });
 
       }
 
 
-      function loadMaps(){
+      function loadMaps(heading_rover, wind_speed_ms, heading_wind){
         //draw map
         var map = L.map('map').setView([last_lrrlat, last_lrrlon], 13);
 
@@ -195,9 +297,9 @@
           .bindPopup('Rover Position')
           .openPopup();
 
-        //set heading via compass data incl. wind data from forecast
-        roverCurrentMarker.setHeadingWind(60, 4.5, 120);
-
+        //set heading via compass data incl. wind data from  forecast
+        roverCurrentMarker.setHeadingWind(heading_rover, wind_speed_ms*1.94384, heading_wind);
+ 
 
         L.marker([last_lrrlat, last_lrrlon]).addTo(map)
           .bindPopup('LoRa GW')
