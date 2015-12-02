@@ -1,5 +1,16 @@
 ---
 published: false
+layout: post
+author: 
+  display_name: Sam
+  login: sam
+  email: "sam@bitmorse.com"
+  url: ""
+author_login: sam
+author_email: "sam@bitmorse.com"
+bgimage: morteratsch_headline.jpg
+categories: 
+  - Rover
 ---
 
 The past few weeks were packed with many challenges. An intense selection process for the Field Scientist position, preparation of the mission protocol and also continuous development to get the rover mission-ready.
