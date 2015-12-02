@@ -14,6 +14,7 @@ categories:
 ---
 
 
+
 The past few weeks were packed with many challenges. An intense selection process for the Field Scientist position, preparation of the mission protocol and also continuous development to get the rover mission-ready.
 
 As you might already know, our supporting Antarctic Base INAE had previously reassured us that a logistical expedition to Greenwhich Island, Antarctica would take place and our mission would be carried within it in February 2016.
@@ -22,4 +23,4 @@ Now we have received news that, unfortunately, according to INAE, they were not 
 
 Despite this news, we are still planning to execute an alternative mission in February/March 2016. The destination we are currently aiming for is Svalbard, Norway, due to its similarly harsh environment. Interestingly enough it is more north than we would have gone south (78° vs -62° latitude)!
 
-We'll update this page as soon as we can say more on the alternative mission.
+We'll update this page as soon as we have more details on the alternative mission.
