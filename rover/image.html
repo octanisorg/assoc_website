@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+    <!-- EXTERNAL LIBS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/numeric-1.2.6.min.js"></script>
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/mathjs/2.4.2/math.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Catamaran:400,500,300,600' rel='stylesheet' type='text/css'>
+    
+    <title>Octanis 1 Rover IMAGEPROC</title>
+
+    <style type="text/css">
+    body {
+      font-family: 'Catamaran', sans-serif;
+    }
+
+     </style>
+
+
+
+
+
+    <script type="text/javascript">
+
+      console.log('init');
+
+      // Check for the various File API support.
+      if (window.File && window.FileReader && window.FileList && window.Blob) {
+        // Great success! All the File APIs are supported.
+      } else {
+        alert('The File APIs are not fully supported in this browser.');
+      }
+
+      $(document).ready(function() {
+
+        var canvas = document.getElementById('imagecanvas');
+       
+        var input_image_matrix = [];
+        var image_data = [];
+
+        //rank for "low rank approximation"
+        var rank = 400;
+
+        $('#inputs').on('change', '#imageupload', function(){ 
+          var ctx = canvas.getContext('2d');
+          var img = new Image;
+
+          img.onload = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 20,20);
+            console.log('the image is drawn');
+
+
+            process_image();
+          }
+
+          img.src = URL.createObjectURL(document.getElementById('imageupload').files[0]);
+
+
+          function process_image(){
+
+             image_data = ctx.getImageData(0, 0, canvas.width, canvas.height);  //contains all the colors, but it's a one-dimensional array (Javascript does not have multidimensional arrays). There are 4 bytes for each pixel (r, g, b and alpha) so to access the array you need to compute as index (y*width+x)*4+c where c is the component (red=0, green=1, blue=2, alpha=3).
+
+
+              //store grayscale image into matrix suitable for SVD
+              for(var y = 0; y < image_data.height; y++){
+
+                  var image_row = [];
+
+                   for(var x = 0; x < image_data.width; x++){
+                        var i = (y * 4) * image_data.width + x * 4;
+                        var avg = (image_data.data[i] + image_data.data[i + 1] + image_data.data[i + 2]) / 3;
+                        image_row[x] = avg;
+
+                   }
+
+                  input_image_matrix[y] = image_row;
+
+              }
+              
+              var image_SVD = numeric.svd(input_image_matrix);
+              
+              console.log(image_SVD);
+
+              /* 
+              Low-rank matrix approximation
+              
+              Some practical applications need to solve the problem of approximating a matrix M with another matrix \tilde{\mathbf{M}}, said truncated, which has a specific rank r. In the case that the approximation is based on minimizing the Frobenius norm of the difference between M and \tilde{\mathbf{M}} under the constraint that \operatorname{rank}\left(\tilde{\mathbf{M}}\right) = r it turns out that the solution is given by the SVD of M, namely
+
+                  \tilde{\mathbf{M}} = \mathbf{U} \tilde{\boldsymbol{\Sigma}} \mathbf{V}^*
+
+              where \tilde{\boldsymbol{\Sigma}} is the same matrix as Σ except that it contains only the r largest singular values (the other singular values are replaced by zero). This is known as the Eckart–Young theorem, as it was proved by those two authors in 1936 (although it was later found to have been known to earlier authors; see Stewart 1993).
+              */
+
+              //keep the first #rank singular values and fill the rest with 0
+              //convert S to a 400x400 matrix
+              var S_matrix = numeric.rep([rank, rank],0);
+
+              //fill the diagonal of S with singular values up to rank
+              for(var y = 0; y < rank; y++){
+                S_matrix[y][y] = image_SVD.S[y];
+              }
+
+
+
+              //M' = U dot Sreduced dot V
+              var Mprime = math.multiply(math.multiply(math.matrix(image_SVD.U).resize([400,rank]), S_matrix), math.matrix(image_SVD.V).resize([rank],400));
+              var Mprime_list = [];
+
+              //convert Mprime to list
+              var i=0;
+              for(var y=0; y<400;y++){
+                for(var x=0; x<400; x++){
+                  Mprime_list[i] = Mprime._data[y][x];
+                  i++;
+                }
+              }
+
+              console.log(Mprime_list); 
+
+
+
+              //M' is our new image
+              console.log("low-rank approximation of image matrix computed");
+
+              var processed_image_data = ctx.createImageData(rank,rank);
+              var j=0;
+              for (var i=0;i<processed_image_data.data.length;i+=4){
+
+                processed_image_data.data[i+0]=Mprime_list[j];
+                processed_image_data.data[i+1]=Mprime_list[j];
+                processed_image_data.data[i+2]=Mprime_list[j];
+                processed_image_data.data[i+3]=Mprime_list[j];
+
+                j++;
+              }
+              console.log(j);
+
+              //put back onto canvas
+              console.log(image_data.width + 'w x '+image_data.height+'h');
+              ctx.putImageData(processed_image_data, 0, 0, 0, 0, image_data.width, image_data.height);
+
+
+          }
+
+
+        });
+
+
+
+
+
+
+
+      });
+     
+
+
+       
+
+
+
+    </script>
+  </head>
+  <body style="padding: 30px;">
+
+    <div id="inputs">
+      <input type="file" id="imageupload" />
+      <hr>
+    </div>
+
+    <div id="outputs">
+      <canvas width="400" height="400" id="imagecanvas"/>
+      <hr>
+    </div>
+
+
+
+  </body>
+</html>
