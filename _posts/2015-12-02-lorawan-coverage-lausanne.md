@@ -24,7 +24,7 @@ LoRa operates on the open and license-free 868 MHz range. It is ok to operate ga
 <img src="/img/loramap.jpg" />
 
 
-The best part is that the gateway uploads all received data directly to [TheThingsNetwork](http://thethingsnetwork.org/wiki/GettingStarted) and [Semtech](http://iot.semtech.com/gateways/BE-EF-BA-E9-58-45-C5-2A/) servers. The Things Network is a global, crowdsourced, open, free and decentralized internet of things network and they have just successfully completed their Kickstarter crowdfunding campaign. Their goal is to produce affordable hardware, but also to provide the infrastructure necessary to host the data received by nodes and gateways. While their network is still in it's early days and most software in infancy, the API's are already useable. Currently, any node's data is accessible through an easy to use REST API.
+The best part is that the gateway uploads all received data directly to [TheThingsNetwork](http://thethingsnetwork.org/wiki/GettingStarted) and [Semtech](http://iot.semtech.com/gateways/B8-27-EB-FF-FF-1E-40-DC/) servers. The Things Network is a global, crowdsourced, open, free and decentralized internet of things network and they have just successfully completed their Kickstarter crowdfunding campaign. Their goal is to produce affordable hardware, but also to provide the infrastructure necessary to host the data received by nodes and gateways. While their network is still in it's early days and most software in infancy, the API's are already useable. Currently, any node's data is accessible through an easy to use REST API.
 
 
 If you want to use our LoRaWAN gateway in Lausanne, here's a short guide based on the [Microchip RN2483 node](http://www.microchip.com/wwwproducts/Devices.aspx?product=RN2483): 
@@ -51,7 +51,7 @@ If you've configured your end-node as above, then your device will work with all
 ###Links###
 
    * [Rover Node](http://thethingsnetwork.org/api/v0/nodes/08050046/)
-   * [Gateway Information](http://iot.semtech.com/gateways/BE-EF-BA-E9-58-45-C5-2A/)
+   * [Gateway Information](http://iot.semtech.com/gateways/B8-27-EB-FF-FF-1E-40-DC/)
    * [LoRa FAQ](http://www.semtech.com/wireless-rf/lora/LoRa-FAQs.pdf)
    * [TheThingsNetwork Manifesto](https://github.com/TheThingsNetwork/Manifest)
    * [TheThingsNetwork Wiki](http://thethingsnetwork.org/wiki/)
