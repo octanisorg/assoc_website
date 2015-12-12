@@ -35,8 +35,9 @@
     <div id="payload_data">
       Last packet received from 
       <ul>
-        <li>LoRaWAN: <br/><span id="lorawan_last_metadata">-</span></li>
+        <li>LoRaWAN Swisscom: <br/><span id="lorawan_last_metadata">-</span></li>
         <li>Iridium: <br/><span id="iridium_last_metadata">-</span></li>
+        <li>LoRaWAN Gateway TTN Lausanne: <br/><span id="lorawanttn_last_metadata">-</li>
       </ul> 
     </div>
 
@@ -83,6 +84,18 @@
 
       //storage for data from json api
       var rover_statuses = [];
+
+      //TTN
+      $.ajax({
+        url: 'https://crossorigin.me/http://thethingsnetwork.org/api/v0/gateways/B827EBFFFF1E40DC/?format=json',
+        dataType: 'json'
+      }).done(function(data){
+        console.log(data[0].time);
+
+        $("#lorawanttn_last_metadata").html("Time: <b>"+data[0].time+"</b>, RX: "+data[0].rxcount + ", RXok: "+data[0].rxok); 
+
+      });
+
 
 
       // JSONP request
