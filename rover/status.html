@@ -88,7 +88,8 @@
       //TTN
       $.ajax({
         url: 'https://crossorigin.me/http://thethingsnetwork.org/api/v0/gateways/B827EBFFFF1E40DC/?format=json',
-        dataType: 'json'
+        dataType: 'json',
+        cache: false
       }).done(function(data){
         console.log(data[0].time);
 
@@ -102,7 +103,8 @@
       $.ajax({
         url: 'http://basestation.octanis.org/lorawan_packets/AF7A46ED73754BB7C4C7F54F9B927E694BEC4340',
         dataType: 'jsonp',
-        jsonp: 'callback'
+        jsonp: 'callback',
+        cache: false
       }).done(function(data){
 
         rover_statuses = data;
