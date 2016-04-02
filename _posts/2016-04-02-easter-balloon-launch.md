@@ -28,7 +28,7 @@ At the moment the team is busy with data analysis and compiling <a href="http://
 Octanis Association would like to thank <a href="http://carbagas.ch">Carbagas</a> and <a href="http://u-blox.com">u-blox</a> for 
 making this launch possible!
 
-<a href="http://wiki.octanis.org/octanis1_easterballoon">More details on the ballon launch on our wiki.</a>
+<a href="http://wiki.octanis.org/octanis1_easterballoon">More details on the balloon launch on our wiki.</a>
 
 
 
