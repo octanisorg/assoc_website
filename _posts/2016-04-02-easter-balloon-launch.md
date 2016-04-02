@@ -36,6 +36,6 @@ making this launch possible!
 <img src="/img/e1.png" /><br/>
 
 
-<b>Extract from the telemetry feed (<a href="http://octanis.org/ballon-live">more here</a>):</b>
+<b>Extract from the telemetry feed (<a href="http://octanis.org/balloon-live">more here</a>):</b>
 <img src="/img/e4.png" /><br/>
 <img src="/img/e5.png" /><br/>
