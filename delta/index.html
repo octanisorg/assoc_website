@@ -1,0 +1,138 @@
+---
+layout: default
+title: Delta Kit
+teaser: 'Remotely monitoring practically anything you can imagine has never been that easy. The Octanis Delta Kit provides you with environmental sensors, inertial measurement unit, GPS receiver, bluetooth and LoRa connectivity - all managed by an ultra-low power MSP432 microprocessor and powered by just two AAA batteries. And it is entirely open-source, customizable and extendable!'
+cta: '<a class="btn btn--large btn--default cta" href="mailto:info@octanis.org?subject=Delta Kit">I want one!</a><br />'
+
+---
+						
+<div id="pagebg">
+  <img data-stellar-ratio="2" src="{{ site.baseurl }}/img/header2.jpg" alt="">
+</div>
+
+<div class="grid padded bg-gradient">
+	<div class="grid__item sm-w-1/1">
+
+	</div>
+</div>
+
+
+<div class="grid padded bg-darker">
+
+	<div class="grid__item sm-w-1/1 pdg">
+		<h1>About the Delta Kit</h1>
+
+		<p>
+			Over the past few months, we have brought our main control board of the rover to perfection. Now we want to go beyond this application and let everybody use it for their own purposes. Be it your bycicle tracking system or the monitoring of the climate on your wineyard - the possibilities are endless. You can even extend the sensing and communications capabilities of the Delta Kit by adding your specific sensors and radio modules.
+		</p>
+		<p>
+			Becase we know that getting into all the details of the software code, we designed two usage scenarios: For the users that want to get started immediately, there is a set of basic commands that can be sent via the bluetooth interface. You could for example set a threshold for the humidity measurement in your wine cellar and send an alert message if it is too high. Find all the currently implemented commands on our <a href="http://wiki.octanis.org/doku.php?id=octanis1_delta&#bluetooth_commands_for_the_octanis_delta_kit">Wiki</a>
+		</p>
+		<p>
+			For the more experienced programmer, you may download our source code from Github and adapt it fully to your purposes. You will need a JTAG programmer (for example from an MSP432 launchpad) to flash the code onto the microcontroller of the Delta Kit. See <a href="http://wiki.octanis.org/doku.php?id=octanis1_delta&#getting_started_with_programming_octanis_delta_kit_using_ccs_on_any_os">here</a> how to set everything up to get you started.
+		</p>
+	</div>
+
+
+	
+	<div class="grid__item sm-w-1/2 pdg">
+		<h1 class="subtitled">All in a box.</h1>
+		<h3 class="subtitle">Sensors, Controllers and Long Range Communications on one board.</h3>
+		<p>
+			Specialised devices on one tiny board form the rovers main computer. This little powerhouse can now also be used for your dedicated connected sensing application. Designed to consume very little power, this board can be running standalone only on two AAA batteries. Move your mouse over the picture to get more information about the available sensors and modules (some are hidden on the back).
+		</p>
+	</div>
+
+	<div class="grid__item sm-w-1/2 text-center pdg pdgl++ pdgr++">
+
+
+		<div class="callout-block">
+			<img src="{{ site.baseurl }}/img/delta_pcb.png" class="img-block">
+
+
+			<div class="callout-point" style="top: 1%; left: 35%;">
+				<div class="callout-bubble">15km Long Range Wireless (LoRaWAN module on back)</div>
+			</div>
+
+			<div class="callout-point" style="bottom: 5%; left: 70%;">
+				<div class="callout-bubble">Bluetooth connectivity (BLE module on back)</div>
+			</div>
+
+			<div class="callout-point" style="bottom: 5%; left: 47%;">
+				<div class="callout-bubble">GPS reception (u-blox module on back)</div>
+			</div>
+
+			<div class="callout-point" style="top: 25%; left: 37%;">
+				<div class="callout-bubble">Inertial Measurement Unit (Accelerometer, Gyro, Compass)</div>
+			</div>
+
+			<div class="callout-point" style="bottom: 22%; left: 66%;">
+				<div class="callout-bubble">Environmental Sensor (Temperature, Pressure, Humidity)</div>
+			</div>
+
+			<div class="callout-point" style="bottom: 16%; left: 37%;">
+				<div class="callout-bubble">3.3V DC-DC converter</div>
+			</div>
+
+			<div class="callout-point" style="bottom: 50%; left: 10%;">
+				<div class="callout-bubble">All powered by 2 AAA batteries</div>
+			</div>
+
+<!-- 			<div class="callout-point" style="top: 3%; right: 19%;">
+				<div class="callout-bubble">Flash Storage for Sensor Data</div>
+			</div> -->
+
+
+<!-- 				<div class="callout-point" style="bottom: 10%; left: 35%;">
+				<div class="callout-bubble">H-Bridge Array for Motor Control</div>
+			</div> -->
+
+			<div class="callout-point" style="top: 10%; left: 60%;">
+				<div class="callout-bubble">60x GPIO for Peripherals</div>
+			</div>
+
+
+<!-- 				<div class="callout-point" style="bottom: 23%; right: 12%;">
+				<div class="callout-bubble">Current Sense Array for Motor Control</div>
+			</div> -->
+
+			<div class="callout-point" style="top: 42%; left: 65%;">
+				<div class="callout-bubble">
+					TI MSP432, ARM Cortex M4F Microcontroller running TI-RTOS
+				</div>
+			</div>
+		</div>
+
+		<div class="callout-block">
+			<img src="{{ site.baseurl }}/img/delta_box.png" class="img-block">
+
+			<div class="callout-point" style="top: 1%; left: 25%;">
+				<div class="callout-bubble">On/Off switch</div>
+			</div>
+		</div>
+
+
+	</div>		
+
+	<div class="grid__item sm-w-1/3 pdg text-center">
+		<h2>Bluetooth connectivity</h2>
+
+		<img src="{{ site.baseurl }}/img/logo_bluetooth.jpg" class="img-block pdg++">
+		<p class="oc-value-text">To get you started as fast as possible for your indoor sensing project, just pair the Delta Kit with your phone via BLE.</p>
+	</div>
+
+	<div class="grid__item sm-w-1/3 pdg text-center">
+		<h2>GPS reception</h2>
+
+		<img src="{{ site.baseurl }}/img/ublox.png" class="img-block pdg++">
+		<p class="oc-value-text">The NEO-6 GPS module from u-blox gives you steady information on the position of your Delta Kit. Very useful for moving sensor platforms!</p>
+	</div>
+	<div class="grid__item sm-w-1/3 pdg text-center">
+		<h2>LoRa-ready</h2>
+		<img src="{{ site.baseurl }}/img/logo_lora.png" class="img-block pdg++">
+		<p class="oc-value-text">More and more open LoRa gateways are getting installed all over the world! Easily connect the Delta Kit to basestations from The Things Network, or set up your private access point.</p>
+	</div>
+
+</div>
+
+
