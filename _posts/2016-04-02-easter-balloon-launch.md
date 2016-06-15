@@ -23,12 +23,12 @@ the flight over LoRaWAN and GSM. LoRaWAN was used at high altitudes, where GSM w
 <b>Live image transmitted via GSM</b> <br/>
 <img src="/img/e2.png" /><br/>
 
-At the moment the team is busy with data analysis and compiling <a href="http://wiki.octanis.org/octanis1_easterballoon">results and lessons learned from this launch</a>. The payload will be retrieved in the following days revealing more findings. For now we know that the two almost identical payloads the flew were functional until landing and kept working on battery power for a long time after.
+At the moment the team is busy with data analysis and compiling <a href="http://wiki.octanis.org/orb/easter_balloon">results and lessons learned from this launch</a>. The payload will be retrieved in the following days revealing more findings. For now we know that the two almost identical payloads the flew were functional until landing and kept working on battery power for a long time after.
 
 Octanis Association would like to thank <a href="http://carbagas.ch">Carbagas</a> and <a href="http://u-blox.com">u-blox</a> for 
 making this launch possible!
 
-<a href="http://wiki.octanis.org/octanis1_easterballoon">More details on the balloon launch on our wiki.</a>
+<a href="http://wiki.octanis.org/orb/easter_balloon">More details on the balloon launch on our wiki.</a>
 
 
 
