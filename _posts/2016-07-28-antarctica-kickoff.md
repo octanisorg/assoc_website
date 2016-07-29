@@ -13,7 +13,7 @@ bgimage: grenoble_headline.jpg
 categories: 
   - Rover
 ---
-<img src="/img/battery_delivery.jpg" style="float:right; width:450px;margin:10px 0px 10px 30px" />
+<img src="/img/battery_delivery.jpg" style="float:right; max-width:100%; width:450px;margin:10px 10px 10px 30px" />
 
 Last Friday, part of the Octanis team went to the «Laboratoire de Glaciologie et Géophysique de l’Environnement (LGGE)», the Glaciology and Geophysics Lab in Grenoble, France. Kindly received by Laurent Arnaud, a research engineer specialized in the characterization of snow, we handed over the batteries and other bulky material needed for the upcoming rover mission in the end of this year. Laurent and his team will be in Antarctica for a several month-long research trip starting mid-November and they agreed to take along the Octanis Rover to conduct on-site experiments and tests with it. 
 
@@ -25,7 +25,7 @@ The glaciologists are very interested in measuring the roughness of the snow (so
 
 
 
-<img src="/img/grenoble.jpg" style="float:left; width:450px;margin:0px 30px 10px 0px" />
+<img src="/img/grenoble.jpg" style="float:left; max-width:100%;width:450px;margin:0px 30px 10px 0px" />
 
 The next trip to Grenoble in September with the final delivery will also serve as demonstration and introduction of the rover to the field operators. For this time, we used the remaining time of the day to visit the town center, charmingly located at the foot of the French Alps and embedded between the two rivers Isère and Drac.
 
