@@ -1,0 +1,49 @@
+---
+layout: post
+status: publish
+published: true
+title: ! 'Octanis 1: Progress Update: Lessons learned after Ume&aring;'
+author:
+  display_name: Sam
+  login: sam
+  email: sam@bitmorse.com
+  url: ''
+author_login: sam
+author_email: sam@bitmorse.com
+wordpress_id: 172
+wordpress_url: http://old.octanis.org/?p=172
+date: !binary |-
+  MjAxNS0wMi0yMiAxODowOTo0MCArMDEwMA==
+date_gmt: !binary |-
+  MjAxNS0wMi0yMiAxODowOTo0MCArMDEwMA==
+categories:
+- Rover
+tags: []
+comments: []
+---
+<p>As you might have seen, we've been working hard last month on our first driving prototype of Octanis 1. We went to Ume&aring;, Sweden to test-drive it on snowy and icy plains. We worked hard for this first test and got a lot of information out of it.</p>
+<h2>What we wanted to find out</h2>
+<p>
+<ul>
+<li>Do the wheels provide enough traction?</li>
+<li>Are the motors chosen well?</li>
+<li>Are the solar panels charing the battery (qualitative)?</li>
+<li>Can the rover stand up-right again after being pushed over?</li>
+<li>How much power do we consume?</li>
+<li>Does the thermal design hold (qualitative)?</li>
+<li>Does FreeRTOS (Real Time Operating System) run on the Main Board Computer?</li><br />
+</ul>
+</p>
+
+<h2>Lessons learned</h2>
+<p>
+We saw that our wheels are well designed for icy snow, but less for wet or fresh snow. The wheels are also a bit too small so that the slightest obstacle turns into a huge problem. Unfortunately we couldn't test the wheel strut mechanism, due to faulty motor controllers.</p>
+<p>The mechanical design is simple but sturdy, struts did not bend, wheels were solid. Gears were difficult to print, but easy to assemble. Strut motors were under-powered and the gear system was reversible, leaving struts unfixed. Wheels a too heavy.</p>
+<p>Nothing too funky to note on the qualitative thermal design. Next time, outside should be black, not gold.</p>
+<p>Solar panels provided enough power while driving that our battery could recharge fully during the test. Current consumption per wheel motor was aroung 0.1 A. Motors performed well but the motor gearboxes broke after 3 days. One broke after falling from 1m, another broke after a simple drive test and yet another broke for unknown reasons.</p>
+<p>We managed to get plain C code running fine on our Main Board computer but couldn't yet enjoy FreeRTOS. Porting FreeRTOS to the MSP430F5529 is not an easy task!</p>
+<p><strong>Next goal</strong><br />
+Knowing what to fix motivates us even more for our next goal: Driving on the <a href="http://en.wikipedia.org/wiki/Aletsch_Glacier"><em><strong>Aletsch Glacier</strong></em></a> - Date: 1. May 2015.<br />
+We'll be implementing many new features and advancing in our thermal, power and electronics design. Simulation will also play a bigger role for the next milestone! Follow us on <a href="https://twitter.com/octanisorg">Twitter</a> and <a href="http://www.facebook.com/octanis.epfl">Facebook</a> to stay up to date! Or come in on a Wednesday evening to <a href="http://hackuarium.strikingly.com/">Hackuarium</a> to visit us.</p>
+<p>And here what we need to get done for the Glacier test:<br />
+<img src="https://trello.com/b/tpiG2uiE.png" alt="" /></p>

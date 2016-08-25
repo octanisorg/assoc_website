@@ -1,0 +1,583 @@
+---
+---
+@charset "UTF-8";
+
+@import '../_sass/_kanbasu-overwrites';
+@import "../_sass/kanbasu";
+
+
+body {
+    font-size: 1.25em;
+    background: $alt-color-darker;
+    line-height: 1.8em;
+}
+
+footer {
+    position: relative;
+    line-height: 1.3rem;
+    z-index: 100;
+
+}
+
+p {
+    font-size: 1.5em;
+    font-family: $font-family-light;
+}
+
+h1 {
+    font-family: $font-family-bold;
+    font-size: 4em;
+}
+
+h1.subtitled {
+    font-family: $font-family-default;
+    font-size: 3.6em;
+}
+
+h3.subtitle {
+    margin-top:-1em;
+    padding-top:0;
+    padding-bottom:1em;
+    font-family: $font-family-default;
+    font-size: 2.2em;
+}
+
+
+
+.dimmed {
+  position: relative;
+}
+
+.dimmed:before {
+  content: " ";
+  z-index: 0;
+  display: block;
+  position: absolute;
+  height: 100%;
+  min-height: 80rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+
+}
+
+#pagebg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+  z-index: -100;
+}
+    
+#pagebg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
+}
+
+
+.oc-brand-indicator:after {
+    content: "";
+    display: block;
+    background: $brand-color;
+    height: $spacing-unit-tiny;
+    width: $spacing-unit-huge*2;
+    margin: $spacing-unit-small 0 $spacing-unit-huge 0;
+}
+
+.main-nav li:hover::after {
+    content: "";
+    display: block;
+    background: $brand-color;
+    height: $spacing-unit-tiny;
+    width: 100%;
+    margin: auto;
+}
+
+.padded{
+    padding: 3*$spacing-unit-huge;
+}
+
+
+.padded--body{
+   	padding: 0 3*$spacing-unit-huge 3*$spacing-unit-huge 3*$spacing-unit-huge;
+}
+
+
+
+.main-nav {
+	text-transform: uppercase;
+    font-family: $font-family-bold;
+	letter-spacing: 2px;
+    position: relative;
+    z-index: 100;
+}
+
+header .masterhead {
+	margin-top: 5*$spacing-unit-huge;
+}
+
+.masterhead, .grid {z-index: 100; position: relative;}
+
+
+.bg-gradient {
+    background: -moz-linear-gradient(top,  rgba(34,33,31,0) 0%, rgba(34,33,31,1) 69%, rgba(34,33,31,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(34,33,31,0)), color-stop(69%,rgba(34,33,31,1)), color-stop(100%,rgba(34,33,31,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(34,33,31,0) 0%,rgba(34,33,31,1) 69%,rgba(34,33,31,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(34,33,31,0) 0%,rgba(34,33,31,1) 69%,rgba(34,33,31,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(34,33,31,0) 0%,rgba(34,33,31,1) 69%,rgba(34,33,31,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(34,33,31,0) 0%,rgba(34,33,31,1) 69%,rgba(34,33,31,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0022211f', endColorstr='#22211f',GradientType=0 ); /* IE6-9 */
+
+}
+
+.bg-darker {
+	background: $alt-color-darker;
+}
+
+.bg-lighter {
+    background: $alt-color-lighter;
+    color:  $alt-color-darker;
+}
+
+.bg-lighter a{
+    color: black;
+}
+
+header {
+	height: 10.5em;
+}
+
+header.full {
+	height: 100vh;
+}
+
+a.cta{
+	border: 2px solid white;
+	text-transform: uppercase;
+    font-family: $font-family-bold;
+	letter-spacing: 2px;
+}
+
+a.cta:hover{
+	color: white;
+	border: 2px solid $brand-color;
+}
+
+.masterhead a.cta {
+	@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+		margin-top: $spacing-unit-large;
+	}
+
+	@media #{$mq-lg} {
+		margin-top: $spacing-unit-large;
+	}
+}
+
+
+
+.divider {
+	color: $alt-color-darker;
+}
+
+/* Join page */
+input.newsletter {
+    width: 10*$spacing-unit-huge;
+    display: inline;
+}
+
+
+/* Projects page */
+.projectcover {
+	background: none;
+	overflow: hidden;
+}
+
+.projectcover a{
+    text-decoration: none;
+}
+
+.projectteaser h2 a {
+	color: white;
+	text-decoration: none;
+}
+
+.projectteaser h2 {
+	font-weight: 600;
+	font-size: 2.4em;
+	margin: 0 0 100px 0;
+	padding: 0;
+	top: 0;
+	position: relative;
+	z-index: 4;
+}
+
+.projectteaser span {
+	font-size: 1.2em;
+	line-height: 1;
+	font-weight: 400;
+}
+
+.projectteaser {
+	top: 0;
+	padding: 20px;
+	min-height: 232px;
+}
+
+.balloon {
+	position: relative;
+    background: #000;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/balloon_cover.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+  	background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+
+
+
+.levillage {
+	position: relative;
+    background: #000;
+}
+
+.levillage::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/levillage_cover.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+  	background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+
+.rover {
+	position: relative;
+    background: #000;
+}
+
+.rover::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/rover_cover.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+  	background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.projectteaser:hover {
+	background: $brand-color;
+}
+
+
+.soon {display: none;}
+
+@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+    .soon {
+        display: block;
+    }
+}
+.projectteaser:hover > .soon {
+    display: block;
+    font-family: $font-family-bold;
+}
+
+/* News */
+
+.news {
+	background: url(http://placehold.it/600x300);
+	padding: 10*$spacing-unit-huge 0 0 0;
+	margin: 0 0 3*$spacing-unit-huge 0;
+}
+
+
+/* About */
+.img-subtitle {
+    margin: 0 0 0 0;
+    padding: $spacing-unit-tiny;
+    background: rgba(0,0,0,0.7);
+    border-bottom: #ffc600 3px solid;
+    position: relative;
+    height: 4.4em;
+    margin-top: -4.4em;
+    font-size: 1em;
+}
+
+.oc-value {
+    height: 15em;
+    width: 15em;
+    margin: auto;
+}
+
+.oc-value-text {
+    padding: $spacing-unit-tiny;
+    font-size: 1.4em;
+}
+
+/* Rover */
+.fullscreen-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.fullscreen-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+
+.box--logo {
+    height: 100vh;
+}
+.box--logo img {
+    width: 20em;
+    margin: auto;
+}
+
+.logo {
+    position: absolute;
+    z-index: 201;
+}
+
+.logo img {
+    margin-top: -7px;
+    width: 180px;
+}
+
+#navpull {
+    position: absolute;
+    z-index: 201;
+    top: $spacing-unit-large;
+    right: $spacing-unit-large;
+    display: none;
+    padding-top: 0.8*$spacing-unit-large;
+}
+
+#navpull img {
+    width: 38px;
+}
+
+
+.callout-bubble {
+    margin: -2em 0 0 3em;
+    position: relative;
+    display: none;
+    width:  10em;
+    padding: 0em 1em 1.2em 1em;
+    font-family: $font-family-bold;
+ 
+     color:  $alt-color-darker;
+    background-color: $alt-color-lighter;
+    
+    border-radius: 0.3em;
+    -webkit-border-radius: 0.3em;
+    -webkit-box-shadow: 0 0 3em #B2B2B2;
+    -moz-border-radius: 0.3em;
+    -moz-box-shadow: 0 0 3em #B2B2B2;
+
+    z-index: 300;
+
+ 
+
+}
+
+.callout-bubble::before {
+    background: $alt-color-lighter;
+    box-shadow: -2px 2px 2px 0 rgba( 178, 178, 178, .4 );
+    content: "";
+    display: block;
+    height: 1.3em;
+    left: -1.6em;
+    position: relative;
+    transform:             rotate( 45deg );
+        -moz-transform:    rotate( 45deg );
+        -ms-transform:     rotate( 45deg );
+        -o-transform:      rotate( 45deg );
+        -webkit-transform: rotate( 45deg );
+    width:  1.3em;
+    z-index: 250;
+    top: 1.25em;
+}
+
+.callout-block {
+    position: relative;
+    width: 100%;
+
+}
+
+.callout-point {
+    width:2em;
+    height:2em;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    border: 0.2em solid #E3A20B;
+    background: rgba( 34, 33, 31, .5 );
+    position: absolute;
+    box-shadow: 3px 3px 10px #000;
+    cursor: pointer;
+    opacity: 0;
+     -webkit-transition: opacity 0.5s; /* Safari */
+    transition: opacity 0.5s;
+}
+
+.callout-point:hover > .callout-bubble {
+     display: block;
+}
+
+.callout-point:hover {
+        background: rgba( 34, 33, 31, 0.8 );
+
+}
+
+.callout-block:hover > .callout-point {
+    opacity: 1;
+}
+
+
+
+
+/*Updates*/
+.post {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0 0 $spacing-unit-large 0;
+    margin: 0 0 5*$spacing-unit-large 0;
+}
+
+.firstpost {
+    padding: 0 0 $spacing-unit-large 0;
+    margin: 0 0 5*$spacing-unit-large 0;
+}
+
+.post a {
+    text-decoration: underline;
+}
+
+.post-metainfo{
+    font-size: 1em;
+}
+
+.right-footer {
+    text-align: right;
+}
+
+
+/* Responsive */
+@media #{$mq-md}, #{$mq-sm}, #{$mq-xs}{
+
+   
+    .padded--body{
+        padding: 0 $spacing-unit-huge $spacing-unit-huge $spacing-unit-huge;
+    }
+
+    .padded {
+        padding: $spacing-unit-huge;
+    }
+    
+    body, .grid__item {
+        font-size: 0.6rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+        line-height: 1.3em;
+    }
+
+
+
+}
+
+
+@media #{$mq-xs}{
+
+    .cta {
+        font-size: 1.5em;
+    }
+    
+    .right-footer {
+        text-align: left;
+    }
+
+
+    #navpull {
+        display: block;
+    }
+
+    ul.main-nav {
+        display: none;
+        position: absolute;
+        z-index: 200;
+        height: 100vh;
+        width: 100%;
+        left: 0;
+        top: 0;
+        padding: 5*$spacing-unit-huge 0 0 $spacing-unit-large;
+        margin: 0;
+        background: $brand-color;
+    }
+
+    ul.main-nav > li{
+        display: block;
+        width: 100%;
+        text-align: left;
+        color: black;
+        font-size: 1.5em;
+    }
+
+    ul.main-nav > li:hover::after{
+        display: none;
+    }
+}
+
+
+

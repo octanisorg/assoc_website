@@ -1,0 +1,15 @@
+# Site settings
+title: Octanis
+email: info@octanis.org
+description: "Octanis is an open incubator with the objective to distill its findings into pragmatic solutions and inventions, accessible to everyone."
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://octanisorg.github.io" # the base hostname & protocol for your site
+twitter_username: octanisorg
+github_username:  octanisorg
+
+
+# Build settings
+markdown: kramdown
+sass:
+    sass_dir: _sass
+    style: :nested
