@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+ 
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" dir="ltr">
+ 
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Energy Sim Sketch</title>
+
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/flot/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/xml2json.js"></script>
+
+</head>
+ 
+<body>
+
+
+    <strong>battery_energy_charge: </strong><input class="sim_parameter_input" id="battery_energy_charge" type="range" step="1" min='0' max='33.3' /><br/>
+
+    <strong>battery_charging_current_max: </strong><input class="sim_parameter_input" id="battery_charging_current_max" type="range" step="0.1" min='0' /><br/>
+    <strong>solar_power_produced_avg: </strong><input class="sim_parameter_input" id="solar_power_produced_avg" type="range" step="0.1" min='0.1' max='15' />    <br/>
+
+    <strong>earth_latitude: </strong><input class="sim_parameter_input" id="earth_latitude" type="text" value="62" />
+    <br/>
+    <strong>earth_day_of_year: </strong><input class="sim_parameter_input" id="earth_day_of_year" type="text" value="60" />
+
+    <br/>
+    <br/>
+
+
+    <br/>
+    
+    <pre id="siminfo"></pre>
+    <pre id="simresults"></pre>
+
+    <div id="chart" style="height: 500px; width: 90%"></div>
+    <br/>X: time<br/>
+
+    <script type="text/javascript">
+
+
+            //time
+            var time_step = 0.08; //h
+            var time = 0; //start at midnight
+            var time_limit = 24;
+            var n_datapoints = time_limit/time_step; //300
+
+            //time budgets
+            var time_drive = 2; //h
+            var time_comms = 3;
+
+
+            //yr.no weather API url
+            var weather_url = "http://​crossorigin.me/http://www.yr.no/place/Antarctica/Other/Greenwich_Island/forecast.xml";
+            var weather_data = false; 
+
+            //energy storage
+            var battery_voltage = 3.7; //V
+            var battery_cap = 9; //Ah
+            var battery_energy_cap =  battery_voltage * battery_cap; //Wh (3.7V * 9Ah)
+            var battery_charging_current_max = 0.5; //A
+            var battery_energy_charge = 0; //initial charge 0
+            var battery_percent_status_data = [];
+
+            //energy consumption
+            var energy_consumption_max_per_timestamp = 6 * 3.3 * time_step; //Wh (max current of EPS * bus voltage 3.3V)
+
+
+            //energy production
+            var solar_power_produced_avg = 5; //W
+            var solar_energy_produced_per_day_avg = solar_power_produced_avg*24; //Wh
+            
+            var energy_produced = 0;
+            var energy_consumed = 0;
+
+            var energy_production_data = [];
+            var energy_consumption_data = [];
+
+            var daily_irradiation_data = [];
+
+            //solar panels data
+            var solar_cell_surface = 0.3 * 0.3; //m^2
+            var solar_cell_efficiency = 0.15; // module efficiency
+            var solar_energy_max_per_timestep = solar_cell_surface * solar_cell_efficiency * 1000 * time_step; 
+                                                                    // Wh. Scaling factor for graph.
+                                                                    // (1000 W / m^2 is the maximum normal surface irradiance at sea level)
+
+            //distance traveled
+            var drive_time_total = 0;
+
+            //motors driving state
+            var motors_on = false;
+
+            //energy consumption
+            //HEATING IS NOT CONSIDERED IN THIS MODEL
+
+            var system_consumers = [
+                                        {name: "mainboard", sleep: 0.001*3.3, active: 0.05*3.3, active_per_hour: 1},
+                                        {name: "eps", sleep: 0.001*3.3, active: 0.05*3.3,  active_per_hour: 1},
+                                        {name: "imaging", sleep: 0, active: 0.5*3.3,  active_per_hour: 0.12},
+                                    ];
+
+
+            var comms_consumers = [ 
+                                        {name: "rockblock", sleep: 0.01*5, active: 0.2*5, active_per_hour: 0.12}
+                                    ];
+
+            var drive_consumers = [
+
+                                        {name: "M1", sleep: 0, active: 0.1*5,  active_per_hour: 1},
+                                        {name: "M2", sleep: 0, active: 0.1*5,  active_per_hour: 1},
+                                        {name: "M3", sleep: 0, active: 0.1*5, active_per_hour: 1},
+                                        {name: "M4", sleep: 0, active: 0.1*5, active_per_hour: 1},
+                                        {name: "M5", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2},
+                                        {name: "M6", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2},
+                                        {name: "M7", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2}, 
+                                        {name: "M8", sleep: 0, active: 0.05*3.3, active_per_hour: 0.2}
+
+                                    ];
+
+
+
+        !function ($) {
+
+            //fetches weather asynchronously!
+            get_weather_data(weather_url);
+
+            console.log(get_solar_irradiance_data(40, -62, 300));
+
+
+
+            $("#battery_charging_current_max").attr('max', solar_power_produced_avg/battery_voltage);
+
+            $(".sim_parameter_input").change(function(event) {
+                clear_sim();
+
+                battery_charging_current_max = parseFloat($("#battery_charging_current_max").val());
+                solar_power_produced_avg = parseFloat($("#solar_power_produced_avg").val());
+                battery_energy_charge = parseFloat($("#battery_energy_charge").val());
+                earth_latitude = parseFloat($("#earth_latitude").val());
+                earth_day_of_year = parseFloat($("#earth_day_of_year").val());
+
+                evolve_over_time();
+                
+                //charting
+                $.plot("#chart", [{label: "battery %", data: battery_percent_status_data}, {label: "energy consumed/(max. output of EPS) %", data: energy_consumption_data}, {label: "energy produced/(theoretical maximum) %", data: energy_production_data} ]);
+
+            });
+
+
+
+            function get_weather_data(yrno_xml_url){
+                $.ajax({
+                    type: "GET",
+                    url: yrno_xml_url,
+                    dataType: "xml",
+                    success: function(xml) {
+                        weather_data = $.xml2json(xml)['#document'].weatherdata;
+                    }
+                });
+            }
+
+
+            //returns kW/m^2
+            function get_solar_irradiance_data(dayofyear, latitude, datapoints){
+                var sdata = [];
+                var i = 0;
+                dec = ToRad(Declination(dayofyear))
+                lat = ToRad(latitude);
+                x = - (Math.sin(lat) * Math.sin(dec));
+                x = x / (Math.cos(lat) * Math.cos(dec));
+                if (x > 1.0)
+                    x = 1.0;
+                if (x < -1.0)
+                    x = -1.0;
+                f = Math.acos(x);
+                H = ToDeg(f * 1 / 15.0);
+                
+                sunrise = 12.0 - H;
+                sunset = 12.0 + H;
+
+
+                $("#siminfo").append("latitude: "+latitude+", sunrise: " + HoursMinutes(sunrise) + ", sunset: " + HoursMinutes(sunset) + " on day <b>"+dateFromDay(2016, dayofyear)+"</b><br/>");
+
+                for (i = 0; i < datapoints; i++){
+                    hour = i * time_step ;
+                    Stot = 0.0;
+                    if (hour > sunrise && hour < sunset) {
+                        am = AM(hour, dayofyear, lat);
+                        x1 = Math.pow(0.7, am);
+                        Stot = Stot + 1.353 * Math.pow(x1, 0.678);
+                        } else { Stot = 0}
+                        if (Stot > 1.1){Stot = 0}
+                    sdata[i] = Stot
+
+                }   
+
+                return sdata;
+            }
+
+        function dateFromDay(year, day){
+          var date = new Date(year, 0); // initialize a date in `year-01-01`
+          return new Date(date.setDate(day)).toDateString(); // add the number of days
+        }
+        function ToRad(c){return c*Math.PI/180}
+        function ToDeg(c){return 180*c/Math.PI}
+        function AM(c,e,f){dec=ToRad(Declination(e));HRA=ToRad(15*(c-12));elevation=Math.asin(Math.sin(dec)*Math.sin(f)+Math.cos(dec)*Math.cos(f)*Math.cos(HRA));declination=ToRad(90)-elevation;return 1/(1E-4+Math.cos(declination))}
+        function Declination(c){return 23.45*Math.sin(ToRad(360/365*(c-81)))}
+        function HoursMinutes(c){h=Math.floor(c);m=Math.floor(60*(c-h));return h.toFixed(0)+":"+m.toFixed(0)}
+
+
+        // returns the amount of energy to be charged into the battery.
+        function charge_battery_until_full(energy_charge, sunpower, energy_consumed_at_this_step){
+            var battery_charging_current = Math.max(sunpower-energy_consumed_at_this_step,0) * 1000 * solar_cell_surface * solar_cell_efficiency / battery_voltage;
+
+            //limit charge current
+            battery_charging_current = Math.min(battery_charging_current, battery_charging_current_max);
+
+            //charge until full
+            return Math.min(battery_charging_current * battery_voltage * time_step, battery_energy_cap - energy_charge);
+            // V * A * h = Wh
+
+        }
+
+
+        function consume_battery_energy(energy_charge, t, t_step){
+            var total_consumption = 0; //W
+            var percent_hour_full = Math.floor(((t-Math.floor(t)))*100)+0.01;
+
+            if(energy_charge <= battery_energy_cap){
+                var percent_full = Math.floor((energy_charge/battery_energy_cap)*100);
+            }else{
+                var percent_full = 100;
+            }
+
+            //$("#simresults").append(percent_hour_full + "% of current hour");
+
+
+            for (var i = system_consumers.length - 1; i >= 0; i--) {
+
+                if(system_consumers[i].active_per_hour*100 >= percent_hour_full){
+                   total_consumption += system_consumers[i].active;
+                }else{
+                   total_consumption += system_consumers[i].sleep;
+                }
+
+            };
+            
+
+            if(percent_full > 90 && motors_on == false){
+                motors_on = true;
+            }
+
+            if(percent_full < 70 && motors_on == true){
+                motors_on = false;
+            }
+
+            if(motors_on == true)
+            {
+                for (var i = drive_consumers.length - 1; i >= 0; i--) {
+                    
+                    if(drive_consumers[i].active_per_hour*100 >= percent_hour_full){
+
+                        //$("#simresults").append(" - " + drive_consumers[i].name + " - drive mode.");
+
+                        total_consumption += drive_consumers[i].active;
+                    }else{
+                        total_consumption += drive_consumers[i].sleep;
+
+                    }
+                };
+            }   
+
+            if(percent_full > 50){
+
+
+                for (var i = comms_consumers.length - 1; i >= 0; i--) {
+                    if(comms_consumers[i].active_per_hour*100 >= percent_hour_full){
+                        //$("#simresults").append(" - " + comms_consumers[i].name + ": "+ comms_consumers[i].active_per_hour*100 + "aph - comms mode.");
+
+                        total_consumption += comms_consumers[i].active;
+                    }else{
+                        total_consumption += comms_consumers[i].sleep;
+
+                    }
+                };
+            }
+
+            return total_consumption*t_step; //Wh
+        }
+
+
+        function clear_sim(){
+            $("#siminfo").html("");
+            $("#simresults").html("");
+
+            //sums
+            battery_energy_charge = 0;
+
+
+            //charts
+            battery_percent_status_data = [];
+            energy_production_data = [];
+            energy_consumption_data = [];
+        }
+
+
+        function show_sim_info(){
+            $("#siminfo").append("------------<br/>");
+            $("#siminfo").append("battery_cap (battery_voltage*battery_cap): " + battery_energy_cap + "Wh </br>");
+            $("#siminfo").append("battery_voltage: " + battery_voltage + "V</br>");
+            $("#siminfo").append("battery_charging_current_max: " + battery_charging_current_max + "A</br>");
+            $("#siminfo").append("battery_energy_charge (initial charge): " + battery_energy_charge + "Wh </br>");
+            $("#siminfo").append("solar_power_produced_avg: " + solar_power_produced_avg + "W, doesn't affect simulation </br>");
+            $("#siminfo").append("</br>------------ </br>");
+        }
+
+        function show_postsim_info(){
+            $("#siminfo").append("# data rows: "+ battery_percent_status_data.length);
+            $("#siminfo").append("<br/>time step: "+ time_step + "h , time span: " + time_limit+ "h ");
+
+        }
+
+        function evolve_over_time(){
+
+            show_sim_info();
+            daily_sunpower_data = get_solar_irradiance_data(earth_day_of_year, earth_latitude, 300) ; //kW/m^2
+            var i=0;
+
+            while (time < time_limit){
+                //$("#simresults").append("<hr/><i>" + time + "h: </i><br/>");
+
+                energy_consumed = consume_battery_energy(battery_energy_charge, time, time_step);
+              
+                energy_produced = charge_battery_until_full(battery_energy_charge, daily_sunpower_data[i], energy_consumed);
+               
+                battery_energy_charge += (energy_produced);
+                battery_energy_charge -= (energy_consumed);
+               
+
+                battery_percent_status_data.push([time, (battery_energy_charge/battery_energy_cap)*100]);
+                energy_consumption_data.push([time, (energy_consumed/(energy_consumption_max_per_timestamp)*100)]);
+                energy_production_data.push([time, (energy_produced/solar_energy_max_per_timestep * 100)]);
+
+ 
+
+                time=time+time_step;
+                i=i+1;
+                //$("#simresults").append("<br/>∂E = "+(energy_production - energy_consumption)+"</hr>");
+            }
+
+            show_postsim_info();
+
+
+            //reset time
+            time = 0;
+        }
+
+
+    }(window.jQuery)
+
+    </script>
+    
+</body>
+ 
+</html>

@@ -1,0 +1,74 @@
+---
+layout: page_fr
+title: Nouveautés
+---
+
+<div id="pagebg">
+  {% if site.posts.first.bgimage != '' %}
+  	 <img  data-stellar-ratio="2" src="{{ site.baseurl }}/media/{{site.posts.first.bgimage}}" alt="">
+  {% else %}
+	  <img data-stellar-ratio="2" src="{{ site.baseurl }}/img/header3.jpg" alt="">
+  {% endif %}
+
+</div>
+
+
+<div class="grid padded grid--center pdgt">
+
+
+	<div class="grid__item sm-w-2/3 firstpost">
+		
+		<div class="text-left box box--tiny">
+
+			<h1>{{ site.posts.first.title }}</h1>
+			<p>
+				{{ site.posts.first.content  | strip_html | truncatewords: 50  }}
+			</p>
+		</div>
+
+		<div class="grid grid--bottom mrgt++ pdgt++">
+
+			<div class="grid__item w-1/2 text-left">
+				Posted by {{site.posts.first.author.display_name}} on {{ site.posts.first.date | date:"%B %d, %Y" }}.
+			</div>
+
+			<div class="grid__item sm-w-1/2 text-right pdgr+ ">
+				<a class="btn btn--medium btn--default cta" href="{{site.posts.first.url}}">Read post</a>
+			</div>
+		</div>
+
+	</div>
+
+
+</div>
+
+
+<div class="grid padded bg-lighter text-center">
+	
+	{% for post in site.posts limit: 100 %}  
+		 
+		{% if site.posts.first.title != post.title %}
+			<div class="grid__item sm-w-2/3">
+				
+				<div class="text-left box box--tiny post">
+
+					<h1 class="subtitled"><a href="{{post.url}}">{{ post.title }}</a></h2>
+
+					<p>
+						{{ post.content  | strip_html | truncatewords: 50  }} <a href="{{post.url}}">more...</a>
+
+					</p>
+					<p class="post-metainfo">
+						Posted by {{post.author.display_name}} on {{ post.date | date:"%B %d, %Y" }}.
+					</p>
+
+				</div>
+
+
+			</div>
+		 
+		{% endif %}
+
+	{% endfor %}
+
+</div>
