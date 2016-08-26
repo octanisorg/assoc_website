@@ -28,7 +28,7 @@ One of the most important points was to see how the wheels behaved on snow and t
 <iframe width="560" height="315" src="https://www.youtube.com/embed/nOQPfrgZmxo" frameborder="0" allowfullscreen></iframe>
 </center>
 
-<p><a href="http://www.glacier3000.ch/" target="_blank"  onclick="javascript:_paq.push(['trackEvent', 'cta', 'bluebird']);"><img src="/img/glacier3000.jpg" style="float:right; max-width:100%;width:200px;margin:0px 30px 10px 40px" /></a></p>
+<p><a href="http://www.glacier3000.ch/" target="_blank"  onclick="javascript:_paq.push(['trackEvent', 'cta', 'bluebird']);"><img src="/img/Glacier3000_Logo_Claim_rgb.png" style="float:right; max-width:100%;width:200px;margin:0px 30px 10px 40px" /></a></p>
 We will post more photos of this and upcoming expeditions soon on our Facebook page. Until mid-September, when the rover will be sent to its final destination, we will be able do more tests in these conditions about 2-3 more times - thanks to the generous support from Glacier 3000!
 
 
