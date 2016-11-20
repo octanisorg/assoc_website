@@ -1,0 +1,78 @@
+body, html, .dashboard {
+  background-color: #333333;
+  background: #333333;
+
+}
+
+h1 {font-size: 1.5em}
+
+.wrapper {
+  margin: 1em 3em 0 3em;
+}
+
+.header {
+  height: 5em;
+  line-height: 3em;
+}
+
+.logo {
+    margin:-0.8em 0 0 -0.2em;
+    height: 4.5em;
+}
+
+.digital {
+  font-family: "Inconsolata", monospace;
+  font-weight: bold;
+}
+
+.dashbox {
+  border-bottom: 3px #232323 solid;
+  background: #424242;
+  padding: 1em;
+  margin: 1em;
+}
+
+.antarctica-bg{
+  background: url("antarctica_bg.jpg") #424242 no-repeat left top;
+  background-size: contain;
+  background-origin: border-box;
+}
+
+.rover-bg{
+  margin: 7em -1em -1em -1em;
+  width: 80%;
+}
+
+.secondary {
+  position: relative;
+}
+
+.comms {
+  position: absolute;
+  bottom: 0;
+}
+
+dt {
+  font-family: "GibsonLight";
+  color: #979797;
+  text-transform: uppercase;
+  line-height: 0.4em;
+  font-size: 0.6em;
+
+}
+
+dl {
+  font-family: "GibsonRegular";
+  color: #fff;
+  font-size: 1.3em
+}
+
+.smaller {
+  font-size: 1em;
+}
+
+.larger {
+  font-size: 2.3em;
+  font-family: "GibsonLight";
+  line-height: 1.1em;
+}
