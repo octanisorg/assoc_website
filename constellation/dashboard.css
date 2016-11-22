@@ -10,6 +10,12 @@ h1 {font-size: 1.5em}
   margin: 1em 3em 0 3em;
 }
 
+@media (min-width: 1em) and (max-width: 60em) {
+  .wrapper {
+    margin: 0;
+  }
+}
+
 .header {
   height: 5em;
   line-height: 3em;
