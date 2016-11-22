@@ -22,7 +22,7 @@ h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
   margin: 1em;
 }
 
-@media (min-width: 1em) and (max-width: 60em) {
+@media (min-width: 1em) and (max-width: 40em) {
   .wrapper {
     margin: 0;
   }
