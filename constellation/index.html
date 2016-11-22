@@ -50,6 +50,8 @@
 
                 <div class="pure-u-1-2">
                   <dl>
+                   <dt>Rover</dt>
+                   <dd>Constellation &nbsp; <a target="_blank" href="/rover"> <i class="fa fa-info-circle" aria-hidden="true"></i></a> <a target="_blank" href="http://github.com/octanis1"> <i class="fa fa-github" aria-hidden="true"></i></a></dd>
                    <dt>Last position transmitted on</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd>
                    <dt>Mission Current Waypoint</dt>
@@ -88,6 +90,8 @@
 
                 <div class="donate">
                   <p style="line-height:1.1em;margin-bottom:10px">
+                    <b>WE NEED YOUR SUPPORT</b><br/>
+
                     Satellite data transmission costs us 0.2 EUR per 50 Bytes.
                   Help us pay for this so we can continue receiving data during the whole mission! Any amount is highly appreciated and attributed to you or your company/institution on this page.
                   </p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">

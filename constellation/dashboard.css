@@ -4,7 +4,8 @@ body, html, .dashboard {
 
 }
 
-h1 {font-size: 1.5em}
+h1 {font-size: 1.5em;margin:0;}
+h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
 
 .wrapper {
   margin: 1em 3em 0 3em;
