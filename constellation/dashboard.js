@@ -56,6 +56,28 @@ angular.module('dashboardApp', ['leaflet-directive'])
       $scope.api = data;
 
 
+      //transform GLOBAL_POSITION_INT to markers
+      data.GLOBAL_POSITION_INT.forEach(function(g){
+
+        var marker = {
+          lat: g.Fields.M.lat.N / 1e7,
+          lng: g.Fields.M.lon.N / 1e7,
+          focus: false,
+          message: "Iridium Received: "+g.IridiumMeta.M.transmit_time.S+"<br>MOMSN: "+g.IridiumMeta.M.momsn.N+"<br>Iridium CEP: "+g.IridiumMeta.M.iridium_cep.N+"<br>Time since boot (ms): "+g.Fields.M.time_boot_ms.N,
+
+          icon: {
+            type: 'extraMarker',
+            icon: 'fa-flag-o',
+            markerColor: 'yellow',
+            prefix: 'fa',
+            shape: 'penta'
+          }
+        };
+
+        $scope.markers.push(marker);
+
+      });
+
       //transform GPS_RAW_INT to markers
       var i=0;
       data.GPS_RAW_INT.forEach(function(g){
@@ -64,7 +86,7 @@ angular.module('dashboardApp', ['leaflet-directive'])
           lat: g.Fields.M.lat.N / 1e7,
           lng: g.Fields.M.lon.N / 1e7,
           focus: false,
-          message: "Iridium Received: "+g.IridiumMeta.M.transmit_time.S+"<br>MOMSN: "+g.IridiumMeta.M.momsn.N+"<br>Iridium CEP: "+g.IridiumMeta.M.iridium_cep.N+"<br> Sat. visible: "+g.Fields.M.satellites_visible.N+"<br> Altitude: "+g.Fields.M.alt.N / 1000+"m<br> Fix type: "+g.Fields.M.fix_type.N+"<br>EPH / EPV: "+g.Fields.M.eph.N+" / "+g.Fields.M.epv.N,
+          message: "Iridium Received: "+g.IridiumMeta.M.transmit_time.S+"<br>MOMSN: "+g.IridiumMeta.M.momsn.N+"<br>Iridium CEP: "+g.IridiumMeta.M.iridium_cep.N+"<br> Satellites visible: "+g.Fields.M.satellites_visible.N+"<br> Altitude: "+g.Fields.M.alt.N / 1000+"m<br> Fix type: "+g.Fields.M.fix_type.N+"<br>EPH / EPV: "+g.Fields.M.eph.N+" / "+g.Fields.M.epv.N,
 
           icon: {
             type: 'extraMarker',

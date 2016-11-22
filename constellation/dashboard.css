@@ -11,9 +11,28 @@ h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
   margin: 1em 3em 0 3em;
 }
 
+.hidem {
+  display: block;
+}
+
+.dashbox {
+  border-bottom: 3px #232323 solid;
+  background: #424242;
+  padding: 1em;
+  margin: 1em;
+}
+
 @media (min-width: 1em) and (max-width: 60em) {
   .wrapper {
     margin: 0;
+  }
+
+  .hidem {
+    display: none
+  }
+
+  .dashbox {
+    margin: 1em 0 1em 0;
   }
 }
 
@@ -32,12 +51,6 @@ h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
   font-weight: bold;
 }
 
-.dashbox {
-  border-bottom: 3px #232323 solid;
-  background: #424242;
-  padding: 1em;
-  margin: 1em;
-}
 
 .antarctica-bg{
   background: url("antarctica_bg.jpg") #424242 no-repeat left top;
@@ -69,9 +82,9 @@ dt {
   font-family: "GibsonLight";
   color: #979797;
   text-transform: uppercase;
-  line-height: 0.4em;
+  line-height: 1em;
   font-size: 0.6em;
-
+  margin: 0 0 -0.3em 0;
 }
 
 dl {
