@@ -1,51 +1,74 @@
 <!doctype html>
-<html>
+<html ng-app="dashboardApp">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3600"/>
 
     <title>Constellation Rover Dashboard</title>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
     <script src="https://use.fontawesome.com/0615670e37.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js" charset="utf-8"></script>
+    <script src="http://coryasilva.github.io/Leaflet.ExtraMarkers/js/leaflet.extra-markers.min.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="http://coryasilva.github.io/Leaflet.ExtraMarkers/css/leaflet.extra-markers.min.css">
     <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="/css/octanis.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.css">
 </head>
 
 <body class="dashboard">
 
-  <div class="pure-g wrapper">
+  <div class="pure-g wrapper" ng-controller="DashboardController as dashboard">
       <div class="pure-u-2-3">
         <div class="dashbox header">
           <div class="pure-g">
               <div class="pure-u-1-5"><a href="/rover" target="_blank"><img class="logo" src="/img/patch.png" alt="octanis1 mission - constellation rover" /></a></div>
-              <div class="pure-u-1-5"><i class="fa fa-clock-o" aria-hidden="true"></i> <span class="digital">00:00:00</span> </div>
-              <div class="pure-u-1-5"><i class="fa fa-calendar" aria-hidden="true"></i>  <span class="digital">00:00:00</span> </div>
-              <div class="pure-u-1-5"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-up" aria-hidden="true"></i>  <span class="digital">00:00:00</span> </div>
-              <div class="pure-u-1-5"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-down" aria-hidden="true"></i>   <span class="digital">00:00:00</span> </div>
+              <div class="pure-u-1-5"><i class="fa fa-clock-o" aria-hidden="true"></i> <span class="digital"> {{clock  | date:'HH:mm:ss' : '+1000'}}</span> </div>
+              <div class="pure-u-1-5"><i class="fa fa-calendar" aria-hidden="true"></i>  <span class="digital">{{clock  | date:'yyyy-MM-dd' : '+1000'}}</span> </div>
+              <div class="pure-u-1-5"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-up" aria-hidden="true"></i>  <span class="digital"> {{sunrise}} </span> </div>
+              <div class="pure-u-1-5"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-down" aria-hidden="true"></i>   <span class="digital"> {{sunset}} </span> </div>
           </div>
         </div>
         <div class="dashbox antarctica-bg">
           <div class="pure-g">
             <div class="pure-u-2-3">
-              <h1>OCTANIS 1 MISSION DATA</h1>
+              <h1>{{title}}</h1>
 
               <div class="pure-g">
+
                 <div class="pure-u-1-2">
                   <dl>
-                   <dt>Coffee</dt>
-                   <dd>Black hot drink</dd>
-                   <dt>Milk</dt>
-                   <dd>White cold drink</dd>
+                   <dt>Last position transmitted on</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd>
+                   <dt>Mission Current Waypoint</dt>
+                   <dd>{{api.MISSION_CURRENT.slice(-1)[0].Fields.M.seq.N | number}}</dd>
+                   <dt>Mission Item Reached Waypoint</dt>
+                   <dd>{{api.MISSION_ITEM_REACHED.slice(-1)[0].Fields.M.seq.N | number}}</dd>
+                   <dt>EPH</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.eph.N | number : 1}}</dd>
+                   <dt>EPV</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.epv.N | number : 1}}</dd>
                   </dl>
                 </div>
+
                 <div class="pure-u-1-2">
                   <dl>
-                   <dt>Coffee</dt>
-                   <dd>Black hot drink</dd>
-                   <dt>Milk</dt>
-                   <dd>White cold drink</dd>
+                   <dt>Latitude</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lat.N / 1e7 | number : 7}}</dd>
+                   <dt>Longitude</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lon.N / 1e7 | number : 7}}</dd>
+                   <dt>Altitude</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.alt.N / 1e3 | number : 1}}</dd>
+                   <dt>Satellites visible</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.satellites_visible.N | number : 1}}</dd>
+                   <dt>Fix type</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.fix_type.N | number : 1}}</dd>
                   </dl>
                 </div>
               </div>
@@ -55,15 +78,30 @@
             <div class="pure-u-1-3 secondary">
 
               <div class="comms">
+
+
+                <div class="donate">
+                  <p style="line-height:1.1em;margin-bottom:10px">
+                    Satellite data transmission costs us 0.2 EUR per 50 Bytes.
+                  Help us pay for this so we can continue receiving data during the whole mission! Any amount is highly appreciated and attributed to you or your company/institution on this page.
+                  </p><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                  <input type="hidden" name="cmd" value="_s-xclick">
+                  <input type="hidden" name="hosted_button_id" value="4WKWG3BFVNV8E">
+                  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                  </form>
+                </div>
+
                 <dl>
-                 <dt>Coffee</dt>
-                 <dd>Black hot drink</dd>
-                 <dt>Milk</dt>
-                 <dd>White cold drink</dd>
-                 <dt>Milk</dt>
-                 <dd>White cold drink</dd>
-                 <dt>Milk</dt>
-                 <dd>White cold drink</dd>
+                 <dt>Last heartbeat transmitted on</dt>
+
+                 <dd>{{api.HEARTBEAT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd></dd>
+                 <dt>System status</dt>
+                 <dd>{{api.HEARTBEAT.slice(-1)[0].Fields.M.system_status.N }}</dd>
+                 <dt>Autopilot</dt>
+                 <dd>{{api.HEARTBEAT.slice(-1)[0].Fields.M.autopilot.N }}</dd>
+                 <dt>Base mode</dt>
+                 <dd>{{api.HEARTBEAT.slice(-1)[0].Fields.M.base_mode.N }}</dd>
                 </dl>
               </div>
 
@@ -72,11 +110,70 @@
 
         </div>
 
+        <div class="dashbox">
+          <leaflet lf-center="center" height="480px" width="100%" tiles="tiles" markers="markers"></leaflet>
+          <p>
+            {{tiles.attribution}}
+          </p>
+        </div>
+
       </div>
 
       <div class="pure-u-1-3">
-        <div class="pure-g">
-            <div class="pure-u-2-3">
+
+
+        <div class="dashbox">
+          <h1>ATMOSPHERIC</h1>
+          <div class="pure-g">
+            <div class="pure-u-2-5">
+              <dl>
+                  <dt>Pressure</dt>
+                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_abs.N | number : 1}} <span class="unit">hPa</span></dd>
+              </dl>
+            </div>
+            <div class="pure-u-2-5">
+              <dl>
+                  <dt>Temperature</dt>
+                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.temperature.N / 100 | number : 1}} <span class="unit">°C</span></dd>
+              </dl>
+            </div>
+            <div class="pure-u-1-5">
+                <dl class="smaller">
+
+                    <dt>Pres. diff</dt>
+                    <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_diff.N | number : 1}}</dd>
+
+                    <dt>Sampled at</dt>
+                    <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N /1000 | number : 1}}s</dd>
+
+
+                </dl>
+            </div>
+          </div>
+
+          <div class="pure-g">
+            <div class="pure-u-2-5">
+              <dl class="smaller">
+                <dt>UV Index</dt>
+                <dd>--</dd>
+
+                <dt>Luminosity</dt>
+                <dd>-- Lux</dd>
+              </dl>
+            </div>
+            <div class="pure-u-3-5">
+              <dl class="smaller">
+                <dt>Radioactivity</dt>
+                <dd>-- CPM</dd>
+                <dt>Rel. Humidity</dt>
+                <dd>-- %</dd>
+              </dl>
+            </div>
+
+          </div>
+
+        </div>
+
               <div class="dashbox">
                 <h1>BATTERY</h1>
 
@@ -84,74 +181,87 @@
                   <div class="pure-u-1-2">
                     <dl>
                       <dt>Remaining</dt>
-                      <dd class="larger">-- %</dd>
-                      <dt>Temperature</dt>
-                      <dd>-- °C</dd>
+                      <dd class="larger">{{api.SYS_STATUS.slice(-1)[0].Fields.M.battery_remaining.N}} %</dd>
+                      <dt>TI-RTOS Load</dt>
+                      <dd>{{api.SYS_STATUS.slice(-1)[0].Fields.M.load.N / 100}}</dd>
                     </dl>
                   </div>
 
                   <div class="pure-u-1-2">
                     <dl>
-                      <dt>Voltage</dt>
-                      <dd class="larger">-- V</dd>
+                      <dt>Battery Voltage</dt>
+                      <dd class="larger">{{api.SYS_STATUS.slice(-1)[0].Fields.M.voltage_battery.N / 1000}} V</dd>
                       <dt>Current</dt>
-                      <dd>-- A</dd>
+                      <dd>{{api.SYS_STATUS.slice(-1)[0].Fields.M.current_battery.N / 100}} A</dd>
                     </dl>
                   </div>
                 </div>
 
-              </div>
-            </div>
-            <div class="pure-u-1-3">
-              <div class="dashbox">
 
-                <dl class="smaller">
-                 <dt>Last Update</dt>
-                 <dd>00:00:00</dd>
-                 <dt>Server</dt>
-                 <dd>OK</dd>
-                </dl>
 
-            </div>
-            </div>
         </div>
 
         <div class="dashbox">
-          <h1>ATMOSPHERIC</h1>
-          <div class="pure-g">
-            <div class="pure-u-1-3">
-              <dl>
-                  <dt>test</dt>
-                  <dd class="larger">ts</dd>
-              </dl>
-            </div>
-            <div class="pure-u-1-3">
-              <dl>
-                  <dt>test</dt>
-                  <dd class="larger">ts</dd>
-              </dl>
-            </div>
-            <div class="pure-u-1-3">
-                <dl class="smaller">
-                    <dt>test</dt>
-                    <dd>ts</dd>
-                    <dt>test</dt>
-                    <dd>ts</dd>
-                </dl>
-            </div>
-          </div>
+          <p>
+            <b>LEGEND</b>
 
-          <div class="pure-g">
-            <div class="pure-u-1-3">
-              t
-            </div>
-            <div class="pure-u-2-3">
-              s
-            </div>
+            <br/>
+            <br/>
+              -- : Data has not yet arrived.<br/><br/>
+              Time is in UTC+10 if not otherwise specified.
+          <br/>
 
-          </div>
+          </p>
+        </div>
+
+        <div class="dashbox">
+          <h1>MESSAGE COUNT</h1>
+
+
+              <dl>
+                <dt>GPS_RAW_INT ({{api.GPS_RAW_INT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.GPS_RAW_INT.length}}</dd>
+
+                <dt>GLOBAL_POSITION_INT ({{api.GLOBAL_POSITION_INT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.GLOBAL_POSITION_INT.length}}</dd>
+
+                <dt>HEARTBEAT ({{api.HEARTBEAT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.HEARTBEAT.length}}</dd>
+
+                <dt>ATTITUDE ({{api.ATTITUDE.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.ATTITUDE.length}}</dd>
+
+                <dt>SCALED_PRESSURE ({{api.SCALED_PRESSURE.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.SCALED_PRESSURE.length}}</dd>
+
+                <dt>VFR_HUD ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.VFR_HUD.length}}</dd>
+
+              </dl>
+
+              <dl>
+                <dt>SYS_STATUS ({{api.SYS_STATUS.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.SYS_STATUS.length}}</dd>
+
+                <dt>RC_CHANNELS ({{api.RC_CHANNELS.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.RC_CHANNELS.length}}</dd>
+
+                <dt>MISSION_ITEM ({{api.MISSION_ITEM.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.MISSION_ITEM.length}}</dd>
+
+                <dt>MISSION_CURRENT ({{api.MISSION_CURRENT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.MISSION_CURRENT.length}}</dd>
+
+                <dt>MISSION_ITEM_REACHED ({{api.MISSION_ITEM_REACHED.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.MISSION_ITEM_REACHED.length}}</dd>
+
+
+              </dl>
+
+
 
         </div>
+
       </div>
 
   </div>
