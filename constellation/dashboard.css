@@ -73,6 +73,7 @@ h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
 
 }
 
+/*
 .secondary {
   position: relative;
 }
@@ -81,7 +82,7 @@ h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
   position: absolute;
   bottom: 0;
 }
-
+*/
 dt {
   font-family: "GibsonLight";
   color: #979797;
