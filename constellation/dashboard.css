@@ -67,6 +67,10 @@ h2 {font-size: 0.8em; font-family: "GibsonLight"; margin: 0;padding:0;}
   background: rgba(255,198,0,0.2) ;
   padding: 1em;
   color: white;
+  font-size: 0.8em;
+  line-height: 1.2em;
+  font-family: "GibsonLight";
+
 }
 
 .secondary {
