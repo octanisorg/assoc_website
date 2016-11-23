@@ -73,7 +73,7 @@
                    <dt>Longitude</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lon.N / 1e7 | number : 7}}</dd>
                    <dt>Altitude</dt>
-                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.alt.N / 1e3 | number : 1}}</dd>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.alt.N / 1e3 | number : 1}} m amsl</dd>
                    <dt>Satellites visible</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.satellites_visible.N | number : 1}}</dd>
                    <dt>Fix type</dt>
