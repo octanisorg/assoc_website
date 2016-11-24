@@ -72,6 +72,8 @@
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lat.N / 1e7 | number : 7}}</dd>
                    <dt>Longitude</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lon.N / 1e7 | number : 7}}</dd>
+                   <dt>Heading ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                   <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.heading.N | number : 1}}°</dd>
                    <dt>Altitude</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.alt.N / 1e3 | number : 1}} m amsl</dd>
                    <dt>Satellites visible</dt>
@@ -103,6 +105,12 @@
                   <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                   <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
                   </form>
+
+                  <i> Don't have PayPal? </i><br/>
+                  CH21 0900 0000 8907 2933 1<br/>
+                  Ocatnis Association, 1004 Lausanne
+                    
+
                 </div>
 
                 <dl>
@@ -115,8 +123,8 @@
                  <dt>Mission Status</dt>
                  <dd>ONGOING</dd>
 
-                 <dt>Heading ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
-                 <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.heading.N | number : 1}}°</dd>
+                 <dt>Current time since boot </dt>
+                 <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N/1000 | number : 1}} s</dd>
 
                  <dt>Throttle ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
                  <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.throttle.N | number : 1}}%</dd>
@@ -222,7 +230,7 @@
         <div class="dashbox">
           <h1>THANK YOU FOR DONATING!</h1>
 
-          D. Portabella <br>G. Casas<br>T. Völlmin<br>D. Bolkensteyn<br>S. Dandavino<br>R. Hochreutener<br>L. Henry
+          D. Portabella <br>G. Casas<br>T. Völlmin<br>D. Bolkensteyn<br>S. Dandavino<br>R. Hochreutener<br>L. Henry<br>P. Jaermann
         </div>
 
         <div class="dashbox">
