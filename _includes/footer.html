@@ -23,18 +23,24 @@
 {% if page.title != 'We are an open incubator.' %}
 <footer class="padded bg-lighter grid">
 	<div class="grid__item sm-w-1/2">
+
 		<strong>Octanis Association</strong><br/>
+
 		Visit us Wednesdays,
 		18:30 - 23:30 at <a href="http://hackuarium.ch" target="_blank">Hackuarium</a><br />
+    <img src="/img/epfl_black.png" alt="" />
+
 		<br/>
 		<a href="http://octanis.org/wiki">Wiki</a>
+
 	</div>
 	<div class="grid__item sm-w-1/2 right-footer">
 		Follow us on:
 		<a href="http://fb.com/octanis.org" target="_blank">Facebook</a> | <a href="http://instagram.com/octanisorg" target="_blank">Instagram</a> | <a href="http://twitter.com/octanisorg" target="_blank">Twitter</a>
 		<br />Text: &copy; 2016,
 		Images: CC-BY 2016<br/>
-		Website by Hug&<a href="http://bitmorse.com">Sulaimanov</a>
+		Website by Hug&<a href="http://bitmorse.com">Sulaimanov</a><br>
+
 
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 		<input type="hidden" name="cmd" value="_s-xclick">
@@ -46,4 +52,7 @@
 	</div>
 
 </footer>
+{%else%}
+<img src="/img/epfl.png" alt="" class="padded" />
+
 {%endif%}
