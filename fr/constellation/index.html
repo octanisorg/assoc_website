@@ -1,0 +1,324 @@
+<!doctype html>
+<html ng-app="dashboardApp">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="3600"/>
+
+    <title>Tableau de Bord: Rover Constellation </title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+    <script src="https://use.fontawesome.com/0615670e37.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-leaflet-directive/0.10.0/angular-leaflet-directive.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.js" charset="utf-8"></script>
+    <script src="http://coryasilva.github.io/Leaflet.ExtraMarkers/js/leaflet.extra-markers.min.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="http://coryasilva.github.io/Leaflet.ExtraMarkers/css/leaflet.extra-markers.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="/css/octanis.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.2/leaflet.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+</head>
+
+<body class="dashboard">
+
+  <div class="pure-g wrapper" ng-controller="DashboardController as dashboard">
+      <div class="pure-u-1 pure-u-md-2-3">
+        <div class="dashbox header">
+          <div class="pure-g">
+              <div class="pure-u-1-3 pure-u-md-1-5"><a href="/rover" target="_blank"><img class="logo" src="/img/patch.png" alt="octanis1 mission - constellation rover" /></a></div>
+              <div class="pure-u-1-3 pure-u-md-1-5"><a target="_blank" href="https://www.timeanddate.com/time/zones/ddut"><i class="fa fa-clock-o" aria-hidden="true"></i></a> <span class="digital"> {{clock  | date:'HH:mm:ss' : '+1000'}}</span> </div>
+              <div class="pure-u-1-3 pure-u-md-1-5"><i class="fa fa-calendar" aria-hidden="true"></i>  <span class="digital">{{clock  | date:'yyyy-MM-dd' : '+1000'}}</span> </div>
+              <div class="pure-u-1-5 hidem"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-up" aria-hidden="true"></i>  <span class="digital"> {{sunrise}} </span> </div>
+              <div class="pure-u-1-5 hidem"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-down" aria-hidden="true"></i>   <span class="digital"> {{sunset}} </span> </div>
+          </div>
+        </div>
+        <div class="dashbox antarctica-bg">
+          <div class="pure-g">
+            <div class="pure-u-2-3">
+              <h1>{{title}}</h1>
+
+              <div class="pure-g">
+
+                <div class="pure-u-1-2">
+                  <dl>
+                   <dt>Rover</dt>
+                   <dd>Constellation &nbsp; <a target="_blank" href="/rover"> <i class="fa fa-info-circle" aria-hidden="true"></i></a> <a target="_blank" href="http://github.com/octanis1"> <i class="fa fa-github" aria-hidden="true"></i></a></dd>
+                   <dt>Dernière position reçue le</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd>
+                   <dt>Mission Current Waypoint</dt>
+                   <dd>{{api.MISSION_CURRENT.slice(-1)[0].Fields.M.seq.N | number}}</dd>
+                   <dt>Mission Item Reached Waypoint</dt>
+                   <dd>{{api.MISSION_ITEM_REACHED.slice(-1)[0].Fields.M.seq.N | number}}</dd>
+                   <dt>EPH</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.eph.N | number : 1}}</dd>
+                   <dt>EPV</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.epv.N | number : 1}}</dd>
+
+                  </dl>
+                </div>
+
+                <div class="pure-u-1-2">
+                  <dl>
+                   <dt>Latitude</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lat.N / 1e7 | number : 7}}</dd>
+                   <dt>Longitude</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.lon.N / 1e7 | number : 7}}</dd>
+                   <dt>Cap ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                   <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.heading.N | number : 1}}°</dd>
+                   <dt>Altitude</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.alt.N / 1e3 | number : 1}} m amsl</dd>
+                   <dt>Satellites visibles</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.satellites_visible.N | number : 1}}</dd>
+                   <dt>Fix type</dt>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.fix_type.N | number : 1}}</dd>
+
+                  </dl>
+                </div>
+              </div>
+
+              <img class="rover-bg" src="rover_bg.jpg" alt="constellation rover - octanis 1 mission" />
+            </div>
+            <div class="pure-u-1-3 secondary">
+
+              <div class="comms">
+
+
+                <div class="donate">
+                     <b>NOUS AVONS BESOIN DE VOUS</b><br/>
+
+                    La transmission de données par satellite nous coûte 0.2 EUR pour 50 Bytes.
+					Aidez-nous à financer la communication satellite afin que nous puissions continuer à recevoir les données du rover pendant toute la durée de la mission !
+					Tout don est bienvenu, votre nom ou celui de votre compagnie/institution apparaîtra sur la liste des contributeurs.
+
+
+                  <form style="margin-top:10px" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                  <input type="hidden" name="cmd" value="_s-xclick">
+                  <input type="hidden" name="hosted_button_id" value="4WKWG3BFVNV8E">
+                  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                  <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                  </form>
+
+                  <i> Vous n'êtes pas sur PayPal? </i><br/>
+                  CH21 0900 0000 8907 2933 1<br/>
+                  Octanis Association, 1004 Lausanne
+                    
+
+                </div>
+
+                <dl>
+                 <dt>Last heartbeat transmitted on</dt>
+
+                 <dd>{{api.HEARTBEAT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd></dd>
+                 <dt>System status</dt>
+                 <dd>{{api.HEARTBEAT.slice(-1)[0].Fields.M.system_status.N }}</dd>
+
+                 <dt>Etat de la Mission</dt>
+                 <dd>EN COURS</dd>
+
+                 <dt>Current time since boot </dt>
+                 <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N/1000 | number : 1}} s</dd>
+
+                 <dt>Throttle ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                 <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.throttle.N | number : 1}}%</dd>
+
+                </dl>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="dashbox">
+          <leaflet lf-center="center" height="480px" width="100%" tiles="tiles" markers="markers"></leaflet>
+          <p>
+            {{tiles.attribution}}
+          </p>
+        </div>
+
+      </div>
+
+      <div class="pure-u-1 pure-u-md-1-3">
+
+
+        <div class="dashbox">
+          <h1>DONNEES ATMOSPHERIQUES</h1>
+          <div class="pure-g">
+            <div class="pure-u-2-5">
+              <dl>
+                  <dt>Pression</dt>
+                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_abs.N | number : 1}} <span class="unit">hPa</span></dd>
+              </dl>
+            </div>
+            <div class="pure-u-2-5">
+              <dl>
+                  <dt>Température Int.</dt>
+                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.temperature.N / 100 | number : 1}} <span class="unit">°C</span></dd>
+              </dl>
+            </div>
+            <div class="pure-u-1-5">
+                <dl class="smaller">
+
+                    <dt>Pres. diff</dt>
+                    <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_diff.N | number : 1}} hPa</dd>
+
+                    <dt>Sampled at</dt>
+                    <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N /1000 | number : 1}}s</dd>
+
+                </dl>
+            </div>
+          </div>
+
+          <div class="pure-g">
+            <div class="pure-u-2-5">
+              <dl class="smaller">
+                <dt>Index UV</dt>
+                <dd>--</dd>
+
+                <dt>Luminosité</dt>
+                <dd>-- Lux</dd>
+              </dl>
+            </div>
+            <div class="pure-u-3-5">
+              <dl class="smaller">
+                <dt>Radioactivité</dt>
+                <dd>-- CPM</dd>
+                <dt>Humidité Rel.</dt>
+                <dd>-- %</dd>
+              </dl>
+            </div>
+
+          </div>
+
+        </div>
+
+              <div class="dashbox">
+                <h1>BATTERIE</h1>
+
+                <div class="pure-g">
+                  <div class="pure-u-1-2">
+                    <dl>
+                      <dt>Niveau de Charge</dt>
+                      <dd class="larger">{{api.SYS_STATUS.slice(-1)[0].Fields.M.battery_remaining.N}} %</dd>
+                      <dt>TI-RTOS Load</dt>
+                      <dd>{{api.SYS_STATUS.slice(-1)[0].Fields.M.load.N / 100}}</dd>
+                    </dl>
+                  </div>
+
+                  <div class="pure-u-1-2">
+                    <dl>
+                      <dt>Voltage Batterie</dt>
+                      <dd class="larger">{{api.SYS_STATUS.slice(-1)[0].Fields.M.voltage_battery.N / 1000}} V</dd>
+                      <dt>Courant</dt>
+                      <dd>{{api.SYS_STATUS.slice(-1)[0].Fields.M.current_battery.N / 100}} A</dd>
+                    </dl>
+                  </div>
+                </div>
+
+
+
+        </div>
+
+        <div class="dashbox">
+          <h1>MERCI DE VOS DONATIONS!</h1>
+
+          D. Portabella <br>G. Casas<br>T. Völlmin<br>D. Bolkensteyn<br>S. Dandavino<br>R. Hochreutener<br>L. Henry<br>P. Jaermann
+        </div>
+
+        <div class="dashbox">
+
+          <p>
+            <b>LEGENDE</b>
+
+            <br/>
+            <br/>
+              -- : Donnée non encore reçue.<br/><br/>
+              Zone horaire UTC+10 / <a target="_blank" href="https://www.timeanddate.com/time/zones/ddut">DDUT</a> si non spécifié.
+          <br/>
+
+          </p>
+        </div>
+
+        <div class="dashbox">
+          <h1>COMPTEUR DE MESSAGES</h1>
+
+
+              <dl>
+                <dt>GPS_RAW_INT ({{api.GPS_RAW_INT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.GPS_RAW_INT.length}}</dd>
+
+                <dt>GLOBAL_POSITION_INT ({{api.GLOBAL_POSITION_INT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.GLOBAL_POSITION_INT.length}}</dd>
+
+                <dt>HEARTBEAT ({{api.HEARTBEAT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.HEARTBEAT.length}}</dd>
+
+                <dt>ATTITUDE ({{api.ATTITUDE.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.ATTITUDE.length}}</dd>
+
+                <dt>SCALED_PRESSURE ({{api.SCALED_PRESSURE.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.SCALED_PRESSURE.length}}</dd>
+
+                <dt>VFR_HUD ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.VFR_HUD.length}}</dd>
+
+              </dl>
+
+              <dl>
+                <dt>SYS_STATUS ({{api.SYS_STATUS.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.SYS_STATUS.length}}</dd>
+
+                <dt>RC_CHANNELS ({{api.RC_CHANNELS.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.RC_CHANNELS.length}}</dd>
+
+                <dt>MISSION_ITEM ({{api.MISSION_ITEM.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.MISSION_ITEM.length}}</dd>
+
+                <dt>MISSION_CURRENT ({{api.MISSION_CURRENT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.MISSION_CURRENT.length}}</dd>
+
+                <dt>MISSION_ITEM_REACHED ({{api.MISSION_ITEM_REACHED.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.MISSION_ITEM_REACHED.length}}</dd>
+
+
+                <dt>BATTERY_STATUS ({{api.BATTERY_STATUS.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                <dd>{{api.BATTERY_STATUS.length}}</dd>
+
+
+              </dl>
+
+
+
+        </div>
+
+      </div>
+
+  </div>
+
+  <!-- Piwik -->
+  <script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//trck.bitmorse.com/";
+      _paq.push(['setTrackerUrl', u+'piwik.php']);
+      _paq.push(['setSiteId', 14]);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  <noscript><p><img src="//trck.bitmorse.com/piwik.php?idsite=14" style="border:0;" alt="" /></p></noscript>
+  <!-- End Piwik Code -->
+
+</body>
+</html>
