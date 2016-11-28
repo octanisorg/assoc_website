@@ -57,9 +57,9 @@
 
                    <dt>Dernière position reçue le</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd>
-                   <dt>Mission Current Waypoint</dt>
+                   <dt>Etape de Mission Actuelle</dt>
                    <dd>{{api.MISSION_CURRENT.slice(-1)[0].Fields.M.seq.N | number}}</dd>
-                   <dt>Mission Item Reached Waypoint</dt>
+                   <dt>Etape de Mission Atteinte</dt>
                    <dd>{{api.MISSION_ITEM_REACHED.slice(-1)[0].Fields.M.seq.N | number}}</dd>
                    <dt>EPH</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.eph.N | number : 1}}</dd>
@@ -154,7 +154,7 @@
 
 
         <div class="dashbox">
-          <h1>Données Atmosphériques</h1>
+          <h1>DONNEES ATMOSPHERIQUES</h1>
           <div class="pure-g">
             <div class="pure-u-2-5">
               <dl>
