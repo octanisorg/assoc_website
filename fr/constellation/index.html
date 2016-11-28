@@ -34,7 +34,7 @@
       <div class="pure-u-1 pure-u-md-2-3">
         <div class="dashbox header">
           <div class="pure-g">
-              <div class="pure-u-1-3 pure-u-md-1-5"><a href="/rover" target="_blank"><img class="logo" src="/img/patch.png" alt="octanis1 mission - constellation rover" /></a></div>
+              <div class="pure-u-1-3 pure-u-md-1-5"><a href="/fr/rover" target="_blank"><img class="logo" src="/img/patch.png" alt="octanis1 mission - constellation rover" /></a></div>
               <div class="pure-u-1-3 pure-u-md-1-5"><a target="_blank" href="https://www.timeanddate.com/time/zones/ddut"><i class="fa fa-clock-o" aria-hidden="true"></i></a> <span class="digital"> {{clock  | date:'HH:mm:ss' : '+1000'}}</span> </div>
               <div class="pure-u-1-3 pure-u-md-1-5"><i class="fa fa-calendar" aria-hidden="true"></i>  <span class="digital">{{clock  | date:'yyyy-MM-dd' : '+1000'}}</span> </div>
               <div class="pure-u-1-5 hidem"><i class="fa fa-sun-o" aria-hidden="true"></i> <i class="fa fa-arrow-up" aria-hidden="true"></i>  <span class="digital"> {{sunrise}} </span> </div>
@@ -51,7 +51,7 @@
                 <div class="pure-u-1-2">
                   <dl>
                    <dt>Rover</dt>
-                   <dd>Constellation &nbsp; <a target="_blank" href="/rover"> <i class="fa fa-info-circle" aria-hidden="true"></i></a> <a target="_blank" href="http://github.com/octanis1"> <i class="fa fa-github" aria-hidden="true"></i></a></dd>
+                   <dd>Constellation &nbsp; <a target="_blank" href="/fr/rover"> <i class="fa fa-info-circle" aria-hidden="true"></i></a> <a target="_blank" href="http://github.com/octanis1"> <i class="fa fa-github" aria-hidden="true"></i></a></dd>
                    <dt>Raid</dt>
                    <dd><a target="_blank" href="https://asumablog.wordpress.com/blog/">ASUMA</a></dd>
 
@@ -118,19 +118,19 @@
                 </div>
 
                 <dl>
-                 <dt>Last heartbeat transmitted on</dt>
+                 <dt>Dernière transmission le</dt>
 
                  <dd>{{api.HEARTBEAT.slice(-1)[0].TransmitTime.N * 1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}}</dd></dd>
-                 <dt>System status</dt>
+                 <dt>état du système</dt>
                  <dd>{{api.HEARTBEAT.slice(-1)[0].Fields.M.system_status.N }}</dd>
 
-                 <dt>Etat de la Mission</dt>
+                 <dt>état de la Mission</dt>
                  <dd>EN COURS</dd>
 
-                 <dt>Current time since boot </dt>
+                 <dt>Temps depuis le démarrage</dt>
                  <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N/1000 | number : 1}} s</dd>
 
-                 <dt>Throttle ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
+                 <dt> Vitesse de croisière ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
                  <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.throttle.N | number : 1}}%</dd>
 
                 </dl>
@@ -154,7 +154,7 @@
 
 
         <div class="dashbox">
-          <h1>DONNEES ATMOSPHERIQUES</h1>
+          <h1>Donées Atmosphériques</h1>
           <div class="pure-g">
             <div class="pure-u-2-5">
               <dl>
@@ -174,7 +174,7 @@
                     <dt>Pres. diff</dt>
                     <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_diff.N | number : 1}} hPa</dd>
 
-                    <dt>Sampled at</dt>
+                    <dt>échantilloné à</dt>
                     <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N /1000 | number : 1}}s</dd>
 
                 </dl>
@@ -232,7 +232,7 @@
         </div>
 
         <div class="dashbox">
-          <h1>MERCI DE VOS DONATIONS!</h1>
+          <h1>MERCI DE VOS DONS!</h1>
 
           D. Portabella <br>G. Casas<br>T. Völlmin<br>D. Bolkensteyn<br>S. Dandavino<br>R. Hochreutener<br>L. Henry<br>P. Jaermann
         </div>
