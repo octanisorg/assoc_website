@@ -27,7 +27,7 @@ The photos we received were taken by the researchers who are testing the rover i
 </center>
 
 <center><img src="/img/r2.jpg" />
-<p>Constellation and his "Godfather", Laurent Arnaud</p>
+<p>Constellation and his "Godfather", Laurent Arnaud, LGGE</p>
 </center>
 
 <center><img src="/img/r4.jpg" />
