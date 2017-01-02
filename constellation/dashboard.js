@@ -110,6 +110,9 @@ angular.module('dashboardApp', ['leaflet-directive'])
         i++;
 
       });
+
+      $scope.time_since_boot = Math.max(data.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N,data.RC_CHANNELS.slice(-1)[0].Fields.M.time_boot_ms.N)/1000;
+
     });
 
 

@@ -81,7 +81,9 @@
                    <dt>Satellites visible</dt>
                    <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.satellites_visible.N | number : 1}}</dd>
                    <dt>Fix type</dt>
-                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.fix_type.N | number : 1}}</dd>
+                   <dd>{{api.GPS_RAW_INT.slice(-1)[0].Fields.M.fix_type.N | number : 0}}</dd>
+                   <dt>Fix quality</dt>
+                   <dd>{{api.RC_CHANNELS.slice(-1)[0].Fields.M.chan11_raw.N | number : 0}}</dd>
 
                   </dl>
                 </div>
@@ -126,8 +128,7 @@
                  <dd>ONGOING</dd>
 
                  <dt>Current time since boot </dt>
-                 <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N/1000 | number : 1}} s</dd>
-
+<!--                  <dd>{{api.RC_CHANNELS.slice(-1)[0].Fields.M.time_boot_ms.N/1000 | number : 1}} s</dd>-->                 <dd>{{time_since_boot | number : 0}} s</dd>
                  <dt>Throttle ({{api.VFR_HUD.slice(-1)[0].TransmitTime.N *1000 | date:'yyyy-MM-dd HH:mm:ss' : '+1000'}})</dt>
                  <dd>{{api.VFR_HUD.slice(-1)[0].Fields.M.throttle.N | number : 1}}%</dd>
 
@@ -156,24 +157,24 @@
           <div class="pure-g">
             <div class="pure-u-2-5">
               <dl>
-                  <dt>Pressure</dt>
-                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_abs.N | number : 1}} <span class="unit">hPa</span></dd>
+                  <dt>Ext. Temperature</dt>
+                  <dd class="larger">{{((api.RC_CHANNELS.slice(-1)[0].Fields.M.chan4_raw.N)-27315) / 100 | number : 1}} <span class="unit">°C</span></dd>
               </dl>
             </div>
             <div class="pure-u-2-5">
               <dl>
-                  <dt>Int. Temperature</dt>
-                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.temperature.N / 100 | number : 1}} <span class="unit">°C</span></dd>
+                  <dt>Pressure</dt>
+                  <dd class="larger">{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_abs.N | number : 1}} <span class="unit">hPa</span></dd>
               </dl>
             </div>
             <div class="pure-u-1-5">
                 <dl class="smaller">
 
-                    <dt>Pres. diff</dt>
-                    <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.press_diff.N | number : 1}} hPa</dd>
+                    <dt>Ext. Humidity</dt>
+                    <dd>{{api.RC_CHANNELS.slice(-1)[0].Fields.M.chan2_raw.N /100 | number : 1}} %</dd>
 
-                    <dt>Sampled at</dt>
-                    <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.time_boot_ms.N /1000 | number : 1}}s</dd>
+                    <dt>Int. Humidity</dt>
+                    <dd>{{api.RC_CHANNELS.slice(-1)[0].Fields.M.chan1_raw.N /100 | number : 1}} %</dd>
 
                 </dl>
             </div>
@@ -183,18 +184,25 @@
             <div class="pure-u-2-5">
               <dl class="smaller">
                 <dt>UV Index</dt>
-                <dd>--</dd>
-
+                <dd>{{((0.00391*(api.RC_CHANNELS.slice(-1)[0].Fields.M.chan5_raw.N)*(api.RC_CHANNELS.slice(-1)[0].Fields.M.chan5_raw.N)/2.44+(api.RC_CHANNELS.slice(-1)[0].Fields.M.chan5_raw.N)/1.56)*0.0187) | number : 1}}</dd>
+<!--                 .0187*(.00391*(VALUE/1.5625)^2+VALUE/1.5625)
+ -->
                 <dt>Luminosity</dt>
-                <dd>-- Lux</dd>
+                <dd>{{api.RC_CHANNELS.slice(-1)[0].Fields.M.chan7_raw.N| number : 0}} Lux</dd>
               </dl>
             </div>
-            <div class="pure-u-3-5">
+            <div class="pure-u-2-5">
+              <dl class="smaller">
+                <dt>Solar Voltage</dt>
+                <dd>{{(api.BATTERY_STATUS.slice(-1)[0].Fields.M.voltages.L[1].N /1000) | number : 3}} V</dd>
+                <dt>Est. Solar Power</dt>
+                <dd>{{(api.BATTERY_STATUS.slice(-1)[0].Fields.M.voltages.L[0].N /1000)*(api.BATTERY_STATUS.slice(-1)[0].Fields.M.voltages.L[2].N /1000)/0.9 | number : 3}} W</dd>
+              </dl>
+            </div>
+            <div class="pure-u-1-5">
               <dl class="smaller">
                 <dt>Radioactivity</dt>
-                <dd>-- CPM</dd>
-                <dt>Rel. Humidity</dt>
-                <dd>-- %</dd>
+                <dd>{{api.RC_CHANNELS.slice(-1)[0].Fields.M.chan9_raw.N | number : 0}} CPM</dd>
               </dl>
             </div>
 
@@ -210,17 +218,20 @@
                     <dl>
                       <dt>Remaining</dt>
                       <dd class="larger">{{api.SYS_STATUS.slice(-1)[0].Fields.M.battery_remaining.N}} %</dd>
+                      <dt>Current In</dt>
+                      <dd>{{api.BATTERY_STATUS.slice(-1)[0].Fields.M.voltages.L[2].N /1000}} A</dd>
                       <dt>TI-RTOS Load</dt>
                       <dd>{{api.SYS_STATUS.slice(-1)[0].Fields.M.load.N / 100}}</dd>
                     </dl>
                   </div>
-
                   <div class="pure-u-1-2">
                     <dl>
                       <dt>Battery Voltage</dt>
                       <dd class="larger">{{api.SYS_STATUS.slice(-1)[0].Fields.M.voltage_battery.N / 1000}} V</dd>
-                      <dt>Current</dt>
+                      <dt>Current Out</dt>
                       <dd>{{api.SYS_STATUS.slice(-1)[0].Fields.M.current_battery.N / 100}} A</dd>
+                      <dt>Int. Temperature</dt>
+                      <dd>{{api.SCALED_PRESSURE.slice(-1)[0].Fields.M.temperature.N / 100 | number : 1}} °C</dd>
                     </dl>
                   </div>
                 </div>
