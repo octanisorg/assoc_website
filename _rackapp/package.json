@@ -5,11 +5,11 @@
   "author": "Sam <sam@bitmorse.com>",
   "private": true,
   "scripts": {
-    "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
+    "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o js/rack-build.js",
     "serve": "http-server -o -c 1 -a localhost",
     "dev": "npm-run-all --parallel watchify serve",
     "lint": "eslint --ext .js,.vue src",
-    "build": "cross-env NODE_ENV=production browserify -g envify -p [ vueify/plugins/extract-css -o dist/build.css ] -e src/main.js | uglifyjs -c warnings=false -m > dist/build.js"
+    "build": "cross-env NODE_ENV=production browserify -g envify -p [ vueify/plugins/extract-css -o ../css/rackapp-build.css ] -e src/main.js | uglifyjs -c warnings=false -m > ../js/rackapp-build.js"
   },
   "browserify": {
     "transform": [
