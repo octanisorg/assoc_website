@@ -61,11 +61,11 @@ export default {
 
 h2 {
   position: absolute;
-  top:200px;
   width:100%;
   color: white;
   font-weight: bold;
   padding: 5px;
   font-size: 2.5em;
+  margin-top: -1.5em;
 }
 </style>
