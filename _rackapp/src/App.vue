@@ -25,6 +25,13 @@ export default {
                 question: "What are you soldering?",
                 img_url: "http://lorempixel.com/100/100/"
 
+              },
+              {
+                label: 'soldering',
+                title: 'Soldering',
+                question: "What are you soldering?",
+                img_url: "http://lorempixel.com/200/200/"
+
               }]
             }
     }

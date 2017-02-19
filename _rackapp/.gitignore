@@ -1,4 +1,4 @@
 .DS_Store
 node_modules
-js/rack-build.js
-css/rack-build.css
+js/rackapp-build.js
+css/rackapp-build.css

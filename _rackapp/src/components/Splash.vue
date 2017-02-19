@@ -1,7 +1,6 @@
 <template>
   <div id="hello">
-    <img src="http://vuejs.org/images/logo.png">
-    <router-link to="items">Get Started</router-link>
+     <router-link to="items"class="btn btn--large btn--default cta">Get Started</router-link>
   </div>
 </template>
 
