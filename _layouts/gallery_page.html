@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<style TYPE="text/css">
+.gallery-image-wrapper {
+  height: 300px;
+  width: 300px;
+  display: inline-block;
+  margin: 1em;
+  position: relative;
+}
+.gallery-image {
+  margin: auto;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  max-height: 100%;
+  max-width: 100%;
+}
+</style>
+  {% include head.html %}
+
+  <body>
+
+    {% include header_page.html %}
+
+    <div class="padded">
+
+    <h1 class="oc-brand-indicator">{{ page.title }}</h1>
+
+    {% for image in page.images %}
+        <div class="gallery-image-wrapper">
+            <a name="{{ image.name }}"></a>
+            <a href="{{ image.name }}"{% if site.gallery.lightbox %} rel="lightbox[{{ page.gallery }}]"{% endif %}>
+                <img class="gallery-image" src="thumbs/{{ image.name }}" />
+            </a>
+        </div>
+    {% endfor %}
+
+    </div>
+       {% include footer.html %}
+
+  </body>
+
+</html>
+
