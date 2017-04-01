@@ -15,7 +15,7 @@ categories:
 ---
 
 
-At Octanis, we want to train the EPFL student community to tackle real-world challenges by our disrupting way of doing open-source hardware design. Currently we collaborate with the Discovery Learning Labs (DLL) to offer students a new way of learning about electronics, 3D printing, microbiology and much more!
+We want to inspire EPFL students to get out of their comfort zone and tackle real-world problems with real-world customers to deal with. We have access to a unique infrastructure permitting non-expert students to dive in to electronics, 3D printing, microbiology and much more!
 
 Since our recent acknowledgement as an EPFL association, we’re growing rapidly and would like to reinforce our committee with new members. Especially people having a non-engineering background are encouraged to <a href="mailto:info@octanis.org?subject=Join%20as%20Board%20member">reach out to us</a>, but we welcome everybody who has a few hours every week to dedicate to the association! Here are just a few of our challenges:
 
