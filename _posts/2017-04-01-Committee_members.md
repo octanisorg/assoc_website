@@ -42,6 +42,7 @@ Since our recent acknowledgement as an EPFL association, we’re growing rapidly
 <ul>
 <li>During the past 2 years of development, we designed various subsystems that could be used and sold as a stand-alone product. If you want to gain experience in online sales, product pricing and customer relationship, this is the best way to do so. </li>
 <li>Find ways to promote these products and discover what the customer really wants so we could adapt them accordingly. In short, this is all about product/market fit. </li>
+</ul>
 
 
 <center><img src="/img/new_committee_members.jpg" style="max-width:100%;margin:10px 0px 10px 0px">
