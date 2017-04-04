@@ -23,13 +23,11 @@ Since our recent acknowledgement as an EPFL association, we’re growing rapidly
 <ul>
 <li>Step out of your comfort zone and meet “real” people in the “real” world. Put your persuasion skills into practice and showcase our projects to potential partners, the press, on our social media channels and to the general public.</li>
 <li>Organise events where the values of the Octanis association will be transmitted to an external audience (i.e. in form of workshops, seminars, exhibitions, hackathons…). Develop your event management skills and grow your network in industry, the public sector and within the media.</li>
-<li>Ensure the consistency of the Octanis corporate identity in all our publications, websites and documents. </li>
 </ul>
 
 <h3>Fundraising & Sponsoring</h3>
 <ul>
-<li>Sending out sponsoring letters takes a lot of endurance! But once successful, you will get that great feeling of accomplishment and satisfaction because there are people out there who like your project so much that they even support you financially.</li>
-<li>Once you find a major sponsor of the association, you will take care of keeping a good relationship with the sponsors and organise eventual meetings and events for them. </li>
+<li>Sending out sponsoring letters takes a lot of endurance! But once successful, you will get that great feeling of accomplishment and satisfaction.</li>
 <li>Find other means of raising money to cover our R&D costs, such as crowd funding on platforms like Kickstarter and discover their real potential (and limits).</li>
 </ul>
 
@@ -54,13 +52,24 @@ Since our recent acknowledgement as an EPFL association, we’re growing rapidly
 </ul>
 
 
-<center><img src="/img/new_committee_members.jpg" style="max-width:100%;margin:10px 0px 10px 0px" />
-<p>You can create better advertising campaigns than this one? <a href="mailto:info@octanis.org?subject=Join%20as%20Board%20member">Then you should join our board! :)</a>
-<br><br><br>
-Interested?
+<center><img src="/img/new_committee_members.jpg" style="max-width:100%;margin:10px 0px 10px 0px">
+<p>You can create better advertising campaigns than this one? <a href="mailto:info@octanis.org?subject=Join%20as%20Board%20member">Then you should join our board! :)</a></p>
+</center>
 
-Contact us at info@octanis.org
+<h2>Your benefits</h2>
+<ul>
+<li>Grow with the entire team! Develop skills that will help you to work on a technical project.</li>
+<li>Be part of a unique team developing unique products that have the potential to be marketed. </li>
+<li>Make an impact! Grow your seeds within the EPFL community and expand your network towards new disciplines. Who knows, maybe you'll meet your future co-founder/CTO</li>
+</ul>
 
+<br>
+
+<center>
+<h3>Interested?</h3>
+<p>
+Contact us at <a href="mailto:info@octanis.org?subject=Join%20as%20Board%20member">info@octanis.org</a>
+<br>
 …or simply join our weekly meetings on EPFL campus in MED3 2215 
 (new silver building in front of Rolex Learning Center) every Tuesday at 19:30!
 </p>
