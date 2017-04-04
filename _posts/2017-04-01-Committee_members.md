@@ -45,12 +45,6 @@ Since our recent acknowledgement as an EPFL association, we’re growing rapidly
 <li>Imagine we sold 1000 units of one of our subsystems. Apart from the question how we’re actually going to manufacture it cost-effectively, we will also have to ship it to our customers. Your job would be to find the most efficient distribution method. </li>
 </ul>
 
-<h3>Legal Affairs</h3>
-<ul>
-<li>Did you know that even in Antarctica there are certain laws and regulations? Also a balloon flight in 30 km height is subject to certain limitations, and the same goes for attaching plastic rings to owls. If you’re passionate about all kinds of legal questions, this would be the right position for you within Octanins!</li>
-<li>For all sorts of agreements with potential sponsors, customers and collaborators we need to establish a well-written document to ensure a solid partnership between the two sides. This is your chance to write these kinds of contracts - and as we’re still students, our experience shows that the professionals on the other side are keen to help and improve our documents, so you can learn a lot!</li>
-</ul>
-
 
 <center><img src="/img/new_committee_members.jpg" style="max-width:100%;margin:10px 0px 10px 0px">
 <p>You can create better advertising campaigns than this one? <a href="mailto:info@octanis.org?subject=Join%20as%20Board%20member">Then you should join our board! :)</a></p>
@@ -60,7 +54,7 @@ Since our recent acknowledgement as an EPFL association, we’re growing rapidly
 <ul>
 <li>Grow with the entire team! Develop skills that will help you to work on a technical project.</li>
 <li>Be part of a unique team developing unique products that have the potential to be marketed. </li>
-<li>Make an impact! Grow your seeds within the EPFL community and expand your network towards new disciplines. Who knows, maybe you'll meet your future co-founder/CTO</li>
+<li>Make an impact! Grow your seeds within the EPFL community and expand your network towards new disciplines. Who knows, maybe you'll meet your future co-founder/CTO!</li>
 </ul>
 
 <br>
