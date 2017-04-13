@@ -274,29 +274,27 @@ input.newsletter {
 
 
 
-.levillage {
-	position: relative;
-    background: #000;
-}
+.rack {
+  position: relative;
+  background: #000; }
 
-.levillage::after {
-    content: "";
-    position: absolute;
-    z-index: 1;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    background: transparent url(../img/levillage_cover.jpg) no-repeat scroll 0% 0%;
-    opacity: 0.3;
-  	background-repeat: no-repeat;
-    background-position: 50% 0;
-    -ms-background-size: cover;
-    -o-background-size: cover;
-    -moz-background-size: cover;
-    -webkit-background-size: cover;
-    background-size: cover;
-}
+.rack::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: transparent url(../img/rack_cover.jpg) no-repeat scroll 0% 0%;
+  opacity: 0.3;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover; }
 
 
 .rover {
