@@ -69,6 +69,8 @@ every Tuesday, 19:15 - 22:00 <br/>
 	<div class="grid padded bg-darker">
 		<div class="grid__item sm-w-1/1">
 			<h1>Who we are.</h1>
+			<svg width="960" height="960"></svg>
+
 			<p>
 			 	We are a diverse bunch of people from a variety of backgrounds. A lot of us attend or have attended one of the Swiss Federal Institutes of Technology. We all contribute in different ways to different projects within Octanis. Most members have one work area that they do very well and another that is a bit crazy and experimental! We all like to challenge each other and sometimes we stay late or come in on weekends. After all, there's an unlimited supply of coffee!
 			</p>
@@ -253,3 +255,128 @@ every Tuesday, 19:15 - 22:00 <br/>
 
 
 	</div>
+
+<!-- EXPERIMENT -->
+<style>
+
+svg {
+	width: 100%;
+	height: auto;
+}
+
+.node {
+  cursor: pointer;
+}
+
+.node:hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node--leaf {
+  fill: #22211f;
+}
+
+.label {
+  text-anchor: middle;
+	fill: #fff;
+	font-size: 20px;
+}
+
+
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+
+</style>
+<script src="/js/d3.min.js"></script>
+<script type="text/javascript">
+
+var svg = d3.select("svg"),
+    margin = 20,
+    diameter = +svg.attr("width"),
+    g = svg.append("g").attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+
+var color = d3.scaleLinear()
+    .domain([-1, 5])
+    .range(["hsla(47, 100%, 50%, 0)", "hsla(47, 100%, 50%, 1)"])
+    .interpolate(d3.interpolateHcl);
+
+var pack = d3.pack()
+    .size([diameter - margin, diameter - margin])
+    .padding(2);
+
+d3.json("flare.json", function(error, root) {
+  if (error) throw error;
+
+  root = d3.hierarchy(root)
+      .sum(function(d) { return d.size; })
+      .sort(function(a, b) { return b.value - a.value; });
+
+  var focus = root,
+      nodes = pack(root).descendants(),
+      view;
+
+  var circle = g.selectAll("circle")
+    .data(nodes)
+    .enter().append("circle")
+      .attr("class", function(d) { return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root"; })
+      .style("fill", function(d) { return d.children ? color(d.depth) : null; })
+      .on("click", function(d) { if (focus !== d) zoom(d), d3.event.stopPropagation(); });
+
+  var text = g.selectAll("text")
+    .data(nodes)
+    .enter().append("text")
+      .attr("class", "label")
+      .style("fill-opacity", function(d) { return d.parent === root ? 1 : 0.25; })
+      .style("display", function(d) { return d.parent === root ? "inline" : "none"; })
+      .text(function(d) { return d.data.name; });
+
+
+	var hypertext = g.selectAll("foreignObject")
+		.data(nodes)
+		.enter().append("foreignObject")
+    .attr("width", 100)
+    .attr("height", 20)
+  	.append("xhtml:body")
+    .style("font", "14px 'Helvetica Neue'")
+    .html("BR BR BR");
+
+
+
+  var node = g.selectAll("circle,text,foreignObject");
+
+  svg
+      .style("background", color(-1))
+      .on("click", function() { zoom(root); });
+
+  zoomTo([root.x, root.y, root.r * 2 + margin]);
+
+  function zoom(d) {
+    var focus0 = focus; focus = d;
+
+    var transition = d3.transition()
+        .duration(d3.event.altKey ? 7500 : 750)
+        .tween("zoom", function(d) {
+          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+          return function(t) { zoomTo(i(t)); };
+        });
+
+    transition.selectAll("text")
+      .filter(function(d) { return d.parent === focus || this.style.display === "inline"; })
+        .style("fill-opacity", function(d) { return d.parent === focus ? 1 : 0.15; })
+        .on("start", function(d) { if (d.parent === focus) this.style.display = "inline"; })
+        .on("end", function(d) { if (d.parent !== focus) this.style.display = "none"; });
+  }
+
+  function zoomTo(v) {
+    var k = diameter / v[2]; view = v;
+    node.attr("transform", function(d) { return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")"; });
+    circle.attr("r", function(d) { return d.r * k; });
+  }
+});
+
+</script>
