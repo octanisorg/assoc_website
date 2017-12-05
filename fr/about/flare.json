@@ -1,0 +1,65 @@
+{
+"name": "Board Circle",
+
+ "children": [
+   {
+    "name": "Bookkeeper Baboon",
+    "purpose": "Process transactions with clarity & coherence; guard the books from chaos.",
+    "size": 2
+
+   },   {
+       "name": "Fundraising Falcon",
+       "purpose": "Money needed = Funds raised.",
+       "size": 2
+
+      },   {
+          "name": "Joyful Janitor",
+          "purpose": "Reflecting the awesomeness of Octanis in the state of its assets.",
+          "size": 2
+
+         },   {
+             "name": "Social Media Squirrel",
+             "purpose": "Diffusing the essence and activity of Octanis virtually.",
+             "size": 2
+            },   {
+                "name": "Reachout Raccoon",
+                "purpose": "Opening windows of opportunities by being present and being passionate.",
+                "size": 2
+               },   {
+                   "name": "Kapacitating Koala",
+                   "purpose": "Identifying and unfolding members’ true potential by being supportive and assertive.",
+                   "size": 2
+                  },   {
+                      "name": "Webdev Wombat",
+                      "purpose": "Developing the web and application infrastructure.",
+                      "size": 2
+                     },   {
+                         "name": "Teaching Turtle",
+                         "size": 2,
+                         "purpose": "Providing learning content to members and external entities as incentive to join Octanis."
+                        },   {
+                            "name": "Wandering Wolf",
+                            "size": 2,
+                            "purpose": "Inherits the board circle's purpose: End the monotony of scholarly study and shed light on the beauty of learning by doing. Ensure proper operation of association in line with its statutes."
+                           },
+  {
+   "name": "General Association Circle",
+     "children": [
+
+       {
+        "name": "Rover Circle",
+        "size":10
+       },
+       {
+        "name": "Nestbox Circle",
+        "size":10
+       },
+       {
+        "name": "Rack Circle",
+        "size":10
+       }
+     ]
+  }
+
+  ]
+}
