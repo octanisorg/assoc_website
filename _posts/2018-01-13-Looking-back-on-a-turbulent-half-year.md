@@ -54,8 +54,6 @@ In the last blog post, we wrote about how the Rover went to Antarctica and came 
 
 So in September a group of people - including Sam, Franziska and Beat - started looking at this data. And as it is so often in science, recording the data is one thing, but actually making sense of it and doing the post-treatment is on its own a big challenge. For our primary mission of measuring [the rugosity](https://en.wikipedia.org/wiki/Rugosity) of the snow, we are working on making sense of the LIDAR measurement coupled with the data from the position measurement (GPS and accelerometer)
 
-[TODO maybe show preliminary results from Beat].
-
 But there is not only the scientific aspect to the recorded data, but also the engineering view of the mission. In order to look forward on a possible future mission we need to understand how well our current system works, where the problems were located and what did not work at all. And to answer these question we again need to have a close look at all the recorded data. In this case for example the inside and outside temperature, the battery charging and discharging curves, the feedback from the motors, and many more. While this is not the most interesting and immediately rewarding kind of work, it is a very important step towards any future new prototypes.
 
 Towards the end of November we also started brainstorming about a new and bigger rover model. It might include track instead of wheels, a roll cage to make it self righting and communication using CAN bus. So stay tuned, this will get interesting.
