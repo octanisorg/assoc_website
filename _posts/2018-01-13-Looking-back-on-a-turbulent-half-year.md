@@ -84,7 +84,7 @@ Our collaboration with the research group of professor Roulin at UNIL continues.
 
 We are also in contact with another group of researchers, with interest in a similar system. In their case they want to focus on weight measurements of owls. This lead us to start thinking about integrating a weight sensor to our setup. We were recently able to test such a sensor and got very promising first results.
 
-[Link to video we made this week].
+[Link to video we made this week](https://drive.google.com/file/d/1uer5fnK8slHawTf7k0lXq0lo52p2hKvN/view).
 
 So we are now evaluating with the Ornithological Institute who to put in place a collaboration for this project.
 
