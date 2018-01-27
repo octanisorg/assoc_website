@@ -82,12 +82,7 @@ The Nestbox project has also seen a lot of changes since the last update. In the
 
 Our collaboration with the research group of professor Roulin at UNIL continues. To foster communication between his group and the people from Octanis working on the project, we held a common workshop / presentation where professor Roulin presented the background of his research and we presented our latest results. Following this presentation we had a very fruitful discussion with many members of the research group with many interesting insights.
 
-We are also in contact with another group of researchers, with interest in a similar system. In their case they want to focus on weight measurements of owls. This lead us to start thinking about integrating a weight sensor to our setup. We were recently able to test such a sensor and got very promising first results.
-
-[Link to video we made this week](https://drive.google.com/file/d/1uer5fnK8slHawTf7k0lXq0lo52p2hKvN/view).
-
-So we are now evaluating with the Ornithological Institute who to put in place a collaboration for this project.
-
+We are also in contact with another group of researchers, with interest in a similar system. In their case they want to focus on weight measurements of owls. This lead us to start thinking about integrating a weight sensor to our setup. We were recently able to test such a sensor and got very promising first results, as you can see in [this video](https://drive.google.com/file/d/1uer5fnK8slHawTf7k0lXq0lo52p2hKvN/view).
 
 Fujibox
 --
