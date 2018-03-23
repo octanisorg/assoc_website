@@ -15,8 +15,8 @@ sass:
     style: :nested
 
 
-gems:
-- jekyll-gallery-generator
+#gems:
+#<- jekyll-gallery-generator
 
 gallery:
   dir: photos_raw               # Path to the gallery
