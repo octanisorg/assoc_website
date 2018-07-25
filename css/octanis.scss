@@ -271,6 +271,28 @@ input.newsletter {
     background-size: cover;
 }
 
+.space {
+  position: relative;
+  background: #000; }
+
+.space::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: transparent url(../img/microverse.jpg) no-repeat scroll 0% 0%;
+  opacity: 0.3;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  -ms-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+  background-size: cover; }
+
 
 
 
@@ -295,6 +317,29 @@ input.newsletter {
   -moz-background-size: cover;
   -webkit-background-size: cover;
   background-size: cover; }
+
+
+  .sem {
+    position: relative;
+    background: #000; }
+
+  .sem::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: transparent url(../img/sem.jpg) no-repeat scroll 0% 0%;
+    opacity: 0.3;
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover; }
 
 
 .rover {
