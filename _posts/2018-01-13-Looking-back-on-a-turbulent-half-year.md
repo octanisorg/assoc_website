@@ -13,7 +13,7 @@ bgimage: r1_headline.jpg
 categories:
   - Octanis
 ---
-<style>.post img{max-width:40%;float:left; margin-right:45px;} .post{text-align: justify;}</style>
+<style>.post img{max-width:40%;float:left; clear:left; margin-right:45px; margin-bottom:45px;} .post{text-align: justify;} .post h2{clear:left;}</style>
 
 It is crazy how fast time passes when you are well occupied doing things you love.  It was only 2 weeks ago, that somebody of our group noticed, that we have not written any updates here for nearly half a year.  This is not because nothing has happened in these 6 months, quite the opposite! So many things have been advancing and changing, that we hardly get the time to write a post here.
 
